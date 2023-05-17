@@ -34,6 +34,7 @@ public class InterficiePrincipal extends JFrame implements ActionListener {
 	private JButton btnNewButton;
 	private JButton btnNewButton1;
 	private JButton btnNewButton_1;
+	private JButton btnNewButton_2;
 	private JLabel label;
 	private boolean trobatuser, trobatcontra;
 	private static ResultSet resultSet = null;
@@ -120,14 +121,25 @@ public class InterficiePrincipal extends JFrame implements ActionListener {
 
 		btnNewButton_1 = new JButton("Logout");
 		panel_2.add(btnNewButton_1);
-
+		
 		btnNewButton_1.setVisible(false);
 		label = new JLabel("New label");
 		label.setBounds(76, 92, 46, 14);
 		contentPane.add(label);
+		
+		btnNewButton_2 = new JButton("Eliminar Usuario");
+		panel_2.add(btnNewButton_2);
+		
+		btnNewButton_2.setVisible(false);
+		label = new JLabel("New label");
+		label.setBounds(76, 92, 46, 14);
+		contentPane.add(label);
+
+		
 
 		btnNewButton.addActionListener(this);
 		btnNewButton_1.addActionListener(this);
+		btnNewButton_2.addActionListener(this);
 		btnNewButton1.addActionListener(this);
 		setResizable(false);
 
@@ -254,6 +266,7 @@ public class InterficiePrincipal extends JFrame implements ActionListener {
 
 			if (trobatcontra) {
 				btnNewButton_1.setVisible(true);
+				btnNewButton_2.setVisible(true);
 				btnNewButton.setVisible(false);
 				lblNewLabel_1.setVisible(false);
 				textField.setVisible(false);
@@ -323,6 +336,34 @@ public class InterficiePrincipal extends JFrame implements ActionListener {
 //							JOptionPane.ERROR_MESSAGE);
 //				}
 			}
+		}else if (e.getSource() == btnNewButton_2) {
+			
+//			try {
+//				s = c.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_UPDATABLE);
+//				PreparedStatement pstatement = c.prepareStatement("DELETE FROM nomtabla where");
+//				
+//
+//				pstatement.executeUpdate();
+//
+//				registrado = true;
+//				JOptionPane.showMessageDialog(this, "Usuario Borrado con exito", "Registro",
+//						JOptionPane.INFORMATION_MESSAGE);
+//
+			btnNewButton_1.setVisible(false);
+			btnNewButton.setVisible(true);
+			btnNewButton1.setVisible(true);
+			lblNewLabel.setVisible(true);
+			lblNewLabel_1.setVisible(true);
+			textField.setVisible(true);
+			textField_1.setVisible(true);			
+//			} catch (SQLException ex) {
+//				JOptionPane.showMessageDialog(this, "Error al registrar usuario: " + ex.getMessage(), "Error",
+//						JOptionPane.ERROR_MESSAGE);
+//			}
+			
+			
+		} else {
+
 		}
 	}
 }
