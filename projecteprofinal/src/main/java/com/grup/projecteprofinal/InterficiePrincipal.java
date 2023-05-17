@@ -7,6 +7,9 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -16,8 +19,6 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class InterficiePrincipal extends JFrame {
 
@@ -61,7 +62,7 @@ public class InterficiePrincipal extends JFrame {
 		panel.add(panel_1, BorderLayout.WEST);
 
 		JLabel lblNewLabel = new JLabel();
-		ImageIcon icona = new ImageIcon("inici.JPG");
+		ImageIcon icona = new ImageIcon("img"+ File.separator + "inici.JPG");
 		Image imatge = icona.getImage();
 		Image novaImage = imatge.getScaledInstance(80, 80, Image.SCALE_SMOOTH);
 		ImageIcon nouIcon = new ImageIcon(novaImage);
