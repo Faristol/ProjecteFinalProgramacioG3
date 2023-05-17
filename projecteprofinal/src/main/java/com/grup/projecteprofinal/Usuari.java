@@ -15,6 +15,7 @@ import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 public class Usuari {
 	private String nom = null;
@@ -30,7 +31,7 @@ public class Usuari {
 	private int longitudSalt = 16;
 	private byte[] salt = null;
 	private int longitudHash = 64 * 8;
-	private byte[] imagenBytes;
+	private byte[] imatgeBytes;
 
 	public Usuari(String nom, String cognoms, String poblacio, String correu, String password, String imatge) {
 		// TODO Auto-generated constructor stub
@@ -44,6 +45,7 @@ public class Usuari {
 		this.imatge = imatgeIcon.getImage();
 		xifrarContrassenya();
 		serialitzarImatge();
+		comprovarCorreu();
 
 	}
 
@@ -120,7 +122,7 @@ public class Usuari {
 	}
 
 	public byte[] getImagenBytes() {
-		return imagenBytes;
+		return imatgeBytes;
 	}
 
 	public void setFortalesa(int fortalesa) {
@@ -140,7 +142,7 @@ public class Usuari {
 	}
 
 	public void setImagenBytes(byte[] imagenBytes) {
-		this.imagenBytes = imagenBytes;
+		this.imatgeBytes = imagenBytes;
 	}
 
 	public ImageIcon getImatgeIcon() {
@@ -182,10 +184,28 @@ public class Usuari {
 			BufferedImage imagen = ImageIO.read(new File(imatgeCadena));
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			ImageIO.write(imagen, "jpg", baos);
-			imagenBytes = baos.toByteArray();
+			imatgeBytes = baos.toByteArray();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+
+	}
+
+	public void comprovarCorreu() {
+		boolean noexisteix = ProcessamentRegistre.comprovarCorreu(correuElectronic);
+		if (noexisteix) {
+			ProcessamentRegistre.guardarInformacioRegistreTaula1(nom, cognoms, poblacio, correuElectronic, imatgeBytes);
+			ProcessamentRegistre.guardarInformacioRegistreTaula2(contrassenyaXifrada, fortalesa, salt, longitudHash);
+			JOptionPane.showMessageDialog(null,
+					"El registre ha resultat satisfactòri. Benvingut a la llar dels jocs " + nom, "Registre",
+					JOptionPane.INFORMATION_MESSAGE);
+			// ara crear un objecte del frame que va després de l'inici de sessió on estan
+			// els tres jocs
+			InterficieSeleccioJocs panellJocs = new InterficieSeleccioJocs();
+			return;
+		}
+		JOptionPane.showMessageDialog(null, "El correu ja existeix, proporciona altre.", "Error",
+				JOptionPane.ERROR_MESSAGE);
 
 	}
 

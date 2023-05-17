@@ -1,5 +1,11 @@
 package com.grup.projecteprofinal;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.regex.Pattern;
 
 import javax.swing.JOptionPane;
@@ -36,6 +42,88 @@ public class ProcessamentRegistre {
 			return;
 		}
 		Usuari nouUsuari = new Usuari(nom, cognoms, poblacio, correu, password1, imatge);
+
+	}
+
+	public static boolean comprovarCorreu(String correuElectronic) {
+		String url = "jdbc:mysql://ticsimarro:3306/1daw03_pro";
+		String user = "1daw03";
+		String password = "dEQ1e3Q2ZD";
+
+		try {
+
+			Connection connection = DriverManager.getConnection(url, user, password);
+			Statement cerca = connection.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+			String consulta = "SELECT COUNT('correuElectronic') FROM tabla1 WHERE correuElectronic='" + correuElectronic
+					+ "'";
+			ResultSet r = cerca.executeQuery(consulta);
+			r.next();
+			int numCorreusCoincidents = r.getInt(1);
+			if (numCorreusCoincidents == 0) {
+				connection.close();
+				return true;
+			}
+			connection.close();
+			return false;
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
+
+	}
+
+	public static void guardarInformacioRegistreTaula1(String nom, String cognoms, String poblacio,
+			String correuElectronic, byte[] imatgeBytes) {
+		String url = "jdbc:mysql://ticsimarro:3306/1daw03_pro";
+		String user = "1daw03";
+		String password = "dEQ1e3Q2ZD";
+
+		PreparedStatement statement = null;
+		try {
+
+			Connection connection = DriverManager.getConnection(url, user, password);
+			String input = "INSERT INTO tabla1 (nom, cognoms, poblacio, correuElectronic, imatgeBytes) VALUES (?, ?, ?, ?, ?)";
+			statement = connection.prepareStatement(input);
+			statement.setString(1, nom);
+			statement.setString(2, cognoms);
+			statement.setString(3, poblacio);
+			statement.setString(4, correuElectronic);
+			statement.setBytes(5, imatgeBytes);
+			int resultat = statement.executeUpdate();
+			connection.close();
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	public static void guardarInformacioRegistreTaula2(String contrassenyaXifrada, int fortalesa, byte[] salt,
+			int longitudHash) {
+		String url = "jdbc:mysql://ticsimarro:3306/1daw03_pro";
+		String user = "1daw03";
+		String password = "dEQ1e3Q2ZD";
+
+		PreparedStatement statement = null;
+		try {
+
+			Connection connection = DriverManager.getConnection(url, user, password);
+			String input = "INSERT INTO tabla2 (contrassenyaXifrada, fortalesa, salt, longitudHash) VALUES (?, ?, ?, ?)";
+			statement = connection.prepareStatement(input);
+			statement.setString(1, contrassenyaXifrada);
+			statement.setInt(2, fortalesa);
+			statement.setBytes(3, salt);
+			statement.setInt(4, longitudHash);
+			int resultat = statement.executeUpdate();
+			connection.close();
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
 
