@@ -62,7 +62,7 @@ public class InterficiePrincipal extends JFrame {
 		panel.add(panel_1, BorderLayout.WEST);
 
 		JLabel lblNewLabel = new JLabel();
-		ImageIcon icona = new ImageIcon("img"+ File.separator + "inici.JPG");
+		ImageIcon icona = new ImageIcon("img" + File.separator + "inici.JPG");
 		Image imatge = icona.getImage();
 		Image novaImage = imatge.getScaledInstance(80, 80, Image.SCALE_SMOOTH);
 		ImageIcon nouIcon = new ImageIcon(novaImage);

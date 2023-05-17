@@ -1,7 +1,19 @@
 package com.grup.projecteprofinal;
 
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.KeySpec;
+import java.util.Base64;
 
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.PBEKeySpec;
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
 public class Usuari {
@@ -10,11 +22,15 @@ public class Usuari {
 	private String poblacio = null;
 	private String correuElectronic = null;
 	private String password = null;
-	private ImageIcon imatge = null;
+	private ImageIcon imatgeIcon = null;
+	private String imatgeCadena = null;
+	private Image imatge = null;
 	private String contrassenyaXifrada = null;
-	private final int fortalesa;
-	private String salt = null;
-	private int longitud;
+	private int fortalesa = 65536;
+	private int longitudSalt = 16;
+	private byte[] salt = null;
+	private int longitudHash = 64 * 8;
+	private byte[] imagenBytes;
 
 	public Usuari(String nom, String cognoms, String poblacio, String correu, String password, String imatge) {
 		// TODO Auto-generated constructor stub
@@ -23,7 +39,12 @@ public class Usuari {
 		this.poblacio = poblacio;
 		this.correuElectronic = correu;
 		this.password = password;
-		this.imatge = new ImageIcon("img" + File.separator + imatge + ".jpg");
+		this.imatgeCadena = "img" + File.separator + imatge + ".jpg";
+		this.imatgeIcon = new ImageIcon(imatgeCadena);
+		this.imatge = imatgeIcon.getImage();
+		xifrarContrassenya();
+		serialitzarImatge();
+
 	}
 
 	public String getNom() {
@@ -47,7 +68,7 @@ public class Usuari {
 	}
 
 	public ImageIcon getImatge() {
-		return imatge;
+		return imatgeIcon;
 	}
 
 	public void setNom(String nom) {
@@ -70,7 +91,7 @@ public class Usuari {
 		this.password = password;
 	}
 
-	public void setImatge(ImageIcon imatge) {
+	public void setImatge(Image imatge) {
 		this.imatge = imatge;
 	}
 
@@ -82,24 +103,90 @@ public class Usuari {
 		return fortalesa;
 	}
 
-	public String getSalt() {
-		return salt;
-	}
-
-	public int getLongitud() {
-		return longitud;
-	}
-
 	public void setContrassenyaXifrada(String contrassenyaXifrada) {
 		this.contrassenyaXifrada = contrassenyaXifrada;
 	}
 
-	public void setSalt(String salt) {
+	public int getLongitudSalt() {
+		return longitudSalt;
+	}
+
+	public byte[] getSalt() {
+		return salt;
+	}
+
+	public int getLongitudHash() {
+		return longitudHash;
+	}
+
+	public byte[] getImagenBytes() {
+		return imagenBytes;
+	}
+
+	public void setFortalesa(int fortalesa) {
+		this.fortalesa = fortalesa;
+	}
+
+	public void setLongitudSalt(int longitudSalt) {
+		this.longitudSalt = longitudSalt;
+	}
+
+	public void setSalt(byte[] salt) {
 		this.salt = salt;
 	}
 
-	public void setLongitud(int longitud) {
-		this.longitud = longitud;
+	public void setLongitudHash(int longitudHash) {
+		this.longitudHash = longitudHash;
+	}
+
+	public void setImagenBytes(byte[] imagenBytes) {
+		this.imagenBytes = imagenBytes;
+	}
+
+	public ImageIcon getImatgeIcon() {
+		return imatgeIcon;
+	}
+
+	public String getImatgeCadena() {
+		return imatgeCadena;
+	}
+
+	public void setImatgeIcon(ImageIcon imatgeIcon) {
+		this.imatgeIcon = imatgeIcon;
+	}
+
+	public void setImatgeCadena(String imatgeCadena) {
+		this.imatgeCadena = imatgeCadena;
+	}
+
+	public void xifrarContrassenya() {
+		try {
+
+			SecureRandom random = new SecureRandom();
+			salt = new byte[longitudSalt];
+			random.nextBytes(salt);
+			KeySpec spec = new PBEKeySpec(password.toCharArray(), salt, fortalesa, longitudHash);
+			SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
+			byte[] hash = factory.generateSecret(spec).getEncoded();
+			this.contrassenyaXifrada = Base64.getEncoder().encodeToString(hash);
+		} catch (NoSuchAlgorithmException e) {
+			System.out.println(e);
+		} catch (InvalidKeySpecException e) {
+			System.out.println(e);
+		}
+
+	}
+
+	public void serialitzarImatge() {
+		try {
+			BufferedImage imagen = ImageIO.read(new File(imatgeCadena));
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			ImageIO.write(imagen, "jpg", baos);
+			imagenBytes = baos.toByteArray();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 	}
 
 }
