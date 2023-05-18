@@ -39,7 +39,7 @@ public class ProcesamentIniciSessio {
 
 		String consulta = "SELECT * FROM tabla2 WHERE id = (SELECT id FROM tabla1 WHERE correuElectronic = ?)";
 		String url = "jdbc:mysql://ticsimarro:3306/1daw03_pro";
-		String user = "1daw03";
+		String user = "1daw03_pro";
 		String password = "dEQ1e3Q2ZD";
 
 		try (Connection connection = DriverManager.getConnection(url, user, password);

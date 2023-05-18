@@ -25,7 +25,7 @@ public class Usuari {
 	private String password = null;
 	private ImageIcon imatgeIcon = null;
 	private String imatgeCadena = null;
-	private Image imatge = null;
+	private Image imatge;
 	private String contrassenyaXifrada = null;
 	private int fortalesa = 65536;
 	private int longitudSalt = 16;
