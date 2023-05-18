@@ -46,7 +46,7 @@ public class ProcessamentRegistre {
 	}
 
 	public static boolean comprovarCorreu(String correuElectronic) {
-		String url = "jdbc:mysql://ticsimarro:3306/1daw03_pro";
+		String url = "jdbc:mysql://ticsimarro.org:3306/1daw03_pro";
 		String user = "1daw03_pro";
 		String password = "dEQ1e3Q2ZD";
 
@@ -76,7 +76,7 @@ public class ProcessamentRegistre {
 
 	public static void guardarInformacioRegistreTaula1(String nom, String cognoms, String poblacio,
 			String correuElectronic, byte[] imatgeBytes) {
-		String url = "jdbc:mysql://ticsimarro:3306/1daw03_pro";
+		String url = "jdbc:mysql://ticsimarro.org:3306/1daw03_pro";
 		String user = "1daw03_pro";
 		String password = "dEQ1e3Q2ZD";
 
@@ -103,7 +103,7 @@ public class ProcessamentRegistre {
 
 	public static void guardarInformacioRegistreTaula2(String contrassenyaXifrada, int fortalesa, byte[] salt,
 			int longitudHash) {
-		String url = "jdbc:mysql://ticsimarro:3306/1daw03_pro";
+		String url = "jdbc:mysql://ticsimarro.org:3306/1daw03_pro";
 		String user = "1daw03_pro";
 		String password = "dEQ1e3Q2ZD";
 

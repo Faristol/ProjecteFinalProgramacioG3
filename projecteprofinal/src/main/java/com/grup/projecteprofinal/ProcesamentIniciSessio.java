@@ -38,7 +38,7 @@ public class ProcesamentIniciSessio {
 		// desxifrar-los
 
 		String consulta = "SELECT * FROM tabla2 WHERE id = (SELECT id FROM tabla1 WHERE correuElectronic = ?)";
-		String url = "jdbc:mysql://ticsimarro:3306/1daw03_pro";
+		String url = "jdbc:mysql://ticsimarro.org:3306/1daw03_pro";
 		String user = "1daw03_pro";
 		String password = "dEQ1e3Q2ZD";
 
@@ -61,29 +61,28 @@ public class ProcesamentIniciSessio {
 			e.printStackTrace();
 		}
 		// desxifrar contrassenya
-		String contrassenyaDesxifrada = desxifrarContrassenya(contrassenyaXifrada, fortalesa, salt, longitudHash);
-		if (contrassenyaDesxifrada == null || !contrassenyaDesxifrada.equals(contrassenya)) {
+		String contrassenyaHash= desxifrarContrassenya(contrassenya, fortalesa, salt, longitudHash);
+		if (contrassenyaHash == null || !contrassenyaHash.equals(contrassenyaXifrada)) {
 			JOptionPane.showMessageDialog(null, "La contrassenya és incorrecta", "Error", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
-
 		InterficieSeleccioJocs seleccioJocs = new InterficieSeleccioJocs();
 	}
 
-	public static String desxifrarContrassenya(String contrassenyaXifrada, int fortalesa, byte[] salt,
+	public static String desxifrarContrassenya(String contrassenya, int fortalesa, byte[] salt,
 			int longitudHash) {
-		String contrassenyaDesxifrada = null;
+		String contrassenyaHash = null;
 		try {
-			KeySpec spec = new PBEKeySpec(contrassenyaXifrada.toCharArray(), salt, fortalesa, longitudHash);
+			KeySpec spec = new PBEKeySpec(contrassenya.toCharArray(), salt, fortalesa, longitudHash);
 			SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
 			byte[] nouHash = factory.generateSecret(spec).getEncoded();
-			contrassenyaDesxifrada = Base64.getEncoder().encodeToString(nouHash);
+			contrassenyaHash = Base64.getEncoder().encodeToString(nouHash);
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
 		} catch (InvalidKeySpecException e) {
 			e.printStackTrace();
 		}
-		return contrassenyaDesxifrada;
+		return contrassenyaHash;
 	}
 
 }
