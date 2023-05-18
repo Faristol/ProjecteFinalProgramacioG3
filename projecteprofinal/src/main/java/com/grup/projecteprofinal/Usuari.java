@@ -197,7 +197,7 @@ public class Usuari {
 			ProcessamentRegistre.guardarInformacioRegistreTaula1(nom, cognoms, poblacio, correuElectronic, imatgeBytes);
 			ProcessamentRegistre.guardarInformacioRegistreTaula2(contrassenyaXifrada, fortalesa, salt, longitudHash);
 			JOptionPane.showMessageDialog(null,
-					"El registre ha resultat satisfactòri. Benvingut a la llar dels jocs " + nom, "Registre",
+					"El registre ha resultat satisfactòri. Benvingut a la llar dels jocs " + nom+".", "Registre",
 					JOptionPane.INFORMATION_MESSAGE);
 			// ara crear un objecte del frame que va després de l'inici de sessió on estan
 			// els tres jocs

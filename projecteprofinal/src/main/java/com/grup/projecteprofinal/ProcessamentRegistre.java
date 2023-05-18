@@ -112,12 +112,15 @@ public class ProcessamentRegistre {
 
 			Connection connection = DriverManager.getConnection(url, user, password);
 			String input = "INSERT INTO tabla2 (contrassenyaXifrada, fortalesa, salt, longitudHash) VALUES (?, ?, ?, ?)";
+			String input2 = "INSERT INTO tabla3 (dibuixGuardat) VALUES (NULL)";
 			statement = connection.prepareStatement(input);
 			statement.setString(1, contrassenyaXifrada);
 			statement.setInt(2, fortalesa);
 			statement.setBytes(3, salt);
 			statement.setInt(4, longitudHash);
 			int resultat = statement.executeUpdate();
+			statement = connection.prepareStatement(input2);
+			int resultat2 = statement.executeUpdate();
 			connection.close();
 
 		} catch (SQLException e) {

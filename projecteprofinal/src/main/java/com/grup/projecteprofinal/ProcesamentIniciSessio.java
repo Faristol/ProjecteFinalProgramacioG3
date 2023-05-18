@@ -25,6 +25,7 @@ public class ProcesamentIniciSessio {
 		// fer primera consulta per veure si el correu existeix
 		// si existeix fer altra consulta per veure si hi ha correspondencia entre
 		// correu i contra
+		String nom = "";
 		String contrassenyaXifrada = null;
 		int fortalesa = 0;
 		byte[] salt = null;
@@ -55,6 +56,14 @@ public class ProcesamentIniciSessio {
 				salt = resultSet.getBytes("salt");
 				longitudHash = resultSet.getInt("longitudHash");
 			}
+			String consulta2 = "SELECT nom FROM tabla1 WHERE correuElectronic = ?";
+			PreparedStatement statement2 = connection.prepareStatement(consulta2);
+			statement2.setString(1, correuElectronic);
+			ResultSet resultSet2 = statement2.executeQuery();
+			if (resultSet2.next()) {
+			    nom = resultSet2.getString("nom");
+			}
+			
 			connection.close();
 
 		} catch (SQLException e) {
@@ -66,6 +75,10 @@ public class ProcesamentIniciSessio {
 			JOptionPane.showMessageDialog(null, "La contrassenya és incorrecta", "Error", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
+		JOptionPane.showMessageDialog(null,
+				"El registre ha resultat satisfactòri. Benvingut a la llar dels jocs " + nom+".", "Inici sessió",
+				JOptionPane.INFORMATION_MESSAGE);
+		
 		InterficieSeleccioJocs seleccioJocs = new InterficieSeleccioJocs();
 	}
 
