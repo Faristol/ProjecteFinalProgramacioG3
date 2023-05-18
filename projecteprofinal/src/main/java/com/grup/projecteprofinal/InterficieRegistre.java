@@ -4,11 +4,15 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.FontFormatException;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -31,6 +35,16 @@ public class InterficieRegistre extends JFrame {
 	private JPasswordField passwordText2;
 	private JComboBox<String> comboBox = new JComboBox<String>();
 	private String[] componentsCadena = new String[7];
+	private JButton btnNewButton;
+	private JButton btnNewButton_1;
+	private JLabel lblNewLabel;
+	private JLabel nom;
+	private JLabel cognoms;
+	private JLabel poblacio;
+	private JLabel correu;
+	private JLabel contra1;
+	private JLabel contra2;
+	private JLabel lblNewLabel_1;
 
 	/**
 	 * Launch the application.
@@ -57,26 +71,35 @@ public class InterficieRegistre extends JFrame {
 		setBounds(100, 100, 450, 300);
 		setResizable(false);
 		contentPane = new JPanel();
-		contentPane.setBackground(new Color(88,214,141));
+		try {
+			Font stocky = Font.createFont(Font.TRUETYPE_FONT, new File("stocky.ttf"));
+			stocky = stocky.deriveFont(Font.PLAIN, 18);
+
+			btnNewButton = new JButton("Registrar-se");
+			btnNewButton.setFont(stocky);
+			btnNewButton_1 = new JButton("Cancel-la");
+			btnNewButton_1.setFont(stocky);
+			lblNewLabel = new JLabel("Registre");
+			lblNewLabel.setFont(stocky);
+		} catch (IOException | FontFormatException e) {
+			e.printStackTrace();
+		}
+		contentPane.setBackground(new Color(255, 217, 61));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
 
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(88,214,141));
+		panel.setBackground(new Color(255, 217, 61));
 		contentPane.add(panel, BorderLayout.SOUTH);
 
-		JButton btnNewButton = new JButton("Registrar-se");
-
 		panel.add(btnNewButton);
-
-		JButton btnNewButton_1 = new JButton("Cancel·la");
 
 		panel.add(btnNewButton_1);
 
 		JPanel panel_1 = new JPanel();
-		panel_1.setBackground(new Color(88,214,141));
+		panel_1.setBackground(new Color(255, 217, 61));
 		contentPane.add(panel_1, BorderLayout.CENTER);
 		GridBagLayout gbl_panel_1 = new GridBagLayout();
 		gbl_panel_1.columnWidths = new int[] { 0, 0, 0, 0, 0, 0, 0, 0 };
@@ -85,14 +108,32 @@ public class InterficieRegistre extends JFrame {
 		gbl_panel_1.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
 		panel_1.setLayout(gbl_panel_1);
 
-		JLabel lblNewLabel = new JLabel("Registre");
 		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
 		gbc_lblNewLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNewLabel.gridx = 5;
 		gbc_lblNewLabel.gridy = 0;
 		panel_1.add(lblNewLabel, gbc_lblNewLabel);
+		try {
+			Font stocky = Font.createFont(Font.TRUETYPE_FONT, new File("stocky.ttf"));
+			stocky = stocky.deriveFont(Font.PLAIN, 12);
+			nom = new JLabel("Nom:");
+			nom.setFont(stocky);
+			cognoms = new JLabel("Cognoms:");
+			cognoms.setFont(stocky);
+			poblacio = new JLabel("Poblacio:");
+			poblacio.setFont(stocky);
+			correu = new JLabel("Correu:");
+			correu.setFont(stocky);
+			contra1 = new JLabel("Contrassenya: ");
+			contra1.setFont(stocky);
+			contra2 = new JLabel("Repeteix la contrassenya:");
+			contra2.setFont(stocky);
+			lblNewLabel_1 = new JLabel("Selecciona el teu avatar:");
+			lblNewLabel_1.setFont(stocky);
+		} catch (IOException | FontFormatException e) {
+			e.printStackTrace();
+		}
 
-		JLabel nom = new JLabel("Nom:");
 		GridBagConstraints gbc_lblNewLabel_1 = new GridBagConstraints();
 		gbc_lblNewLabel_1.anchor = GridBagConstraints.EAST;
 		gbc_lblNewLabel_1.gridwidth = 2;
@@ -110,7 +151,6 @@ public class InterficieRegistre extends JFrame {
 		panel_1.add(textNom, gbc_textField);
 		textNom.setColumns(10);
 
-		JLabel cognoms = new JLabel("Cognoms:");
 		GridBagConstraints gbc_lblNewLabel_2 = new GridBagConstraints();
 		gbc_lblNewLabel_2.anchor = GridBagConstraints.EAST;
 		gbc_lblNewLabel_2.gridwidth = 2;
@@ -128,7 +168,6 @@ public class InterficieRegistre extends JFrame {
 		panel_1.add(textCognoms, gbc_textField_1);
 		textCognoms.setColumns(10);
 
-		JLabel poblacio = new JLabel("Població:");
 		GridBagConstraints gbc_lblNewLabel_4 = new GridBagConstraints();
 		gbc_lblNewLabel_4.anchor = GridBagConstraints.EAST;
 		gbc_lblNewLabel_4.gridwidth = 2;
@@ -146,7 +185,6 @@ public class InterficieRegistre extends JFrame {
 		panel_1.add(textPoblacio, gbc_textField_2);
 		textPoblacio.setColumns(10);
 
-		JLabel correu = new JLabel("Correu:");
 		GridBagConstraints gbc_lblNewLabel_3 = new GridBagConstraints();
 		gbc_lblNewLabel_3.anchor = GridBagConstraints.EAST;
 		gbc_lblNewLabel_3.gridwidth = 2;
@@ -164,7 +202,6 @@ public class InterficieRegistre extends JFrame {
 		panel_1.add(textCorreu, gbc_textField_3);
 		textCorreu.setColumns(10);
 
-		JLabel contra1 = new JLabel("Contrassenya: ");
 		GridBagConstraints gbc_lblNewLabel_5 = new GridBagConstraints();
 		gbc_lblNewLabel_5.anchor = GridBagConstraints.EAST;
 		gbc_lblNewLabel_5.gridwidth = 2;
@@ -181,7 +218,6 @@ public class InterficieRegistre extends JFrame {
 		gbc_passwordField.gridy = 5;
 		panel_1.add(passwordText1, gbc_passwordField);
 
-		JLabel contra2 = new JLabel("Repeteix la contrassenya:");
 		GridBagConstraints gbc_lblNewLabel_6 = new GridBagConstraints();
 		gbc_lblNewLabel_6.anchor = GridBagConstraints.EAST;
 		gbc_lblNewLabel_6.gridwidth = 2;
@@ -198,7 +234,6 @@ public class InterficieRegistre extends JFrame {
 		gbc_passwordField_1.gridy = 6;
 		panel_1.add(passwordText2, gbc_passwordField_1);
 
-		JLabel lblNewLabel_1 = new JLabel("Selecciona el teu avatar:");
 		GridBagConstraints gbc_lblNewLabel_11 = new GridBagConstraints();
 		gbc_lblNewLabel_11.anchor = GridBagConstraints.EAST;
 		gbc_lblNewLabel_11.insets = new Insets(0, 0, 0, 5);
@@ -244,9 +279,9 @@ public class InterficieRegistre extends JFrame {
 					}
 				}
 				if (correcte == true) {
-					ProcessamentRegistre.procesamentCampsRegistre(componentsCadena[0].trim(), componentsCadena[1].trim(),
-							componentsCadena[2].trim(), componentsCadena[3].trim(), componentsCadena[4].trim(), componentsCadena[5].trim(),
-							componentsCadena[6].trim());
+					ProcessamentRegistre.procesamentCampsRegistre(componentsCadena[0].trim(),
+							componentsCadena[1].trim(), componentsCadena[2].trim(), componentsCadena[3].trim(),
+							componentsCadena[4].trim(), componentsCadena[5].trim(), componentsCadena[6].trim());
 
 				} else {
 					JOptionPane.showMessageDialog(null, "Cal plenar tots els camps!", "Error",

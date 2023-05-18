@@ -36,7 +36,7 @@ public class InterficieSeleccioJocs extends JFrame {
 		setBounds(100, 100, 450, 300);
 		
 		contentPane = new JPanel();
-		contentPane.setBackground(new Color(88,214,141));
+		contentPane.setBackground(new Color(255, 217, 61));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setVisible(true);
 
