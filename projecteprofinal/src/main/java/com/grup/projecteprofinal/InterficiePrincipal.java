@@ -15,6 +15,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -23,6 +24,10 @@ import javax.swing.border.EmptyBorder;
 public class InterficiePrincipal extends JFrame {
 
 	private JPanel contentPane;
+	private JLabel lblNewLabel_1;
+	private JLabel lblNewLabel_2;
+	private JTextField textField;
+	private JPasswordField passwordField;
 
 	/**
 	 * Launch the application.
@@ -74,7 +79,7 @@ public class InterficiePrincipal extends JFrame {
 		panel_2.setLayout(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
 
-		JLabel lblNewLabel_1 = new JLabel("Usuari:");
+		lblNewLabel_1 = new JLabel("Correu:");
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		gbc.weightx = 0;
@@ -82,14 +87,14 @@ public class InterficiePrincipal extends JFrame {
 		gbc.insets = new Insets(5, 5, 5, 5);
 		panel_2.add(lblNewLabel_1, gbc);
 		GridBagConstraints gbc2 = new GridBagConstraints();
-		JTextField textField = new JTextField();
+		textField = new JTextField();
 		gbc2.gridx = 1;
 		gbc2.gridy = 0;
 		gbc2.weightx = 1.0;
 		gbc2.fill = GridBagConstraints.HORIZONTAL;
 		gbc2.insets = new Insets(5, 5, 5, 5);
 		panel_2.add(textField, gbc2);
-		JLabel lblNewLabel_2 = new JLabel("Contrassenya:");
+		lblNewLabel_2 = new JLabel("Contrassenya:");
 		GridBagConstraints gbc3 = new GridBagConstraints();
 		gbc3.gridx = 0;
 		gbc3.gridy = 1;
@@ -97,7 +102,7 @@ public class InterficiePrincipal extends JFrame {
 		gbc3.anchor = GridBagConstraints.EAST;
 		gbc3.insets = new Insets(5, 5, 5, 5);
 		panel_2.add(lblNewLabel_2, gbc3);
-		JPasswordField passwordField = new JPasswordField();
+		passwordField = new JPasswordField();
 		GridBagConstraints gbc4 = new GridBagConstraints();
 		gbc4.gridx = 1;
 		gbc4.gridy = 1;
@@ -119,6 +124,23 @@ public class InterficiePrincipal extends JFrame {
 		JButton btnNewButton2 = new JButton("Inicia Sessió");
 		btnNewButton2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				String contra = new String(passwordField.getPassword());
+				if ((textField.getText().trim().isBlank() || textField.getText() == null)
+						&& (contra.trim().isBlank() || contra == null)) {
+					JOptionPane.showMessageDialog(null, "Cal ambdós camps", "Avís", JOptionPane.INFORMATION_MESSAGE);
+					return;
+				} else if (textField.getText().trim().isBlank() || textField.getText() == null) {
+					JOptionPane.showMessageDialog(null, "Cal emplenar el camp correu", "Avís",
+							JOptionPane.INFORMATION_MESSAGE);
+					return;
+				} else if (contra.trim().isBlank() || contra == null) {
+					JOptionPane.showMessageDialog(null, "Cal emplenar el camp contrassenya", "Avís",
+							JOptionPane.INFORMATION_MESSAGE);
+					return;
+				}
+				String contrassenya = contra.trim();
+				String correuElectronic = textField.getText().trim();
+				ProcesamentIniciSessio.verificacioCamps(correuElectronic, contrassenya);
 			}
 		});
 

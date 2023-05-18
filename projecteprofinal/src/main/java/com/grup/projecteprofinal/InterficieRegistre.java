@@ -239,9 +239,9 @@ public class InterficieRegistre extends JFrame {
 					}
 				}
 				if (correcte == true) {
-					ProcessamentRegistre.procesamentCampsRegistre(componentsCadena[0], componentsCadena[1],
-							componentsCadena[2], componentsCadena[3], componentsCadena[4], componentsCadena[5],
-							componentsCadena[6]);
+					ProcessamentRegistre.procesamentCampsRegistre(componentsCadena[0].trim(), componentsCadena[1].trim(),
+							componentsCadena[2].trim(), componentsCadena[3].trim(), componentsCadena[4].trim(), componentsCadena[5].trim(),
+							componentsCadena[6].trim());
 
 				} else {
 					JOptionPane.showMessageDialog(null, "Cal plenar tots els camps!", "Error",
