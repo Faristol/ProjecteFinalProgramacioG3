@@ -1,6 +1,7 @@
 package com.grup.projecteprofinal;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.GridBagConstraints;
@@ -54,13 +55,16 @@ public class InterficieRegistre extends JFrame {
 		setTitle("Registre");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
+		
 		contentPane = new JPanel();
+		contentPane.setBackground(new Color(88,214,141));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
 
 		JPanel panel = new JPanel();
+		panel.setBackground(new Color(88,214,141));
 		contentPane.add(panel, BorderLayout.SOUTH);
 
 		JButton btnNewButton = new JButton("Registrar-se");
@@ -72,6 +76,7 @@ public class InterficieRegistre extends JFrame {
 		panel.add(btnNewButton_1);
 
 		JPanel panel_1 = new JPanel();
+		panel_1.setBackground(new Color(88,214,141));
 		contentPane.add(panel_1, BorderLayout.CENTER);
 		GridBagLayout gbl_panel_1 = new GridBagLayout();
 		gbl_panel_1.columnWidths = new int[] { 0, 0, 0, 0, 0, 0, 0, 0 };
