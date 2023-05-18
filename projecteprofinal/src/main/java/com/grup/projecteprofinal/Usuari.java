@@ -9,12 +9,14 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
+import java.util.ArrayList;
 import java.util.Base64;
 
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 public class Usuari {
@@ -32,6 +34,7 @@ public class Usuari {
 	private byte[] salt = null;
 	private int longitudHash = 64 * 8;
 	private byte[] imatgeBytes;
+	public static ArrayList<JFrame> panellsActius = new ArrayList<JFrame>();
 
 	public Usuari(String nom, String cognoms, String poblacio, String correu, String password, String imatge) {
 		// TODO Auto-generated constructor stub
@@ -201,12 +204,21 @@ public class Usuari {
 					JOptionPane.INFORMATION_MESSAGE);
 			// ara crear un objecte del frame que va després de l'inici de sessió on estan
 			// els tres jocs
+			
+			InterficiePrincipal.ferVisibleTancaSessio();
 			InterficieSeleccioJocs panellJocs = new InterficieSeleccioJocs();
+			Usuari.panellsActius.add(panellJocs);
 			return;
 		}
 		JOptionPane.showMessageDialog(null, "El correu ja existeix, proporciona altre.", "Error",
 				JOptionPane.ERROR_MESSAGE);
 
+	}
+	public static void tancarPanells() {
+		for(JFrame panells: panellsActius) {
+			panells.dispose();
+		}
+		panellsActius.clear();
 	}
 
 }

@@ -30,6 +30,7 @@ public class InterficiePrincipal extends JFrame {
 	private JLabel lblNewLabel_2;
 	private JTextField textField;
 	private JPasswordField passwordField;
+	private static JButton btnNewButton_1;
 
 	/**
 	 * Launch the application.
@@ -55,21 +56,21 @@ public class InterficiePrincipal extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 400, 200);
 		setResizable(false);
-		
+
 		contentPane = new JPanel();
-		contentPane.setBackground(new Color(88,214,141));
+		contentPane.setBackground(new Color(88, 214, 141));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
 		contentPane.setLayout(new GridLayout(1, 0, 0, 0));
 
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(88,214,141));
+		panel.setBackground(new Color(88, 214, 141));
 		contentPane.add(panel);
 		panel.setLayout(new BorderLayout(0, 0));
 
 		JPanel panel_1 = new JPanel();
-		panel_1.setBackground(new Color(88,214,141));
+		panel_1.setBackground(new Color(88, 214, 141));
 		panel.add(panel_1, BorderLayout.WEST);
 
 		JLabel lblNewLabel = new JLabel();
@@ -82,7 +83,7 @@ public class InterficiePrincipal extends JFrame {
 		panel_1.add(lblNewLabel);
 
 		JPanel panel_2 = new JPanel();
-		panel_2.setBackground(new Color(88,214,141));
+		panel_2.setBackground(new Color(88, 214, 141));
 		panel.add(panel_2, BorderLayout.CENTER);
 		panel_2.setLayout(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
@@ -121,13 +122,15 @@ public class InterficiePrincipal extends JFrame {
 		panel_2.add(passwordField, gbc4);
 
 		JPanel panel_3 = new JPanel();
-		panel_3.setBackground(new Color(88,214,141));
+		panel_3.setBackground(new Color(88, 214, 141));
 		panel.add(panel_3, BorderLayout.SOUTH);
 
 		JButton btnNewButton = new JButton("Registra't");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
 				InterficieRegistre registre = new InterficieRegistre();
+				Usuari.panellsActius.add(registre);
 			}
 		});
 		JButton btnNewButton2 = new JButton("Inicia Sessió");
@@ -155,6 +158,27 @@ public class InterficiePrincipal extends JFrame {
 
 		panel_3.add(btnNewButton);
 		panel_3.add(btnNewButton2);
+
+		btnNewButton_1 = new JButton("Tanca sessió");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Usuari.tancarPanells();
+				textField.setText("");
+				passwordField.setText("");
+				InterficiePrincipal.ferinVisibleTancaSessio();
+				revalidate();
+			}
+		});
+		btnNewButton_1.setVisible(false);
+		panel_3.add(btnNewButton_1);
+
+	}
+	public static void ferinVisibleTancaSessio() {
+		btnNewButton_1.setVisible(false);
+	}
+
+	public static void ferVisibleTancaSessio() {
+		btnNewButton_1.setVisible(true);
 
 	}
 

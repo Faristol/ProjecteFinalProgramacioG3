@@ -78,8 +78,9 @@ public class ProcesamentIniciSessio {
 		JOptionPane.showMessageDialog(null,
 				"El registre ha resultat satisfactòri. Benvingut a la llar dels jocs " + nom+".", "Inici sessió",
 				JOptionPane.INFORMATION_MESSAGE);
-		
+		InterficiePrincipal.ferVisibleTancaSessio();
 		InterficieSeleccioJocs seleccioJocs = new InterficieSeleccioJocs();
+		Usuari.panellsActius.add(seleccioJocs);
 	}
 
 	public static String desxifrarContrassenya(String contrassenya, int fortalesa, byte[] salt,
@@ -97,5 +98,6 @@ public class ProcesamentIniciSessio {
 		}
 		return contrassenyaHash;
 	}
+	
 
 }

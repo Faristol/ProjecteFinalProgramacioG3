@@ -61,6 +61,7 @@ public class ProcessamentRegistre {
 			int numCorreusCoincidents = r.getInt(1);
 			if (numCorreusCoincidents == 0) {
 				connection.close();
+				
 				return true;
 			}
 			connection.close();
