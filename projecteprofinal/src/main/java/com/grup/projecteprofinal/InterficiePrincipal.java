@@ -63,7 +63,7 @@ public class InterficiePrincipal extends JFrame {
 		setResizable(false);
 
 		contentPane = new JPanel();
-		
+
 		contentPane.setBackground(new Color(255, 217, 61));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -119,7 +119,6 @@ public class InterficiePrincipal extends JFrame {
 		panel_2.add(lblNewLabel_3, gbc_lblNewLabel_3);
 		GridBagConstraints gbc = new GridBagConstraints();
 
-		
 		gbc.gridx = 0;
 		gbc.gridy = 2;
 		gbc.weightx = 0;
@@ -134,7 +133,7 @@ public class InterficiePrincipal extends JFrame {
 		gbc2.fill = GridBagConstraints.HORIZONTAL;
 		gbc2.insets = new Insets(5, 5, 5, 0);
 		panel_2.add(textField, gbc2);
-		
+
 		GridBagConstraints gbc3 = new GridBagConstraints();
 		gbc3.gridx = 0;
 		gbc3.gridy = 3;
@@ -156,7 +155,6 @@ public class InterficiePrincipal extends JFrame {
 		panel_3.setBackground(new Color(255, 217, 61));
 		panel.add(panel_3, BorderLayout.SOUTH);
 
-		
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
@@ -164,7 +162,7 @@ public class InterficiePrincipal extends JFrame {
 				Usuari.panellsActius.add(registre);
 			}
 		});
-		
+
 		btnNewButton2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String contra = new String(passwordField.getPassword());
