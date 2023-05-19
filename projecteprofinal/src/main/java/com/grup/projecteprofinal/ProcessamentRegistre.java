@@ -1,16 +1,23 @@
 package com.grup.projecteprofinal;
 
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Enumeration;
 import java.util.regex.Pattern;
 
 import javax.swing.JOptionPane;
 
 public class ProcessamentRegistre {
+	private static String url;
+	private static String user = "1daw03_pro";
+	private static String password = "dEQ1e3Q2ZD";
 
 	public ProcessamentRegistre() {
 		// TODO Auto-generated constructor stub
@@ -18,6 +25,7 @@ public class ProcessamentRegistre {
 
 	public static void procesamentCampsRegistre(String nom, String cognoms, String poblacio, String correu,
 			String password1, String password2, String imatge) {
+		obtindreLesConnexion();
 		// Paràmetres a comprovar correu i correspondència entre contrassenyes.
 		// també que les contrassenyes tinguen com a mínim 8 caràcters.
 		String regex = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
@@ -46,9 +54,7 @@ public class ProcessamentRegistre {
 	}
 
 	public static boolean comprovarCorreu(String correuElectronic) {
-		String url = "jdbc:mysql://ticsimarro.org:3306/1daw03_pro";
-		String user = "1daw03_pro";
-		String password = "dEQ1e3Q2ZD";
+		obtindreLesConnexion();
 
 		try {
 
@@ -61,7 +67,7 @@ public class ProcessamentRegistre {
 			int numCorreusCoincidents = r.getInt(1);
 			if (numCorreusCoincidents == 0) {
 				connection.close();
-				
+
 				return true;
 			}
 			connection.close();
@@ -77,9 +83,7 @@ public class ProcessamentRegistre {
 
 	public static void guardarInformacioRegistreTaula1(String nom, String cognoms, String poblacio,
 			String correuElectronic, byte[] imatgeBytes) {
-		String url = "jdbc:mysql://ticsimarro.org:3306/1daw03_pro";
-		String user = "1daw03_pro";
-		String password = "dEQ1e3Q2ZD";
+		obtindreLesConnexion();
 
 		PreparedStatement statement = null;
 		try {
@@ -104,9 +108,7 @@ public class ProcessamentRegistre {
 
 	public static void guardarInformacioRegistreTaula2(String contrassenyaXifrada, int fortalesa, byte[] salt,
 			int longitudHash) {
-		String url = "jdbc:mysql://ticsimarro.org:3306/1daw03_pro";
-		String user = "1daw03_pro";
-		String password = "dEQ1e3Q2ZD";
+		obtindreLesConnexion();
 
 		PreparedStatement statement = null;
 		try {
@@ -128,6 +130,33 @@ public class ProcessamentRegistre {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
+	}
+	public static void obtindreLesConnexion() {
+		Enumeration e;
+		try {
+			e = NetworkInterface.getNetworkInterfaces();
+			while (e.hasMoreElements()) {
+				NetworkInterface n = (NetworkInterface) e.nextElement();
+				Enumeration ee = n.getInetAddresses();
+				while (ee.hasMoreElements()) {
+					InetAddress i = (InetAddress) ee.nextElement();
+					String adress = "" + (i.getHostAddress());
+
+					if (adress.contains("1922.168.14")) {
+						url = "jdbc:mysql://" + adress + "/1daw03_pro";
+						user = "1daw03_pro";
+						password = "dEQ1e3Q2ZD";
+						return;
+					}
+
+				}
+			}
+		} catch (SocketException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		url = "jdbc:mysql://ticsimarro.org:3306/1daw03_pro";
 
 	}
 

@@ -1,5 +1,8 @@
 package com.grup.projecteprofinal;
 
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
@@ -9,12 +12,17 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Base64;
+import java.util.Enumeration;
+import java.util.regex.Pattern;
 
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 import javax.swing.JOptionPane;
 
 public class ProcesamentIniciSessio {
+	private static String url;
+	private static String user = "1daw03_pro";
+	private static String password = "dEQ1e3Q2ZD";
 
 	public ProcesamentIniciSessio() {
 		// TODO Auto-generated constructor stub
@@ -25,6 +33,7 @@ public class ProcesamentIniciSessio {
 		// fer primera consulta per veure si el correu existeix
 		// si existeix fer altra consulta per veure si hi ha correspondencia entre
 		// correu i contra
+		obtindreLesConnexion();
 		String nom = "";
 		String contrassenyaXifrada = null;
 		int fortalesa = 0;
@@ -39,9 +48,6 @@ public class ProcesamentIniciSessio {
 		// desxifrar-los
 
 		String consulta = "SELECT * FROM tabla2 WHERE id = (SELECT id FROM tabla1 WHERE correuElectronic = ?)";
-		String url = "jdbc:mysql://ticsimarro.org:3306/1daw03_pro";
-		String user = "1daw03_pro";
-		String password = "dEQ1e3Q2ZD";
 
 		try (Connection connection = DriverManager.getConnection(url, user, password);
 				PreparedStatement statement = connection.prepareStatement(consulta)) {
@@ -61,30 +67,29 @@ public class ProcesamentIniciSessio {
 			statement2.setString(1, correuElectronic);
 			ResultSet resultSet2 = statement2.executeQuery();
 			if (resultSet2.next()) {
-			    nom = resultSet2.getString("nom");
+				nom = resultSet2.getString("nom");
 			}
-			
+
 			connection.close();
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		// desxifrar contrassenya
-		String contrassenyaHash= desxifrarContrassenya(contrassenya, fortalesa, salt, longitudHash);
+		String contrassenyaHash = desxifrarContrassenya(contrassenya, fortalesa, salt, longitudHash);
 		if (contrassenyaHash == null || !contrassenyaHash.equals(contrassenyaXifrada)) {
 			JOptionPane.showMessageDialog(null, "La contrassenya és incorrecta", "Error", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 		JOptionPane.showMessageDialog(null,
-				"El registre ha resultat satisfactòri. Benvingut a la llar dels jocs " + nom+".", "Inici sessió",
+				"El registre ha resultat satisfactòri. Benvingut a la llar dels jocs " + nom + ".", "Inici sessió",
 				JOptionPane.INFORMATION_MESSAGE);
 		InterficiePrincipal.ferVisibleTancaSessio();
 		InterficieSeleccioJocs seleccioJocs = new InterficieSeleccioJocs();
 		Usuari.panellsActius.add(seleccioJocs);
 	}
 
-	public static String desxifrarContrassenya(String contrassenya, int fortalesa, byte[] salt,
-			int longitudHash) {
+	public static String desxifrarContrassenya(String contrassenya, int fortalesa, byte[] salt, int longitudHash) {
 		String contrassenyaHash = null;
 		try {
 			KeySpec spec = new PBEKeySpec(contrassenya.toCharArray(), salt, fortalesa, longitudHash);
@@ -98,6 +103,33 @@ public class ProcesamentIniciSessio {
 		}
 		return contrassenyaHash;
 	}
-	
+
+	public static void obtindreLesConnexion() {
+		Enumeration e;
+		try {
+			e = NetworkInterface.getNetworkInterfaces();
+			while (e.hasMoreElements()) {
+				NetworkInterface n = (NetworkInterface) e.nextElement();
+				Enumeration ee = n.getInetAddresses();
+				while (ee.hasMoreElements()) {
+					InetAddress i = (InetAddress) ee.nextElement();
+					String adress = "" + (i.getHostAddress());
+
+					if (adress.contains("1922.168.14")) {
+						url = "jdbc:mysql://" + adress + "/1daw03_pro";
+						user = "1daw03_pro";
+						password = "dEQ1e3Q2ZD";
+						return;
+					}
+
+				}
+			}
+		} catch (SocketException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		url = "jdbc:mysql://ticsimarro.org:3306/1daw03_pro";
+
+	}
 
 }
