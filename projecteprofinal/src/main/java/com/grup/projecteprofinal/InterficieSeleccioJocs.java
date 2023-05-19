@@ -23,9 +23,10 @@ public class InterficieSeleccioJocs extends JFrame implements ActionListener{
 
 	private JPanel contentPane;
 	private JLabel texto;
-	private JButton button1, button2, button3;
+	private JButton btnNewButton, btnNewButton_1, btnNewButton_2;
     private Buscaminas buscaminasFrame;
     private JuegoVida juegoVidaFrame;
+    private PixelArt pixelArtFrame;
 
 	/**
 	 * Launch the application.
@@ -78,7 +79,7 @@ public class InterficieSeleccioJocs extends JFrame implements ActionListener{
 		JPanel panel = new JPanel();
 		contentPane.add(panel, BorderLayout.SOUTH);
 		
-		JButton btnNewButton_3 = new JButton("New button");
+		JButton btnNewButton_3 = new JButton("Dona'mde baixa");
 		panel.add(btnNewButton_3);
 		
 		JPanel panel_1 = new JPanel();
@@ -90,14 +91,17 @@ public class InterficieSeleccioJocs extends JFrame implements ActionListener{
 		gbl_panel_1.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		panel_1.setLayout(gbl_panel_1);
 		
-		JLabel lblNewLabel_4 = new JLabel("New label");
+		JLabel lblNewLabel_4 = new JLabel("La img de l'usuari");
 		GridBagConstraints gbc_lblNewLabel_4 = new GridBagConstraints();
-		gbc_lblNewLabel_4.insets = new Insets(0, 0, 5, 0);
+		gbc_lblNewLabel_4.insets = new Insets(40, 5, 5, 0);
 		gbc_lblNewLabel_4.gridx = 0;
 		gbc_lblNewLabel_4.gridy = 0;
 		panel_1.add(lblNewLabel_4, gbc_lblNewLabel_4);
 		
 		JComboBox comboBox = new JComboBox();
+		comboBox.addItem("Opción 1");
+		comboBox.addItem("Opción 2");
+		comboBox.addItem("Opción 3");
 		GridBagConstraints gbc_comboBox = new GridBagConstraints();
 		gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
 		gbc_comboBox.gridx = 0;
@@ -107,68 +111,71 @@ public class InterficieSeleccioJocs extends JFrame implements ActionListener{
 		JPanel panel_2 = new JPanel();
 		contentPane.add(panel_2, BorderLayout.NORTH);
 		
-		JLabel lblNewLabel_3 = new JLabel("New label");
+		JLabel lblNewLabel_3 = new JLabel("La Llar Dels Jocs");
 		panel_2.add(lblNewLabel_3);
 		
 		JPanel panel_3 = new JPanel();
 		contentPane.add(panel_3, BorderLayout.CENTER);
 		GridBagLayout gbl_panel_3 = new GridBagLayout();
-		gbl_panel_3.columnWidths = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+		gbl_panel_3.columnWidths = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 117, 0, 0, 0};
 		gbl_panel_3.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 		gbl_panel_3.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		gbl_panel_3.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		panel_3.setLayout(gbl_panel_3);
 		
-		JLabel lblNewLabel = new JLabel("New label");
+		JLabel lblNewLabel = new JLabel("Buscamines:");
 		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
 		//lblNewLabel.setHorizontalAlignment(SwingConstraints.CENTER);
 		gbc_lblNewLabel.gridwidth = 6;
-		gbc_lblNewLabel.insets = new Insets(0, 0, 5, 5);
+		gbc_lblNewLabel.insets = new Insets(50, 200, 5, 5);
 		gbc_lblNewLabel.gridx = 4;
 		gbc_lblNewLabel.gridy = 3;
 		panel_3.add(lblNewLabel, gbc_lblNewLabel);
 		
-		JButton btnNewButton = new JButton("New button");
+		btnNewButton = new JButton("Accedir");
+		btnNewButton.addActionListener(this);
 		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
 		gbc_btnNewButton.gridwidth = 2;
 		gbc_btnNewButton.fill = GridBagConstraints.HORIZONTAL;
-		gbc_btnNewButton.insets = new Insets(0, 0, 5, 0);
+		gbc_btnNewButton.insets = new Insets(50, 40, 5, 0);
 		gbc_btnNewButton.gridx = 10;
 		gbc_btnNewButton.gridy = 3;
 		panel_3.add(btnNewButton, gbc_btnNewButton);
 		
-		JLabel lblNewLabel_1 = new JLabel("New label");
+		JLabel lblNewLabel_1 = new JLabel("Pixel Art:");
 		GridBagConstraints gbc_lblNewLabel_1 = new GridBagConstraints();
 		gbc_lblNewLabel_1.gridwidth = 6;
-		gbc_lblNewLabel_1.insets = new Insets(0, 0, 5, 5);
+		gbc_lblNewLabel_1.insets = new Insets(10, 200, 5, 5);
 		gbc_lblNewLabel_1.gridx = 4;
 		gbc_lblNewLabel_1.gridy = 5;
 		panel_3.add(lblNewLabel_1, gbc_lblNewLabel_1);
 		
-		JButton btnNewButton_1 = new JButton("New button");
+		btnNewButton_1 = new JButton("Accedir");
+		btnNewButton_1.addActionListener(this);
 		GridBagConstraints gbc_btnNewButton_1 = new GridBagConstraints();
 		gbc_btnNewButton_1.gridwidth = 2;
 		gbc_btnNewButton_1.fill = GridBagConstraints.HORIZONTAL;
-		gbc_btnNewButton_1.insets = new Insets(0, 0, 5, 0);
+		gbc_btnNewButton_1.insets = new Insets(10, 40, 5, 0);
 		gbc_btnNewButton_1.gridx = 10;
 		gbc_btnNewButton_1.gridy = 5;
 		panel_3.add(btnNewButton_1, gbc_btnNewButton_1);
 		
-		JLabel lblNewLabel_2 = new JLabel("New label");
+		JLabel lblNewLabel_2 = new JLabel("Joc de la vida:");
 		lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
 		GridBagConstraints gbc_lblNewLabel_2 = new GridBagConstraints();
 		gbc_lblNewLabel_2.fill = GridBagConstraints.HORIZONTAL;
 		gbc_lblNewLabel_2.gridwidth = 6;
-		gbc_lblNewLabel_2.insets = new Insets(0, 0, 5, 5);
+		gbc_lblNewLabel_2.insets = new Insets(10, 200, 5, 5);
 		gbc_lblNewLabel_2.gridx = 4;
 		gbc_lblNewLabel_2.gridy = 7;
 		panel_3.add(lblNewLabel_2, gbc_lblNewLabel_2);
 		
-		JButton btnNewButton_2 = new JButton("New button");
+		btnNewButton_2 = new JButton("Accedir");
+		btnNewButton_2.addActionListener(this);
 		GridBagConstraints gbc_btnNewButton_2 = new GridBagConstraints();
 		gbc_btnNewButton_2.gridwidth = 2;
 		gbc_btnNewButton_2.fill = GridBagConstraints.HORIZONTAL;
-		gbc_btnNewButton_2.insets = new Insets(0, 0, 5, 0);
+		gbc_btnNewButton_2.insets = new Insets(10, 40, 5, 0);
 		gbc_btnNewButton_2.gridx = 10;
 		gbc_btnNewButton_2.gridy = 7;
 		panel_3.add(btnNewButton_2, gbc_btnNewButton_2);
@@ -184,53 +191,24 @@ public class InterficieSeleccioJocs extends JFrame implements ActionListener{
 	
 	public void actionPerformed(ActionEvent e) {
         if (buscaminasFrame == null || buscaminasFrame.isClosed()) {
-            if (e.getSource() == button1) {
+            if (e.getSource() == btnNewButton) {
                 buscaminasFrame = new Buscaminas();
                 buscaminasFrame.setVisible(true);
             }
         }
-        if(juegoVidaFrame==null|| juegoVidaFrame.isClosed()) {
-        	if (e.getSource() == button2) {
-        		juegoVidaFrame = new JuegoVida();
-        		juegoVidaFrame.setVisible(true);
+        if(pixelArtFrame==null|| pixelArtFrame.isClosed()) {
+        	if (e.getSource() == btnNewButton_1) {
+        		pixelArtFrame = new PixelArt();
+        		pixelArtFrame.setVisible(true);
             }
         }
-        if(juegoVidaFrame==null|| juegoVidaFrame.isClosed()) {
-        	if (e.getSource() == button3) {
-                buscaminasFrame = new Buscaminas();
-                buscaminasFrame.setVisible(true);
-            }
-        }
-        
+//        if(juegoVidaFrame==null|| juegoVidaFrame.isClosed()) {
+//        	if (e.getSource() == btnNewButton_2) {
+//                juegoVidaFrame = new JuegoVida();
+//                juegoVidaFrame.setVisible(true);
+//            }
+//        }
     }
     
-	
-	//Canviar cuant les clases dels jocs estiguen fetes
-    private class Buscaminas extends JFrame {
-        public Buscaminas() {
-            super("Buscaminas");
-            setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            setPreferredSize(new Dimension(500, 500));
-            setLocationRelativeTo(null);
-            setVisible(true);
-        }
-        
-        public boolean isClosed() {
-            return !isVisible();
-        }
-    }
-     class JuegoVida extends JFrame {
-        public JuegoVida() {
-            super("JuegoVida");
-            setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            setPreferredSize(new Dimension(500, 500));
-            setLocationRelativeTo(null);
-            setVisible(true);
-        }
-        
-        public boolean isClosed() {
-            return !isVisible();
-        }
-    }
 
 }
