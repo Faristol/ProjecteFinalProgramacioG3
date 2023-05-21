@@ -23,6 +23,8 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class InterficieRegistre extends JFrame {
 
@@ -45,7 +47,7 @@ public class InterficieRegistre extends JFrame {
 	private JLabel contra1;
 	private JLabel contra2;
 	private JLabel lblNewLabel_1;
-
+	private String imagePath;
 	/**
 	 * Launch the application.
 	 */
@@ -241,19 +243,15 @@ public class InterficieRegistre extends JFrame {
 		gbc_lblNewLabel_11.gridy = 7;
 		panel_1.add(lblNewLabel_1, gbc_lblNewLabel_11);
 
-		comboBox.addItem("Poma");
-		comboBox.addItem("Pera");
-		comboBox.addItem("Llima");
-		comboBox.addItem("Maduixa");
-		comboBox.addItem("Carabassa");
-		comboBox.addItem("Taronja");
-
-		GridBagConstraints gbc_comboBox = new GridBagConstraints();
-		gbc_comboBox.insets = new Insets(0, 0, 0, 5);
-		gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
-		gbc_comboBox.gridx = 5;
-		gbc_comboBox.gridy = 7;
-		panel_1.add(comboBox, gbc_comboBox);
+		JButton selectImageButton2 = new JButton("Selecciona la imagen");
+		
+		
+		GridBagConstraints selectImageButton = new GridBagConstraints();
+		selectImageButton.insets = new Insets(0, 0, 0, 5);
+		selectImageButton.fill = GridBagConstraints.HORIZONTAL;
+		selectImageButton.gridx = 5;
+		selectImageButton.gridy = 7;
+		panel_1.add(selectImageButton2, selectImageButton);
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
@@ -269,7 +267,7 @@ public class InterficieRegistre extends JFrame {
 				componentsCadena[4] = pwd1;
 				String pwd2 = new String(passwordText2.getPassword());
 				componentsCadena[5] = pwd2;
-				componentsCadena[6] = (String) comboBox.getSelectedItem();
+				componentsCadena[6] = imagePath;
 				boolean correcte = true;
 				for (String cadena : componentsCadena) {
 					if (cadena == null || cadena.isBlank() || cadena.isEmpty()) {
@@ -287,11 +285,32 @@ public class InterficieRegistre extends JFrame {
 					JOptionPane.showMessageDialog(null, "Cal plenar tots els camps!", "Error",
 							JOptionPane.ERROR_MESSAGE);
 				}
-			}
-		});
+			}});selectImageButton2.addActionListener(new ActionListener() {
+			    public void actionPerformed(ActionEvent e) {
+			        JFileChooser fileChooser = new JFileChooser();
+			        fileChooser.setFileFilter(new FileNameExtensionFilter("Imágenes", "png", "jpg"));
+			        int result = fileChooser.showOpenDialog(null);
+			        if (result == JFileChooser.APPROVE_OPTION) {
+			            File selectedFile = fileChooser.getSelectedFile();
+			            if (selectedFile != null && selectedFile.isFile()) {
+			                imagePath = selectedFile.getAbsolutePath();
+			                
+
+			                JOptionPane.showMessageDialog(null, "Imagen seleccionada: " + imagePath);
+			            } else {
+			                JOptionPane.showMessageDialog(null, "El archivo seleccionado no es válido", "Error",
+			                        JOptionPane.ERROR_MESSAGE);
+			            }
+			        } else {
+			            JOptionPane.showMessageDialog(null, "Debes seleccionar una imagen", "Error",
+			                    JOptionPane.ERROR_MESSAGE);
+			        }
+			    }
+			});
 
 		setVisible(true);
 
 	}
 
 }
+

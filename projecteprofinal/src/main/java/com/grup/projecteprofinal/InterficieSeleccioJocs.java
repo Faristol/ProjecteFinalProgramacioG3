@@ -99,9 +99,9 @@ public class InterficieSeleccioJocs extends JFrame implements ActionListener{
 		panel_1.add(lblNewLabel_4, gbc_lblNewLabel_4);
 		
 		JComboBox comboBox = new JComboBox();
-		comboBox.addItem("Opción 1");
-		comboBox.addItem("Opción 2");
-		comboBox.addItem("Opción 3");
+		comboBox.addItem("Opciï¿½n 1");
+		comboBox.addItem("Opciï¿½n 2");
+		comboBox.addItem("Opciï¿½n 3");
 		GridBagConstraints gbc_comboBox = new GridBagConstraints();
 		gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
 		gbc_comboBox.gridx = 0;
@@ -209,6 +209,9 @@ public class InterficieSeleccioJocs extends JFrame implements ActionListener{
 //            }
 //        }
     }
-    
+
+	public void mostrarVentana() {
+	    setVisible(true); // Muestra la ventana cuando se llame a este mÃ©todo
+	}
 
 }

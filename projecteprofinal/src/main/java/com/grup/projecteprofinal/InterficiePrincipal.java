@@ -26,6 +26,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+@SuppressWarnings("serial")
 public class InterficiePrincipal extends JFrame {
 
 	private JPanel contentPane;
@@ -57,7 +58,7 @@ public class InterficiePrincipal extends JFrame {
 	 * Create the frame.
 	 */
 	public InterficiePrincipal() {
-		setTitle("Projecte Final Programació");
+		setTitle("Projecte Final Programaciï¿½");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 400, 200);
 		setResizable(false);
@@ -168,14 +169,14 @@ public class InterficiePrincipal extends JFrame {
 				String contra = new String(passwordField.getPassword());
 				if ((textField.getText().trim().isBlank() || textField.getText() == null)
 						&& (contra.trim().isBlank() || contra == null)) {
-					JOptionPane.showMessageDialog(null, "Cal ambdós camps", "Avís", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Cal ambdï¿½s camps", "Avï¿½s", JOptionPane.INFORMATION_MESSAGE);
 					return;
 				} else if (textField.getText().trim().isBlank() || textField.getText() == null) {
-					JOptionPane.showMessageDialog(null, "Cal emplenar el camp correu", "Avís",
+					JOptionPane.showMessageDialog(null, "Cal emplenar el camp correu", "Avï¿½s",
 							JOptionPane.INFORMATION_MESSAGE);
 					return;
 				} else if (contra.trim().isBlank() || contra == null) {
-					JOptionPane.showMessageDialog(null, "Cal emplenar el camp contrassenya", "Avís",
+					JOptionPane.showMessageDialog(null, "Cal emplenar el camp contrassenya", "Avï¿½s",
 							JOptionPane.INFORMATION_MESSAGE);
 					return;
 				}
@@ -188,7 +189,7 @@ public class InterficiePrincipal extends JFrame {
 		panel_3.add(btnNewButton);
 		panel_3.add(btnNewButton2);
 
-		btnNewButton_1 = new JButton("Tanca sessió");
+		btnNewButton_1 = new JButton("Tanca sessiï¿½");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Usuari.tancarPanells();
