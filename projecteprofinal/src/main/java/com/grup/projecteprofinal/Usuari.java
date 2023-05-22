@@ -49,8 +49,7 @@ public class Usuari {
 		xifrarContrassenya();
 		serialitzarImatge();
 		comprovarCorreu();
-		System.out.println("hola");
-
+		
 	}
 
 	public String getNom() {

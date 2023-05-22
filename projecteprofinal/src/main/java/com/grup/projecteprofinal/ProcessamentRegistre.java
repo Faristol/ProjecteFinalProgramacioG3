@@ -132,6 +132,7 @@ public class ProcessamentRegistre {
 		}
 
 	}
+
 	public static void obtindreLesConnexion() {
 		Enumeration e;
 		try {
@@ -143,7 +144,7 @@ public class ProcessamentRegistre {
 					InetAddress i = (InetAddress) ee.nextElement();
 					String adress = "" + (i.getHostAddress());
 
-					if (adress.contains("1922.168.14")) {
+					if (adress.contains("192.168.14")) {
 						url = "jdbc:mysql://" + adress + "/1daw03_pro";
 						user = "1daw03_pro";
 						password = "dEQ1e3Q2ZD";
