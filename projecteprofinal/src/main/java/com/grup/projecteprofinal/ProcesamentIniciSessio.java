@@ -86,6 +86,7 @@ public class ProcesamentIniciSessio {
 				JOptionPane.INFORMATION_MESSAGE);
 		InterficiePrincipal.ferVisibleTancaSessio();
 		InterficieSeleccioJocs seleccioJocs = new InterficieSeleccioJocs();
+		InterficieSeleccioJocs.setCorreuElectronic(correuElectronic);
 		Usuari.panellsActius.add(seleccioJocs);
 	}
 

@@ -23,7 +23,7 @@ public class Usuari {
 	private String nom = null;
 	private String cognoms = null;
 	private String poblacio = null;
-	private String correuElectronic = null;
+	private static String correuElectronic = null;
 	private String password = null;
 	private ImageIcon imatgeIcon = null;
 	private String imatgeCadena = null;
@@ -41,7 +41,7 @@ public class Usuari {
 		this.nom = nom;
 		this.cognoms = cognoms;
 		this.poblacio = poblacio;
-		this.correuElectronic = correu;
+		correuElectronic = correu;
 		this.password = password;
 		this.imatgeCadena = imatge;
 		this.imatgeIcon = new ImageIcon(imatgeCadena);
@@ -49,7 +49,7 @@ public class Usuari {
 		xifrarContrassenya();
 		serialitzarImatge();
 		comprovarCorreu();
-		
+
 	}
 
 	public String getNom() {
@@ -89,7 +89,7 @@ public class Usuari {
 	}
 
 	public void setCorreuElectronic(String correuElectronic) {
-		this.correuElectronic = correuElectronic;
+		Usuari.correuElectronic = correuElectronic;
 	}
 
 	public void setPassword(String password) {
@@ -202,7 +202,9 @@ public class Usuari {
 			JOptionPane.showMessageDialog(null,
 					"El registre ha resultat satisfact�ri. Benvingut a la llar dels jocs " + nom + ".", "Registre",
 					JOptionPane.INFORMATION_MESSAGE);
-			// ara crear un objecte del frame que va despr�s de l'inici de sessi� on estan
+			InterficieSeleccioJocs.setCorreuElectronic(correuElectronic);
+			// ara crear un objecte del frame que va despr�s de l'inici de sessi� on
+			// estan
 			// els tres jocs
 
 			InterficiePrincipal.ferVisibleTancaSessio();
@@ -221,5 +223,6 @@ public class Usuari {
 		}
 		panellsActius.clear();
 	}
+	
 
 }
