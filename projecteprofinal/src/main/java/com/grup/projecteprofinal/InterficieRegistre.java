@@ -130,7 +130,7 @@ public class InterficieRegistre extends JFrame {
 			contra1.setFont(stocky);
 			contra2 = new JLabel("Repeteix la contrassenya:");
 			contra2.setFont(stocky);
-			lblNewLabel_1 = new JLabel("Selecciona el teu avatar:");
+			lblNewLabel_1 = new JLabel();
 			lblNewLabel_1.setFont(stocky);
 		} catch (IOException | FontFormatException e) {
 			e.printStackTrace();
@@ -236,22 +236,24 @@ public class InterficieRegistre extends JFrame {
 		gbc_passwordField_1.gridy = 6;
 		panel_1.add(passwordText2, gbc_passwordField_1);
 
-		GridBagConstraints gbc_lblNewLabel_11 = new GridBagConstraints();
-		gbc_lblNewLabel_11.anchor = GridBagConstraints.EAST;
-		gbc_lblNewLabel_11.insets = new Insets(0, 0, 0, 5);
-		gbc_lblNewLabel_11.gridx = 4;
-		gbc_lblNewLabel_11.gridy = 7;
-		panel_1.add(lblNewLabel_1, gbc_lblNewLabel_11);
 
 		JButton selectImageButton2 = new JButton("Selecciona la imagen");
 		
 		
 		GridBagConstraints selectImageButton = new GridBagConstraints();
-		selectImageButton.insets = new Insets(0, 0, 0, 5);
+		selectImageButton.insets = new Insets(0, 0, 5, 5);
 		selectImageButton.fill = GridBagConstraints.HORIZONTAL;
-		selectImageButton.gridx = 5;
+		selectImageButton.gridx = 4;
 		selectImageButton.gridy = 7;
-		panel_1.add(selectImageButton2, selectImageButton);
+		panel_1.add(selectImageButton2,selectImageButton);
+		
+		GridBagConstraints lblNewLabel_111 = new GridBagConstraints();
+		lblNewLabel_111.insets = new Insets(0, 0, 5, 5);
+		lblNewLabel_111.fill = GridBagConstraints.HORIZONTAL;
+		lblNewLabel_111.gridx = 4;
+		lblNewLabel_111.gridy = 7;
+		panel_1.add(lblNewLabel_1,lblNewLabel_111);
+		
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
@@ -294,7 +296,7 @@ public class InterficieRegistre extends JFrame {
 			            File selectedFile = fileChooser.getSelectedFile();
 			            if (selectedFile != null && selectedFile.isFile()) {
 			                imagePath = selectedFile.getAbsolutePath();
-			                
+			               // lblNewLabel_1.setText(imagePath);
 
 			                JOptionPane.showMessageDialog(null, "Imagen seleccionada: " + imagePath);
 			            } else {
