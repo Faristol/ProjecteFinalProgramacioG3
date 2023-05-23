@@ -82,12 +82,13 @@ public class ProcesamentIniciSessio {
 			return;
 		}
 		JOptionPane.showMessageDialog(null,
-				"El registre ha resultat satisfactòri. Benvingut a la llar dels jocs " + nom + ".", "Inici sessió",
+				"L'inici de sessió ha resultat satisfactòri. Benvingut a la llar dels jocs " + nom + ".", "Inici sessió",
 				JOptionPane.INFORMATION_MESSAGE);
-		InterficiePrincipal.ferVisibleTancaSessio();
-		InterficieSeleccioJocs seleccioJocs = new InterficieSeleccioJocs();
+		InterficieSeleccioJocs panellJocs = new InterficieSeleccioJocs();
 		InterficieSeleccioJocs.setCorreuElectronic(correuElectronic);
-		Usuari.panellsActius.add(seleccioJocs);
+		Usuari.panellsActius.put("panellJocs",panellJocs);
+		Usuari.panellsActius.get("panellPrincipal").dispose();
+		Usuari.panellsActius.remove("panellPrincipal");
 	}
 
 	public static String desxifrarContrassenya(String contrassenya, int fortalesa, byte[] salt, int longitudHash) {

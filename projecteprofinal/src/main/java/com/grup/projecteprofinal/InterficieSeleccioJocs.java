@@ -105,10 +105,14 @@ public class InterficieSeleccioJocs extends JFrame implements ActionListener {
 
 		                String sentenciaBorrarTaula3 = "DELETE FROM tabla3 WHERE id = " + id;
 		                int filasBorradas3 = cerca.executeUpdate(sentenciaBorrarTaula3);
-		                dispose();
-
-		                JOptionPane.showMessageDialog(null, "Fins la pròxima!", "Adéu",
+		                
+		                Usuari.panellsActius.get("panellJocs").dispose();
+		                Usuari.panellsActius.remove("panellJocs");
+		                JOptionPane.showMessageDialog(null, "Espere tornar-te a veure en la base de dades!", "Adéu",
 		                        JOptionPane.INFORMATION_MESSAGE);
+		                InterficiePrincipal panellPrincipal = new InterficiePrincipal();
+						Usuari.panellsActius.put("panellPrincipal",panellPrincipal);
+						panellPrincipal.setVisible(true);
 		            }
 		        } catch (SQLException e1) {
 		            e1.printStackTrace();
@@ -116,6 +120,20 @@ public class InterficieSeleccioJocs extends JFrame implements ActionListener {
 		    }
 		});
 		panel.add(btnNewButton_3);
+		
+		JButton btnNewButton_4 = new JButton("Tanca Sessio");
+		btnNewButton_4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				 Usuari.panellsActius.get("panellJocs").dispose();
+	                Usuari.panellsActius.remove("panellJocs");
+	                JOptionPane.showMessageDialog(null, "Fins la pròxima!", "Adéu",
+	                        JOptionPane.INFORMATION_MESSAGE);
+	                InterficiePrincipal panellPrincipal = new InterficiePrincipal();
+					Usuari.panellsActius.put("panellPrincipal",panellPrincipal);
+					panellPrincipal.setVisible(true);
+			}
+		});
+		panel.add(btnNewButton_4);
 
 		JPanel panel_1 = new JPanel();
 		contentPane.add(panel_1, BorderLayout.WEST);

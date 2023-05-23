@@ -9,8 +9,8 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
-import java.util.ArrayList;
 import java.util.Base64;
+import java.util.HashMap;
 
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
@@ -34,7 +34,7 @@ public class Usuari {
 	private byte[] salt = null;
 	private int longitudHash = 64 * 8;
 	private byte[] imatgeBytes;
-	public static ArrayList<JFrame> panellsActius = new ArrayList<JFrame>();
+	public static HashMap<String, JFrame> panellsActius = new HashMap<String, JFrame>();
 
 	public Usuari(String nom, String cognoms, String poblacio, String correu, String password, String imatge) {
 		// TODO Auto-generated constructor stub
@@ -206,23 +206,15 @@ public class Usuari {
 			// ara crear un objecte del frame que va despr�s de l'inici de sessi� on
 			// estan
 			// els tres jocs
-
-			InterficiePrincipal.ferVisibleTancaSessio();
 			InterficieSeleccioJocs panellJocs = new InterficieSeleccioJocs();
-			Usuari.panellsActius.add(panellJocs);
+			Usuari.panellsActius.put("panellJocs", panellJocs);
+			Usuari.panellsActius.get("panellRegistre").dispose();
+			Usuari.panellsActius.remove("panellRegistre");
 			return;
 		}
 		JOptionPane.showMessageDialog(null, "El correu ja existeix, proporciona altre.", "Error",
 				JOptionPane.ERROR_MESSAGE);
 
 	}
-
-	public static void tancarPanells() {
-		for (JFrame panells : panellsActius) {
-			panells.dispose();
-		}
-		panellsActius.clear();
-	}
-	
 
 }
