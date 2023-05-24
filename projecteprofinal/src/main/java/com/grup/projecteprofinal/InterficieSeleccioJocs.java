@@ -108,7 +108,7 @@ public class InterficieSeleccioJocs extends JFrame implements ActionListener {
 		                
 		                Usuari.panellsActius.get("panellJocs").dispose();
 		                Usuari.panellsActius.remove("panellJocs");
-		                JOptionPane.showMessageDialog(null, "Espere tornar-te a veure en la base de dades!", "Adéu",
+		                JOptionPane.showMessageDialog(null, "Espere tornar-te a veure en la base de dades!", "Adï¿½u",
 		                        JOptionPane.INFORMATION_MESSAGE);
 		                InterficiePrincipal panellPrincipal = new InterficiePrincipal();
 						Usuari.panellsActius.put("panellPrincipal",panellPrincipal);
@@ -126,7 +126,7 @@ public class InterficieSeleccioJocs extends JFrame implements ActionListener {
 			public void actionPerformed(ActionEvent e) {
 				 Usuari.panellsActius.get("panellJocs").dispose();
 	                Usuari.panellsActius.remove("panellJocs");
-	                JOptionPane.showMessageDialog(null, "Fins la pròxima!", "Adéu",
+	                JOptionPane.showMessageDialog(null, "Fins la prï¿½xima!", "Adï¿½u",
 	                        JOptionPane.INFORMATION_MESSAGE);
 	                InterficiePrincipal panellPrincipal = new InterficiePrincipal();
 					Usuari.panellsActius.put("panellPrincipal",panellPrincipal);
@@ -294,5 +294,40 @@ public class InterficieSeleccioJocs extends JFrame implements ActionListener {
 
 	}
 	
+
+	}
+
+	// Canviar cuant les clases dels jocs estiguen fetes
+	private class Buscaminas extends JFrame {
+		public Buscaminas() {
+			super("Buscaminas");
+			setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+			setPreferredSize(new Dimension(500, 500));
+			setLocationRelativeTo(null);
+			setVisible(true);
+		}
+
+		public boolean isClosed() {
+			return !isVisible();
+		}
+	}
+
+	class JuegoVida extends JFrame {
+		public JuegoVida() {
+			super("JuegoVida");
+			setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+			setPreferredSize(new Dimension(500, 500));
+			setLocationRelativeTo(null);
+			setVisible(true);
+		}
+
+		public boolean isClosed() {
+			return !isVisible();
+		}
+	}
+	public static void posarCorreu(String correuElectornic) {
+		correuElectornic=correuElectronic;
+		
+	}
 
 }
