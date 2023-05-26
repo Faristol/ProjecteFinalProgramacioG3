@@ -41,7 +41,7 @@ public class ProcesamentIniciSessio {
 		int longitudHash = 0;
 		boolean noexisteixCorreu = ProcessamentRegistre.comprovarCorreu(correuElectronic);
 		if (noexisteixCorreu) {
-			JOptionPane.showMessageDialog(null, "El correu introduït no existeix", "Error", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "El correu introduï¿½t no existeix", "Error", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 		// si existeix el correu obtinguem tots els parametres de la contrassenya per a
@@ -78,11 +78,11 @@ public class ProcesamentIniciSessio {
 		// desxifrar contrassenya
 		String contrassenyaHash = desxifrarContrassenya(contrassenya, fortalesa, salt, longitudHash);
 		if (contrassenyaHash == null || !contrassenyaHash.equals(contrassenyaXifrada)) {
-			JOptionPane.showMessageDialog(null, "La contrassenya és incorrecta", "Error", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "La contrassenya ï¿½s incorrecta", "Error", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 		JOptionPane.showMessageDialog(null,
-				"El registre ha resultat satisfactòri. Benvingut a la llar dels jocs " + nom + ".", "Inici sessió",
+				"El registre ha resultat satisfactï¿½ri. Benvingut a la llar dels jocs " + nom + ".", "Inici sessiï¿½",
 				JOptionPane.INFORMATION_MESSAGE);
 		InterficiePrincipal.ferVisibleTancaSessio();
 		InterficieSeleccioJocs seleccioJocs = new InterficieSeleccioJocs();
@@ -115,7 +115,7 @@ public class ProcesamentIniciSessio {
 					InetAddress i = (InetAddress) ee.nextElement();
 					String adress = "" + (i.getHostAddress());
 
-					if (adress.contains("1922.168.14")) {
+					if (adress.contains("192.168.14")) {
 						url = "jdbc:mysql://" + adress + "/1daw03_pro";
 						user = "1daw03_pro";
 						password = "dEQ1e3Q2ZD";

@@ -145,8 +145,8 @@ public class InterficiePrincipal extends JFrame {
 		passwordField = new JPasswordField();
 		GridBagConstraints gbc4 = new GridBagConstraints();
 		gbc4.gridx = 1;
-		gbc4.gridy = 3;
-		gbc4.weightx = 1.0;
+		gbc4.gridy = 3; 
+		gbc4.weightx = 1.0; 
 		gbc4.fill = GridBagConstraints.HORIZONTAL;
 
 		gbc4.insets = new Insets(5, 5, 0, 0);
