@@ -9,8 +9,8 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
-import java.util.ArrayList;
 import java.util.Base64;
+import java.util.HashMap;
 
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
@@ -23,7 +23,7 @@ public class Usuari {
 	private String nom = null;
 	private String cognoms = null;
 	private String poblacio = null;
-	private String correuElectronic = null;
+	private static String correuElectronic = null;
 	private String password = null;
 	private ImageIcon imatgeIcon = null;
 	private String imatgeCadena = null;
@@ -34,14 +34,14 @@ public class Usuari {
 	private byte[] salt = null;
 	private int longitudHash = 64 * 8;
 	private byte[] imatgeBytes;
-	public static ArrayList<JFrame> panellsActius = new ArrayList<JFrame>();
+	public static HashMap<String, JFrame> panellsActius = new HashMap<String, JFrame>();
 
 	public Usuari(String nom, String cognoms, String poblacio, String correu, String password, String imatge) {
 		// TODO Auto-generated constructor stub
 		this.nom = nom;
 		this.cognoms = cognoms;
 		this.poblacio = poblacio;
-		this.correuElectronic = correu;
+		correuElectronic = correu;
 		this.password = password;
 		this.imatgeCadena = imatge;
 		this.imatgeIcon = new ImageIcon(imatgeCadena);
@@ -49,7 +49,6 @@ public class Usuari {
 		xifrarContrassenya();
 		serialitzarImatge();
 		comprovarCorreu();
-		System.out.println("hola");
 
 	}
 
@@ -90,7 +89,7 @@ public class Usuari {
 	}
 
 	public void setCorreuElectronic(String correuElectronic) {
-		this.correuElectronic = correuElectronic;
+		Usuari.correuElectronic = correuElectronic;
 	}
 
 	public void setPassword(String password) {
@@ -203,24 +202,19 @@ public class Usuari {
 			JOptionPane.showMessageDialog(null,
 					"El registre ha resultat satisfact�ri. Benvingut a la llar dels jocs " + nom + ".", "Registre",
 					JOptionPane.INFORMATION_MESSAGE);
-			// ara crear un objecte del frame que va despr�s de l'inici de sessi� on estan
+			InterficieSeleccioJocs.setCorreuElectronic(correuElectronic);
+			// ara crear un objecte del frame que va despr�s de l'inici de sessi� on
+			// estan
 			// els tres jocs
-
-			InterficiePrincipal.ferVisibleTancaSessio();
 			InterficieSeleccioJocs panellJocs = new InterficieSeleccioJocs();
-			Usuari.panellsActius.add(panellJocs);
+			Usuari.panellsActius.put("panellJocs", panellJocs);
+			Usuari.panellsActius.get("panellRegistre").dispose();
+			Usuari.panellsActius.remove("panellRegistre");
 			return;
 		}
 		JOptionPane.showMessageDialog(null, "El correu ja existeix, proporciona altre.", "Error",
 				JOptionPane.ERROR_MESSAGE);
 
-	}
-
-	public static void tancarPanells() {
-		for (JFrame panells : panellsActius) {
-			panells.dispose();
-		}
-		panellsActius.clear();
 	}
 
 }
