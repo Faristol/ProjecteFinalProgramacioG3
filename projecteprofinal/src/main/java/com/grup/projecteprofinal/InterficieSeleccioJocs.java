@@ -142,15 +142,26 @@ public class InterficieSeleccioJocs extends JFrame implements ActionListener {
 		gbc_lblNewLabel_4.gridy = 0;
 		panel_1.add(lblNewLabel_4, gbc_lblNewLabel_4);
 
-		JComboBox comboBox = new JComboBox();
-		comboBox.addItem("Opci�n 1");
-		comboBox.addItem("Opci�n 2");
-		comboBox.addItem("Opci�n 3");
+		JLabel img = new JLabel();
+
+		try {
+
+			Connection connection = DriverManager.getConnection(url, user, password);
+			Statement cerca = connection.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+			String consulta = "SELECT imageBytes FROM tabla1 WHERE correuElectronic='" + correuElectronic
+					+ "'";
+			ResultSet r = cerca.executeQuery(consulta);
+			connection.close();
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		GridBagConstraints gbc_comboBox = new GridBagConstraints();
 		gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
 		gbc_comboBox.gridx = 0;
 		gbc_comboBox.gridy = 5;
-		panel_1.add(comboBox, gbc_comboBox);
+		panel_1.add(img, gbc_comboBox);
 
 		JPanel panel_2 = new JPanel();
 		contentPane.add(panel_2, BorderLayout.NORTH);
