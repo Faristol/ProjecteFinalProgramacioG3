@@ -41,7 +41,7 @@ public class ProcesamentIniciSessio {
 		int longitudHash = 0;
 		boolean noexisteixCorreu = ProcessamentRegistre.comprovarCorreu(correuElectronic);
 		if (noexisteixCorreu) {
-			JOptionPane.showMessageDialog(null, "El correu introduït no existeix", "Error", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "El correu introduï¿½t no existeix", "Error", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 		// si existeix el correu obtinguem tots els parametres de la contrassenya per a
@@ -78,16 +78,17 @@ public class ProcesamentIniciSessio {
 		// desxifrar contrassenya
 		String contrassenyaHash = desxifrarContrassenya(contrassenya, fortalesa, salt, longitudHash);
 		if (contrassenyaHash == null || !contrassenyaHash.equals(contrassenyaXifrada)) {
-			JOptionPane.showMessageDialog(null, "La contrassenya és incorrecta", "Error", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "La contrassenya ï¿½s incorrecta", "Error", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 		JOptionPane.showMessageDialog(null,
-				"El registre ha resultat satisfactòri. Benvingut a la llar dels jocs " + nom + ".", "Inici sessió",
+				"L'inici de sessiï¿½ ha resultat satisfactï¿½ri. Benvingut a la llar dels jocs " + nom + ".", "Inici sessiï¿½",
 				JOptionPane.INFORMATION_MESSAGE);
-		InterficiePrincipal.ferVisibleTancaSessio();
-		InterficieSeleccioJocs seleccioJocs = new InterficieSeleccioJocs();
+		InterficieSeleccioJocs panellJocs = new InterficieSeleccioJocs();
 		InterficieSeleccioJocs.setCorreuElectronic(correuElectronic);
-		Usuari.panellsActius.add(seleccioJocs);
+		Usuari.panellsActius.put("panellJocs",panellJocs);
+		Usuari.panellsActius.get("panellPrincipal").dispose();
+		Usuari.panellsActius.remove("panellPrincipal");
 	}
 
 	public static String desxifrarContrassenya(String contrassenya, int fortalesa, byte[] salt, int longitudHash) {

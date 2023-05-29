@@ -33,13 +33,13 @@ public class ProcessamentRegistre {
 		boolean longitudCorrecta = (password1.length() >= 8) && (password2.length() >= 8);
 		boolean sonIguals = password1.equals(password2);
 		if (!correuCorrecte) {
-			JOptionPane.showMessageDialog(null, "El format de correu introdu�t no �s v�lid", "Error",
+			JOptionPane.showMessageDialog(null, "El format de correu introduit no es valid", "Error",
 					JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 
 		if (!longitudCorrecta) {
-			JOptionPane.showMessageDialog(null, "Les contrassenyes deuen tindre almenys 8 car�cters", "Error",
+			JOptionPane.showMessageDialog(null, "Les contrassenyes deuen tindre almenys 8 caracters", "Error",
 					JOptionPane.ERROR_MESSAGE);
 			return;
 		}

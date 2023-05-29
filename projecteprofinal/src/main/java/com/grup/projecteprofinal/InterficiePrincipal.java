@@ -45,8 +45,9 @@ public class InterficiePrincipal extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					InterficiePrincipal frame = new InterficiePrincipal();
-					frame.setVisible(true);
+					InterficiePrincipal panellPrincipal = new InterficiePrincipal();
+					Usuari.panellsActius.put("panellPrincipal", panellPrincipal);
+					panellPrincipal.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -58,10 +59,11 @@ public class InterficiePrincipal extends JFrame {
 	 * Create the frame.
 	 */
 	public InterficiePrincipal() {
-		setTitle("Projecte Final Programaci�");
+		setTitle("Projecte Final Programacio");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 400, 200);
 		setResizable(false);
+		
 
 		contentPane = new JPanel();
 
@@ -145,8 +147,8 @@ public class InterficiePrincipal extends JFrame {
 		passwordField = new JPasswordField();
 		GridBagConstraints gbc4 = new GridBagConstraints();
 		gbc4.gridx = 1;
-		gbc4.gridy = 3;
-		gbc4.weightx = 1.0;
+		gbc4.gridy = 3; 
+		gbc4.weightx = 1.0; 
 		gbc4.fill = GridBagConstraints.HORIZONTAL;
 
 		gbc4.insets = new Insets(5, 5, 0, 0);
@@ -159,8 +161,10 @@ public class InterficiePrincipal extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				InterficieRegistre registre = new InterficieRegistre();
-				Usuari.panellsActius.add(registre);
+				InterficieRegistre panellRegistre = new InterficieRegistre();
+				Usuari.panellsActius.get("panellPrincipal").dispose();
+				Usuari.panellsActius.remove("panellPrincipal");
+				Usuari.panellsActius.put("panellRegistre",panellRegistre);
 			}
 		});
 
@@ -169,14 +173,14 @@ public class InterficiePrincipal extends JFrame {
 				String contra = new String(passwordField.getPassword());
 				if ((textField.getText().trim().isBlank() || textField.getText() == null)
 						&& (contra.trim().isBlank() || contra == null)) {
-					JOptionPane.showMessageDialog(null, "Cal ambd�s camps", "Av�s", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Cal emplenar ambdos camps", "Avis", JOptionPane.INFORMATION_MESSAGE);
 					return;
 				} else if (textField.getText().trim().isBlank() || textField.getText() == null) {
-					JOptionPane.showMessageDialog(null, "Cal emplenar el camp correu", "Av�s",
+					JOptionPane.showMessageDialog(null, "Cal emplenar el camp correu", "Avis",
 							JOptionPane.INFORMATION_MESSAGE);
 					return;
 				} else if (contra.trim().isBlank() || contra == null) {
-					JOptionPane.showMessageDialog(null, "Cal emplenar el camp contrassenya", "Av�s",
+					JOptionPane.showMessageDialog(null, "Cal emplenar el camp contrassenya", "Avis",
 							JOptionPane.INFORMATION_MESSAGE);
 					return;
 				}
@@ -189,28 +193,10 @@ public class InterficiePrincipal extends JFrame {
 		panel_3.add(btnNewButton);
 		panel_3.add(btnNewButton2);
 
-		btnNewButton_1 = new JButton("Tanca sessi�");
-		btnNewButton_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Usuari.tancarPanells();
-				textField.setText("");
-				passwordField.setText("");
-				InterficiePrincipal.ferinVisibleTancaSessio();
-				revalidate();
-			}
-		});
-		btnNewButton_1.setVisible(false);
-		panel_3.add(btnNewButton_1);
 
 	}
 
-	public static void ferinVisibleTancaSessio() {
-		btnNewButton_1.setVisible(false);
-	}
-
-	public static void ferVisibleTancaSessio() {
-		btnNewButton_1.setVisible(true);
-
-	}
+	
+	
 
 }

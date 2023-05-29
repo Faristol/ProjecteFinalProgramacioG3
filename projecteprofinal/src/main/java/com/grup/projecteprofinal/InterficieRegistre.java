@@ -55,8 +55,9 @@ public class InterficieRegistre extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					InterficieRegistre frame = new InterficieRegistre();
-					frame.setVisible(true);
+					InterficieRegistre panellRegistre = new InterficieRegistre();
+					
+					panellRegistre.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -237,7 +238,7 @@ public class InterficieRegistre extends JFrame {
 		panel_1.add(passwordText2, gbc_passwordField_1);
 
 
-		JButton selectImageButton2 = new JButton("Selecciona la imagen");
+		JButton selectImageButton2 = new JButton("Selecciona una imatge");
 		
 		
 		GridBagConstraints selectImageButton = new GridBagConstraints();
@@ -256,7 +257,11 @@ public class InterficieRegistre extends JFrame {
 		
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				dispose();
+				InterficiePrincipal panellPrincipal = new InterficiePrincipal();
+				Usuari.panellsActius.put("panellPrincipal",panellPrincipal);
+				panellPrincipal.setVisible(true);
+				Usuari.panellsActius.get("panellRegistre").dispose();
+				Usuari.panellsActius.remove("panellRegistre");
 			}
 		});
 		btnNewButton.addActionListener(new ActionListener() {
@@ -290,7 +295,7 @@ public class InterficieRegistre extends JFrame {
 			}});selectImageButton2.addActionListener(new ActionListener() {
 			    public void actionPerformed(ActionEvent e) {
 			        JFileChooser fileChooser = new JFileChooser();
-			        fileChooser.setFileFilter(new FileNameExtensionFilter("Imágenes", "png", "jpg"));
+			        fileChooser.setFileFilter(new FileNameExtensionFilter("Imagenes", "png", "jpg"));
 			        int result = fileChooser.showOpenDialog(null);
 			        if (result == JFileChooser.APPROVE_OPTION) {
 			            File selectedFile = fileChooser.getSelectedFile();
@@ -298,13 +303,13 @@ public class InterficieRegistre extends JFrame {
 			                imagePath = selectedFile.getAbsolutePath();
 			               // lblNewLabel_1.setText(imagePath);
 
-			                JOptionPane.showMessageDialog(null, "Imagen seleccionada: " + imagePath);
+			                JOptionPane.showMessageDialog(null, "Imatge seleccionada: " + imagePath);
 			            } else {
-			                JOptionPane.showMessageDialog(null, "El archivo seleccionado no es válido", "Error",
+			                JOptionPane.showMessageDialog(null, "L'arxiu seleccionat no es valid", "Error",
 			                        JOptionPane.ERROR_MESSAGE);
 			            }
 			        } else {
-			            JOptionPane.showMessageDialog(null, "Debes seleccionar una imagen", "Error",
+			            JOptionPane.showMessageDialog(null, "Deus seleccionar una imatge", "Error",
 			                    JOptionPane.ERROR_MESSAGE);
 			        }
 			    }
