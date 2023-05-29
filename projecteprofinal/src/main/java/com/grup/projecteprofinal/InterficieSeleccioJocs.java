@@ -194,7 +194,7 @@ public class InterficieSeleccioJocs extends JFrame implements ActionListener {
 		btnNewButton = new JButton("Accedir");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Pescamines framePescamines = new Pescamines();
+				Buscaminas framePescamines = new Buscaminas();
 				framePescamines.setVisible(true);
 
 			}

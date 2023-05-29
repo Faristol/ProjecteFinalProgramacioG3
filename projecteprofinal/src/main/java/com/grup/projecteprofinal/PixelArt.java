@@ -1,32 +1,31 @@
 package com.grup.projecteprofinal;
 
-import java.awt.EventQueue;
-import java.awt.Font;
-import java.awt.FontFormatException;
-import java.awt.Graphics;
-import java.awt.GridLayout;
-import java.awt.Panel;
-import java.io.File;
-import java.io.IOException;
-import java.security.PublicKey;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
-import javax.swing.border.EmptyBorder;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-
-import javax.management.loading.PrivateClassLoader;
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import java.awt.event.ActionListener;
+import java.awt.EventQueue;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.Graphics2D;
+import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.ActionEvent;
+import java.awt.event.MouseMotionAdapter;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JColorChooser;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
+import javax.swing.border.EmptyBorder;
 
 public class PixelArt extends JFrame {
 
@@ -37,7 +36,6 @@ public class PixelArt extends JFrame {
 	private int PIXEL_SIZE = 1;
 	private int GRID_SIZE = WIDTH / PIXEL_SIZE;
 
-	private boolean[][] pixels;
 	private JButton[][] pixelButtons;
 	private JPanel panel1;
 	private JLabel lblNewLabel;
@@ -51,127 +49,198 @@ public class PixelArt extends JFrame {
 	private JButton btnNewButton_3;
 
 	private JPanel panellGeneral;
+	private Color currentColor = Color.BLACK;
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					PixelArt frame = new PixelArt();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+	    EventQueue.invokeLater(() -> {
+	        try {
+	            PixelArt frame = new PixelArt();
+	            frame.setVisible(true);
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+	    });
 	}
 
-	public PixelArt() throws FontFormatException, IOException {
+	public PixelArt() {
 
-		this.WIDTH = 400;
-		this.HEIGHT = 400;
-		this.PIXEL_SIZE = 400;
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+	    this.WIDTH = 400;
+	    this.HEIGHT = 400;
+	    this.PIXEL_SIZE = 400;
+	    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	    setBounds(100, 100, 450, 300);
+	    contentPane = new JPanel();
+	    contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
-		setContentPane(contentPane);
-		contentPane.setLayout(new BorderLayout(0, 0));
+	    setContentPane(contentPane);
+	    contentPane.setLayout(new BorderLayout(0, 0));
+	    
+	    pixelButtons = new JButton[GRID_SIZE][GRID_SIZE];
 
-		lblNewLabel = new JLabel("Bienvenidos a PixelArt, escoge un formato para el tablero!!!");
-		lblNewLabel.setToolTipText("");
-		lblNewLabel.setFont(new Font("Arial", Font.BOLD, 13));
-		lblNewLabel.setHorizontalAlignment((int) CENTER_ALIGNMENT);
-		lblNewLabel.setForeground(Color.BLUE);
-		contentPane.add(lblNewLabel, BorderLayout.NORTH);
+      
 
-		panel1 = new JPanel();
-		contentPane.add(panel1, BorderLayout.CENTER);
+	    lblNewLabel = new JLabel("Bienvenidos a PixelArt, escoge un formato para el tablero!!!");
+	    lblNewLabel.setToolTipText("");
+	    lblNewLabel.setFont(new Font("Arial", Font.BOLD, 13));
+	    lblNewLabel.setHorizontalAlignment((int) CENTER_ALIGNMENT);
+	    lblNewLabel.setForeground(Color.BLUE);
+	    contentPane.add(lblNewLabel, BorderLayout.NORTH);
 
-		btnNewButton = new JButton("Grande");
-		btnNewButton_1 = new JButton("Mediano");
-		btnNewButton_2 = new JButton("Pequeño");
+	    panel1 = new JPanel();
+	    contentPane.add(panel1, BorderLayout.CENTER);
 
-		
+	    btnNewButton = new JButton("Grande");
+	    btnNewButton_1 = new JButton("Mediano");
+	    btnNewButton_2 = new JButton("Pequeño");
 
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				WIDTH = 500;
-				HEIGHT = 500;
-				PIXEL_SIZE = 10;
-				GRID_SIZE = WIDTH / PIXEL_SIZE;
-				creacioPanell();
-			}
-		});
+	    btnNewButton.addActionListener(e -> {
+	        WIDTH = 500;
+	        HEIGHT = 500;
+	        PIXEL_SIZE = 10;
+	        GRID_SIZE = WIDTH / PIXEL_SIZE;
+	        creacioPanell();
+	    });
 
-		panel1.add(btnNewButton);
+	    panel1.add(btnNewButton);
 
-		btnNewButton_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				WIDTH = 500;
-				HEIGHT = 500;
-				PIXEL_SIZE = 30;
-				GRID_SIZE = WIDTH / PIXEL_SIZE;
-				creacioPanell();
+	    btnNewButton_1.addActionListener(e -> {
+	        WIDTH = 500;
+	        HEIGHT = 500;
+	        PIXEL_SIZE = 30;
+	        GRID_SIZE = WIDTH / PIXEL_SIZE;
+	        creacioPanell();
+	    });
+	    panel1.add(btnNewButton_1);
 
-			}
-		});
-		panel1.add(btnNewButton_1);
-
-		btnNewButton_2.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				WIDTH = 500;
-				HEIGHT = 500;
-				PIXEL_SIZE = 50;
-				GRID_SIZE = WIDTH / PIXEL_SIZE;
-				creacioPanell();
-
-			}
-		});
-		panel1.add(btnNewButton_2);
+	    btnNewButton_2.addActionListener(e -> {
+	        WIDTH = 500;
+	        HEIGHT = 500;
+	        PIXEL_SIZE = 50;
+	        GRID_SIZE = WIDTH / PIXEL_SIZE;
+	        creacioPanell();
+	    });
+	    panel1.add(btnNewButton_2);
 	}
 
 	public void creacioPanell() {
-		lblNewLabel.setVisible(false);
-		btnNewButton.setVisible(false);
-		btnNewButton_1.setVisible(false);
-		btnNewButton_2.setVisible(false);
-		panel1.setVisible(false);
-		panellGeneral = new JPanel();
-		panellGeneral.setLayout(new BorderLayout(0, 0));
-		btnNewButton_3 = new JButton("Selecciona Color");
-		panellGeneral.add(btnNewButton_3, BorderLayout.SOUTH);
-		panel2 = new JPanel();
+	    lblNewLabel.setVisible(false);
+	    btnNewButton.setVisible(false);
+	    btnNewButton_1.setVisible(false);
+	    btnNewButton_2.setVisible(false);
+	    panel1.setVisible(false);
+	    panellGeneral = new JPanel();
+	    panellGeneral.setLayout(new BorderLayout(0, 0));
+	    JButton btnDescription = new JButton("Descripción");
+	    JButton btnGuar = new JButton("Guardar");
+	    btnNewButton_3 = new JButton("Selecciona Color");
 
-		ColorActual = new JButton("Color actual");
-		ColorActual.setHorizontalAlignment((int) CENTER_ALIGNMENT);
+	    JPanel bottomPanel = new JPanel();
+	    bottomPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
 
-		panel2.setLayout(new GridLayout(GRID_SIZE, GRID_SIZE));
-		panellGeneral.setPreferredSize(new Dimension(WIDTH, HEIGHT));
-		panel2.setPreferredSize(new Dimension(WIDTH, HEIGHT));
+	    bottomPanel.add(btnDescription);
+	    bottomPanel.add(btnGuar);
+	    bottomPanel.add(btnNewButton_3);
 
-		for (int x = 0; x < GRID_SIZE; x++) {
-			for (int y = 0; y < GRID_SIZE; y++) {
-				JButton button = new JButton();
-				button.setPreferredSize(new Dimension(PIXEL_SIZE, PIXEL_SIZE));
-				button.setBorder(BorderFactory.createLineBorder(Color.GRAY));
-				panel2.add(button);
-			}
+	    panellGeneral.add(bottomPanel, BorderLayout.SOUTH);
 
-		}
-		panellGeneral.add(panel2, BorderLayout.CENTER);
-		panellGeneral.setVisible(true);
+	    getContentPane().add(panellGeneral);
+	    btnNewButton_3.addActionListener(e -> {
+	        currentColor = JColorChooser.showDialog(null, "Selecciona un color", currentColor);
+	    });
+	    panel2 = new JPanel();
 
-		getContentPane().add(panellGeneral);
-		pack();
-		setLocationRelativeTo(null);
-		setVisible(true);
-		repaint();
-		revalidate();
+	    ColorActual = new JButton("Color actual");
+	    ColorActual.setHorizontalAlignment((int) CENTER_ALIGNMENT);
+
+	    panel2.setLayout(new GridLayout(GRID_SIZE, GRID_SIZE));
+	    panellGeneral.setPreferredSize(new Dimension(WIDTH, HEIGHT));
+	    panel2.setPreferredSize(new Dimension(WIDTH, HEIGHT));
+
+	    // Calculate GRID_SIZE after updating WIDTH and PIXEL_SIZE
+	    GRID_SIZE = WIDTH / PIXEL_SIZE;
+
+	    pixelButtons = new JButton[GRID_SIZE][GRID_SIZE]; // Update pixelButtons size
+
+	    for (int x = 0; x < GRID_SIZE; x++) {
+	        for (int y = 0; y < GRID_SIZE; y++) {
+	            JButton button = new JButton();
+	            button.setPreferredSize(new Dimension(PIXEL_SIZE, PIXEL_SIZE));
+	            button.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+	            button.setBackground(Color.WHITE);
+
+	            button.addMouseListener(new MouseAdapter() {
+	            	 public void mousePressed(MouseEvent e) {
+	                     if (SwingUtilities.isLeftMouseButton(e)) {
+	                         button.setBackground(currentColor);
+	                     } else if (SwingUtilities.isRightMouseButton(e)) {
+	                         button.setBackground(Color.WHITE);
+	                     }
+	                 }
+	                 
+	                 @Override
+	                 public void mouseEntered(MouseEvent e) {
+	                     if (SwingUtilities.isLeftMouseButton(e)) {
+	                         button.setBackground(currentColor);
+	                     } else if (SwingUtilities.isRightMouseButton(e)) {
+	                         button.setBackground(Color.WHITE);
+	                     }
+	                 }
+	             });
+	            pixelButtons[x][y] = button;
+	            panel2.add(button);
+	        }
+	    }
+	
+	    btnDescription.addActionListener(e -> {
+	        JOptionPane.showMessageDialog(null, "Bienvenido a Pixel Art. Aquí puedes crear tu propio arte pixel por pixel.\n"
+	                + "1. Elije un tamaño de cuadrícula para comenzar.\n"
+	                + "2. Selecciona un color usando el botón 'Selecciona Color'.\n"
+	                + "3. Haz clic izquierdo en un cuadro para pintarlo con el color seleccionado.\n"
+	                + "4. Haz clic derecho en un cuadro para borrarlo y volverlo blanco.\n"
+	                + "¡Diviértete creando!");
+	    });
+
+	    panellGeneral.add(panel2, BorderLayout.CENTER);
+	    panellGeneral.setVisible(true);
+
+	    btnGuar.addActionListener(e -> {
+            JFileChooser filechooser = new JFileChooser();
+            int option = filechooser.showSaveDialog(this);
+            if (option == JFileChooser.APPROVE_OPTION) {
+                File archivo = filechooser.getSelectedFile();
+                int anc = WIDTH;
+                int alt = HEIGHT;
+
+                BufferedImage img = new BufferedImage(anc, alt, BufferedImage.TYPE_INT_RGB);
+                Graphics2D graphics = img.createGraphics();
+
+                for (int i = 0; i < GRID_SIZE; i++) {
+                    for (int j = 0; j < GRID_SIZE; j++) {
+                        Color color = pixelButtons[i][j].getBackground();
+                        graphics.setColor(color);
+                        graphics.fillRect(i * PIXEL_SIZE, j * PIXEL_SIZE, PIXEL_SIZE, PIXEL_SIZE);
+                    }
+                }
+
+                graphics.dispose();
+                try {
+                    ImageIO.write(img, "png", archivo);
+                    JOptionPane.showMessageDialog(this, "Guardado correctamente.", "Guardar", JOptionPane.INFORMATION_MESSAGE);
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        });
+
+	    panellGeneral.add(panel2, BorderLayout.CENTER);
+	    panellGeneral.setVisible(true);
+	    
+	    getContentPane().add(panellGeneral);
+	    pack();
+	    setLocationRelativeTo(null);
+	    setVisible(true);
+	    repaint();
+	    revalidate();
 
 	}
-
 }
