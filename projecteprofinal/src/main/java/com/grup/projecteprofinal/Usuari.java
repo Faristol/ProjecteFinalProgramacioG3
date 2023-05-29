@@ -216,5 +216,5 @@ public class Usuari {
 				JOptionPane.ERROR_MESSAGE);
 
 	}
-
+	
 }
