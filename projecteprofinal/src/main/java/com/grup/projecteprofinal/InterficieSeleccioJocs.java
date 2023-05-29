@@ -3,11 +3,13 @@ package com.grup.projecteprofinal;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.FontFormatException;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
@@ -205,7 +207,16 @@ public class InterficieSeleccioJocs extends JFrame implements ActionListener {
 		btnNewButton_1 = new JButton("Accedir");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				PixelArt framePixelArt = new PixelArt();
+				PixelArt framePixelArt = null;
+				try {
+					framePixelArt = new PixelArt();
+				} catch (FontFormatException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				framePixelArt.setVisible(true);
 			}
 		});
