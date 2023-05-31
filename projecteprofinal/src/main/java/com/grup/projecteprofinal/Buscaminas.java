@@ -16,7 +16,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.Timer;
 import javax.swing.border.EmptyBorder;
 
@@ -296,6 +298,29 @@ public class Buscaminas extends JFrame implements ActionListener, MouseListener 
                 }
             }
         }
+        String resultadoFinal="Has durado: "+tiempoTranscurrido+" seg. \n"+"Casillas por desvelar: "+contCasillas;
+        JOptionPane.showMessageDialog(null, resultadoFinal);
+        /*
+        String result = showInputDialog(resultadoFinal, "Fin de la partida");
+        if (result != null) {
+            JOptionPane.showMessageDialog(null, "El valor ingresado fue: " + result);
+        } else {
+            JOptionPane.showMessageDialog(null, "No se ingres� ning�n valor.");
+        }
+        */
+        dispose();
+    }
+    public static String showInputDialog(String message, String title) {
+        JTextField textField = new JTextField();
+        Object[] components = { message, textField };
+        
+        int option = JOptionPane.showConfirmDialog(null, components, title, JOptionPane.OK_CANCEL_OPTION);
+        
+        if (option == JOptionPane.OK_OPTION) {
+            return textField.getText();
+        }
+        
+        return null;
     }
 
     public int contarBombas(int num1, int num2) {
