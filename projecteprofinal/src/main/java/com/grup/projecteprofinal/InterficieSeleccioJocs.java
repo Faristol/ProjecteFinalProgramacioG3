@@ -150,8 +150,7 @@ public class InterficieSeleccioJocs extends JFrame implements ActionListener {
 
 			Connection connection = DriverManager.getConnection(url, user, password);
 			Statement cerca = connection.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
-			String consulta = "SELECT imageBytes FROM tabla1 WHERE correuElectronic='" + correuElectronic
-					+ "'";
+			String consulta = "SELECT imageBytes FROM tabla1 WHERE correuElectronic='" + correuElectronic + "'";
 			ResultSet r = cerca.executeQuery(consulta);
 			connection.close();
 
