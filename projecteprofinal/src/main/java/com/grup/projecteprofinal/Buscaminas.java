@@ -24,14 +24,13 @@ import java.util.Random;
 
 public class Buscaminas extends JFrame implements ActionListener, MouseListener {
 	private JPanel panelGeneral, panelSup, tableroPanel;
-    private JButton[][] casillas;
-    private JLabel labelBombas, labelCasillas, labelTimer;
-    private int numCasillas, contBombas, contCasillas, tiempoTranscurrido;
-    private boolean[][] bombas;
-    private Timer timer;
-    
-    //--------------------------
-    private JPanel contentPane;
+	private JButton[][] casillas;
+	private JLabel labelBombas, labelCasillas, labelTimer;
+	private int numCasillas, contBombas, contCasillas, tiempoTranscurrido;
+	private boolean[][] bombas;
+	private Timer timer;
+
+	private JPanel contentPane;
 
 	private int WIDTH = 1;
 	private int HEIGHT = 1;
@@ -52,12 +51,10 @@ public class Buscaminas extends JFrame implements ActionListener, MouseListener 
 	private JButton btnNewButton_3;
 
 	private JPanel panellGeneral;
-	//--------------------------
 
-    public Buscaminas() {
-    	
-    	//--------------
-    	this.WIDTH = 400;
+	public Buscaminas() {
+
+		this.WIDTH = 400;
 		this.HEIGHT = 400;
 		this.PIXEL_SIZE = 400;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -82,15 +79,13 @@ public class Buscaminas extends JFrame implements ActionListener, MouseListener 
 		btnNewButton_1 = new JButton("Mediano");
 		btnNewButton_2 = new JButton("Pequeño");
 
-		
-
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				WIDTH = 500;
 				HEIGHT = 500;
 				PIXEL_SIZE = 10;
 				GRID_SIZE = WIDTH / PIXEL_SIZE;
-				numCasillas=40;
+				numCasillas = 40;
 				creacioPanell();
 			}
 		});
@@ -103,7 +98,7 @@ public class Buscaminas extends JFrame implements ActionListener, MouseListener 
 				HEIGHT = 500;
 				PIXEL_SIZE = 30;
 				GRID_SIZE = WIDTH / PIXEL_SIZE;
-				numCasillas=20;
+				numCasillas = 20;
 				creacioPanell();
 
 			}
@@ -116,87 +111,79 @@ public class Buscaminas extends JFrame implements ActionListener, MouseListener 
 				HEIGHT = 500;
 				PIXEL_SIZE = 50;
 				GRID_SIZE = WIDTH / PIXEL_SIZE;
-				numCasillas=10;
+				numCasillas = 10;
 				creacioPanell();
 
 			}
 		});
 		panel1.add(btnNewButton_2);
-    	
-    	//-------------------------------------
-		
-		
 
-    }
-    
-    public void creacioPanell() {
-		
+	}
+
+	public void creacioPanell() {
 
 		getContentPane().removeAll();
 		bombas = ponerBombas();
 		setTitle("Tablero");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		
-   // Crear el panel estadistiques
-      labelBombas= new JLabel();
-      labelBombas.setText(""+contBombas);
-      
-      labelCasillas= new JLabel();
-      labelCasillas.setText(""+contCasillas);
-      
-      labelTimer= new JLabel();
-      timer = new Timer(1000, this);
-      labelTimer.setText(""+tiempoTranscurrido);
-      timer.start();
-      //timer.stop();
-      //timer.restart();
-      
-      panelSup= new JPanel();
-      panelSup.setLayout(new GridLayout(1,3));
-      panelSup.add(labelBombas);
-      panelSup.add(labelTimer);
-      panelSup.add(labelCasillas);
-      
-      
+		// Crear el panel estadistiques
+		labelBombas = new JLabel();
+		labelBombas.setText("" + contBombas);
 
-      // Crear el panel del tablero
-      tableroPanel = new JPanel();
-      tableroPanel.setLayout(new GridLayout(numCasillas, numCasillas));
+		labelCasillas = new JLabel();
+		labelCasillas.setText("" + contCasillas);
 
-      // Crear el arreglo de botones
-      casillas = new JButton[numCasillas][numCasillas];
+		labelTimer = new JLabel();
+		timer = new Timer(1000, this);
+		labelTimer.setText("" + tiempoTranscurrido);
+		timer.start();
+		// timer.stop();
+		// timer.restart();
 
-      // Agregar los botones al panel
-      for (int fila=0;fila<numCasillas;fila++) {
-          for (int columna=0;columna<numCasillas;columna++) {
-              casillas[fila][columna]= new JButton();
-              tableroPanel.add(casillas[fila][columna]);
-          }
-      }
+		panelSup = new JPanel();
+		panelSup.setLayout(new GridLayout(1, 3));
+		panelSup.add(labelBombas);
+		panelSup.add(labelTimer);
+		panelSup.add(labelCasillas);
 
-      // Configurar los botones
-      for (int fila=0;fila<numCasillas;fila++) {
-          for (int columna=0;columna<numCasillas;columna++) {
-              JButton boton = casillas[fila][columna];
-              boton.setName(fila+"."+columna);
-              boton.setPreferredSize(new Dimension(10, 10));
-              boton.setBackground(Color.GRAY);
-              boton.addMouseListener(this);
-              contCasillas++;
-          }
-      }
-      contCasillas-=contBombas;
-      labelCasillas.setText(""+contCasillas);
+		// Crear el panel del tablero
+		tableroPanel = new JPanel();
+		tableroPanel.setLayout(new GridLayout(numCasillas, numCasillas));
 
-      // Crear el panel General
-      panelGeneral=new JPanel();
-      panelGeneral.setLayout(new BorderLayout());
-      panelGeneral.add(panelSup, BorderLayout.NORTH);
-      panelGeneral.add(tableroPanel);
-      panelGeneral.setPreferredSize(new Dimension(WIDTH, HEIGHT));
-      
-      getContentPane().add(panelGeneral);	
+		// Crear el arreglo de botones
+		casillas = new JButton[numCasillas][numCasillas];
+
+		// Agregar los botones al panel
+		for (int fila = 0; fila < numCasillas; fila++) {
+			for (int columna = 0; columna < numCasillas; columna++) {
+				casillas[fila][columna] = new JButton();
+				tableroPanel.add(casillas[fila][columna]);
+			}
+		}
+
+		// Configurar los botones
+		for (int fila = 0; fila < numCasillas; fila++) {
+			for (int columna = 0; columna < numCasillas; columna++) {
+				JButton boton = casillas[fila][columna];
+				boton.setName(fila + "." + columna);
+				boton.setPreferredSize(new Dimension(10, 10));
+				boton.setBackground(Color.GRAY);
+				boton.addMouseListener(this);
+				contCasillas++;
+			}
+		}
+		contCasillas -= contBombas;
+		labelCasillas.setText("" + contCasillas);
+
+		// Crear el panel General
+		panelGeneral = new JPanel();
+		panelGeneral.setLayout(new BorderLayout());
+		panelGeneral.add(panelSup, BorderLayout.NORTH);
+		panelGeneral.add(tableroPanel);
+		panelGeneral.setPreferredSize(new Dimension(WIDTH, HEIGHT));
+
+		getContentPane().add(panelGeneral);
 		pack();
 		setLocationRelativeTo(null);
 		setVisible(true);
@@ -205,152 +192,153 @@ public class Buscaminas extends JFrame implements ActionListener, MouseListener 
 
 	}
 
-    public void actionPerformed(ActionEvent evt) {
-        if (evt.getSource() == timer) {
-            tiempoTranscurrido++;
-            labelTimer.setText(""+tiempoTranscurrido);
-        }
-    }
+	public void actionPerformed(ActionEvent evt) {
+		if (evt.getSource() == timer) {
+			tiempoTranscurrido++;
+			labelTimer.setText("" + tiempoTranscurrido);
+		}
+	}
 
-    public void clickDerechoBoton(MouseEvent e) {
-        JButton botonPulsado = (JButton) e.getSource();
-        String coordenada = botonPulsado.getName();
-    }
+	public void clickDerechoBoton(MouseEvent e) {
+		JButton botonPulsado = (JButton) e.getSource();
+		String coordenada = botonPulsado.getName();
+	}
 
-    public boolean isClosed() {
-        return !isVisible();
-    }
+	public boolean isClosed() {
+		return !isVisible();
+	}
 
-    @Override
-    public void mouseClicked(MouseEvent e) {
-        JButton botonPulsado = (JButton) e.getSource();
-        MouseEvent eventoRaton = e;
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		JButton botonPulsado = (JButton) e.getSource();
+		MouseEvent eventoRaton = e;
 
-        if (eventoRaton.getButton() == MouseEvent.BUTTON1) {
-            if (botonPulsado.getIcon() != null || botonPulsado.getIcon() == new ImageIcon("bandera.png")) {
-            	botonPulsado.setBackground(Color.GRAY);
-                botonPulsado.setIcon(null);
-                contBombas++;
-                labelBombas.setText(""+contBombas);
-                
-            } else {
-            	if(botonPulsado.getBackground()==Color.GRAY) {
-            		String num = botonPulsado.getName();
-                    String[] nume = num.split("\\.");
-                    int num1 = Integer.parseInt(nume[0]), num2 = Integer.parseInt(nume[1]);
-                    desvelarAdj(num1, num2);
-            	}
-            }
-        } else {
-            if(botonPulsado.getBackground()==Color.GRAY) {
-            	ImageIcon imagen = new ImageIcon("bandera.png");
-                botonPulsado.setBackground(Color.YELLOW);
-                botonPulsado.setIcon(imagen);
-                contBombas--;
-                labelBombas.setText(""+contBombas);
-            }
-        }
-    }
+		if (eventoRaton.getButton() == MouseEvent.BUTTON1) {
+			if (botonPulsado.getIcon() != null || botonPulsado.getIcon() == new ImageIcon("bandera.png")) {
+				botonPulsado.setBackground(Color.GRAY);
+				botonPulsado.setIcon(null);
+				contBombas++;
+				labelBombas.setText("" + contBombas);
 
-    @Override
-    public void mousePressed(MouseEvent e) {
-    }
+			} else {
+				if (botonPulsado.getBackground() == Color.GRAY) {
+					String num = botonPulsado.getName();
+					String[] nume = num.split("\\.");
+					int num1 = Integer.parseInt(nume[0]), num2 = Integer.parseInt(nume[1]);
+					desvelarAdj(num1, num2);
+				}
+			}
+		} else {
+			if (botonPulsado.getBackground() == Color.GRAY) {
+				ImageIcon imagen = new ImageIcon("bandera.png");
+				botonPulsado.setBackground(Color.YELLOW);
+				botonPulsado.setIcon(imagen);
+				contBombas--;
+				labelBombas.setText("" + contBombas);
+			}
+		}
+	}
 
-    @Override
-    public void mouseReleased(MouseEvent e) {
-    }
+	@Override
+	public void mousePressed(MouseEvent e) {
+	}
 
-    @Override
-    public void mouseEntered(MouseEvent e) {
-    }
+	@Override
+	public void mouseReleased(MouseEvent e) {
+	}
 
-    @Override
-    public void mouseExited(MouseEvent e) {
-    }
+	@Override
+	public void mouseEntered(MouseEvent e) {
+	}
 
-    public boolean[][] ponerBombas() {
-        boolean[][] bombas = new boolean[numCasillas][numCasillas];
-        int cont = 0, finalBombas = numCasillas;
-        Random random = new Random();
+	@Override
+	public void mouseExited(MouseEvent e) {
+	}
 
-        while (cont < finalBombas) {
-            int fila = random.nextInt(numCasillas);
-            int columna = random.nextInt(numCasillas);
-            if (!bombas[fila][columna]) {
-                bombas[fila][columna] = true;
-                cont++;
-                contBombas++;
-            }
-        }
-        return bombas;
-    }
+	public boolean[][] ponerBombas() {
+		boolean[][] bombas = new boolean[numCasillas][numCasillas];
+		int cont = 0, finalBombas = numCasillas;
+		Random random = new Random();
 
-    public void pisarBomba(int num1, int num2) {
-        casillas[num1][num2].setBackground(Color.red);
-        ImageIcon imagen = new ImageIcon("mina.png");
-        for (int a = 0; a < casillas.length; a++) {
-            for (int b = 0; b < casillas.length; b++) {
-                if (bombas[a][b] == true) {
-                    casillas[a][b].setBackground(Color.red);
-                    casillas[a][b].setIcon(imagen);
-                }
-            }
-        }
-    }
+		while (cont < finalBombas) {
+			int fila = random.nextInt(numCasillas);
+			int columna = random.nextInt(numCasillas);
+			if (!bombas[fila][columna]) {
+				bombas[fila][columna] = true;
+				cont++;
+				contBombas++;
+			}
+		}
+		return bombas;
+	}
 
-    public int contarBombas(int num1, int num2) {
-        int contador = 0;
-        for (int i = -1; i <= 1; i++) {
-            for (int j = -1; j <= 1; j++) {
-                if ((num1 + i >= 0) && (num1 + i < numCasillas) && (num2 + j >= 0) && (num2 + j < numCasillas)) {
-                    if (bombas[num1 + i][num2 + j]) {
-                        contador++;
-                    }
-                }
-            }
-        }
-        return contador;
-    }
+	public void pisarBomba(int num1, int num2) {
+		casillas[num1][num2].setBackground(Color.red);
+		ImageIcon imagen = new ImageIcon("mina.png");
+		for (int a = 0; a < casillas.length; a++) {
+			for (int b = 0; b < casillas.length; b++) {
+				if (bombas[a][b] == true) {
+					casillas[a][b].setBackground(Color.red);
+					casillas[a][b].setIcon(imagen);
+				}
+			}
+		}
+	}
 
-    public void desvelarAdj(int num1, int num2) {
-        if (bombas[num1][num2]) {
-        	timer.stop();
-            pisarBomba(num1, num2);
-        } else {
-            int bombasAdyacentes = contarBombas(num1, num2);
-            casillas[num1][num2].setText(Integer.toString(bombasAdyacentes));
-            casillas[num1][num2].setEnabled(false);
-            switch(bombasAdyacentes) {
-            case 1:
-            	casillas[num1][num2].setBackground(Color.BLUE);
-            	break;
-            case 2:
-            	casillas[num1][num2].setBackground(Color.GREEN);
-            	break;
-            case 3:
-            	casillas[num1][num2].setBackground(Color.RED);
-            	break;
-            default:
-            	casillas[num1][num2].setBackground(Color.WHITE);
-            	break;
-            }	
-            contCasillas--;
-        	labelCasillas.setText(""+contCasillas);
-            if (bombasAdyacentes == 0) {
-                for (int i=-1;i<=1;i++) {
-                    for (int j=-1;j<=1;j++) {
-                        if ((num1 + i >= 0) && (num1 + i < numCasillas) && (num2 + j >= 0) && (num2 + j < numCasillas)) {
-                            if (casillas[num1 + i][num2 + j].isEnabled()) {
-                                desvelarAdj(num1 + i, num2 + j);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
+	public int contarBombas(int num1, int num2) {
+		int contador = 0;
+		for (int i = -1; i <= 1; i++) {
+			for (int j = -1; j <= 1; j++) {
+				if ((num1 + i >= 0) && (num1 + i < numCasillas) && (num2 + j >= 0) && (num2 + j < numCasillas)) {
+					if (bombas[num1 + i][num2 + j]) {
+						contador++;
+					}
+				}
+			}
+		}
+		return contador;
+	}
 
-    public static void main(String[] args) {
+	public void desvelarAdj(int num1, int num2) {
+		if (bombas[num1][num2]) {
+			timer.stop();
+			pisarBomba(num1, num2);
+		} else {
+			int bombasAdyacentes = contarBombas(num1, num2);
+			casillas[num1][num2].setText(Integer.toString(bombasAdyacentes));
+			casillas[num1][num2].setEnabled(false);
+			switch (bombasAdyacentes) {
+			case 1:
+				casillas[num1][num2].setBackground(Color.BLUE);
+				break;
+			case 2:
+				casillas[num1][num2].setBackground(Color.GREEN);
+				break;
+			case 3:
+				casillas[num1][num2].setBackground(Color.RED);
+				break;
+			default:
+				casillas[num1][num2].setBackground(Color.WHITE);
+				break;
+			}
+			contCasillas--;
+			labelCasillas.setText("" + contCasillas);
+			if (bombasAdyacentes == 0) {
+				for (int i = -1; i <= 1; i++) {
+					for (int j = -1; j <= 1; j++) {
+						if ((num1 + i >= 0) && (num1 + i < numCasillas) && (num2 + j >= 0)
+								&& (num2 + j < numCasillas)) {
+							if (casillas[num1 + i][num2 + j].isEnabled()) {
+								desvelarAdj(num1 + i, num2 + j);
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
