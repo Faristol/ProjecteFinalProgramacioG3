@@ -25,9 +25,14 @@
 		</attributes>
 	</classpathentry>
 <<<<<<< Updated upstream
+<<<<<<< HEAD
 	<classpathentry kind="lib" path="mysql-connector-j-8.0.33.jar"/>
 =======
 	<classpathentry kind="lib" path="C:/Users/PC/eclipse-workspace/ProjecteFinalProgramacioG3/projecteprofinal/mysql-connector-j-8.0.33/mysql-connector-j-8.0.33.jar"/>
+=======
+=======
+	<classpathentry kind="lib" path="mysql-connector-j-8.0.33/mysql-connector-j-8.0.33.jar"/>
+>>>>>>> main
 >>>>>>> Stashed changes
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
