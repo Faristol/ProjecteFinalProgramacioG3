@@ -10,15 +10,15 @@ import javax.swing.JPanel;
 public class Celda extends JPanel  {
 
 	private boolean viva;
-	static int posX;
-	static int posY;
+	private int posX;
+	private int posY;
 	private static int amplaria = 5;
 	private static int altura = 5;
 
 	public Celda(int posX, int posY) {
 		this.viva = false;
-		Celda.posX = posX;
-		Celda.posY = posY;
+		this.posX = posX;
+		this.posY = posY;
 		setPreferredSize(new Dimension(amplaria, altura));
 		setBackground(Color.BLACK);
 		setBorder(BorderFactory.createLineBorder(Color.WHITE, 1));
