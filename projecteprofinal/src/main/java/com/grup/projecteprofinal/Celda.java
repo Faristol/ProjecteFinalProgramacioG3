@@ -23,7 +23,35 @@ public class Celda extends JPanel {
         setBorder(BorderFactory.createLineBorder(Color.WHITE));
     }
 
-    public boolean estaViva() {
+    public boolean isViva() {
+		return viva;
+	}
+
+	public int getAmplaria() {
+		return amplaria;
+	}
+
+	public int getAltura() {
+		return altura;
+	}
+
+	public void setPosX(int posX) {
+		this.posX = posX;
+	}
+
+	public void setPosY(int posY) {
+		this.posY = posY;
+	}
+
+	public void setAmplaria(int amplaria) {
+		this.amplaria = amplaria;
+	}
+
+	public void setAltura(int altura) {
+		this.altura = altura;
+	}
+
+	public boolean estaViva() {
         return viva;
     }
 
