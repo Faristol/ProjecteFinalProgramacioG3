@@ -7,7 +7,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
-public class Celda extends JPanel {
+public class Celda extends JPanel  {
 
 	private boolean viva;
 	private int posX;
@@ -76,4 +76,19 @@ public class Celda extends JPanel {
 			setBackground(Color.BLACK);
 		}
 	}
-}
+
+	
+	 public boolean equals(Object obj) {
+	        if (this == obj) {
+	            return true;
+	        }
+
+	        if (obj == null || getClass() != obj.getClass()) {
+	            return false;
+	        }
+
+	        Celda other = (Celda) obj;
+	        return posY == other.posY && posX == other.posX && viva == other.viva;
+	    }
+	}
+

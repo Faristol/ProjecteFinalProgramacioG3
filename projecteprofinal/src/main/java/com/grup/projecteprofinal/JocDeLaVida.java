@@ -28,9 +28,9 @@ public class JocDeLaVida extends JFrame {
 	private JButton Menuda;
 	private JButton Mitjana;
 	private JButton Gran;
-	private int alturaTauler;
-	private int amplariaTauler;
-	private JButton condicionsInicials;
+	static int alturaTauler;
+	private static int amplariaTauler;
+	static JButton condicionsInicials;
 	private JButton start;
 	private JButton pausar;
 	private JButton alentir;
@@ -38,7 +38,7 @@ public class JocDeLaVida extends JFrame {
 	private JButton info;
 	private JButton acaba;
 	private JPanel panellBotons;
-	private Tauler graella;
+	private Tauler graella = new Tauler(1,1);
 
 	/**
 	 * Launch the application.
@@ -208,8 +208,8 @@ public class JocDeLaVida extends JFrame {
 		return alturaTauler;
 	}
 
-	public void setAlturaTauler(int alturaTauler) {
-		this.alturaTauler = alturaTauler;
+	public static void setAlturaTauler(int alturaTauler) {
+		JocDeLaVida.alturaTauler = alturaTauler;
 	}
 
 	public void iniciarInfoStart() {
@@ -220,12 +220,14 @@ public class JocDeLaVida extends JFrame {
 						JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
 				if (choice == 0) {
 					Tauler.condicionsManuals();
-					//si polsa tant en condicions manuals com en aleatories, es creara el listener per a el start
-					//quan es polse en start es desabilitarà el botó Dibuixa
+					
 					
 				} else if (choice == 1) {
 					Tauler.condicionsAleatories();
 				}
+				//si polsa tant en condicions manuals com en aleatories, es creara el listener per a el start
+				//quan es polse en start es desabilitarà el botó Dibuixa
+				crearListenerStart();
 			}
 		});
 		info.addActionListener(new ActionListener() {
@@ -249,5 +251,110 @@ public class JocDeLaVida extends JFrame {
 			}
 		});
 
+	}
+	public void crearListenerStart() {
+		start.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//quan polsa start s'habiliten els botons
+				setEnabled(true);
+				habilitarBotons();
+				condicionsInicials.setEnabled(false);
+				start.setEnabled(false);
+				Tauler.inicia(graella);
+				if(!Tauler.estat) {
+					destruirPanell();
+				}
+				
+				
+
+			}
+		});
+	}
+	public void habilitarBotons() {
+		
+
+		pausar.addActionListener(new ActionListener() {
+		    public void actionPerformed(ActionEvent e) {
+		        if (Tauler.jocPausat == false) {
+		            
+		            Tauler.timer.stop();
+		            Tauler.jocPausat = true;
+		            pausar.setText("Continuar");
+		        } else {
+		            
+		        	Tauler.timer.start();
+		        	Tauler.jocPausat = false;
+		            pausar.setText("Pausar");
+		        }
+		    }
+		});
+
+		acaba.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Tauler.acaba = true;
+				destruirPanell();
+				
+				
+				
+				
+			}
+		});
+		alentir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int velocitatActual = Tauler.timer.getDelay();
+				int novaVelocitat = velocitatActual+100;
+				Tauler.timer.setDelay(novaVelocitat);
+				
+				
+
+			}
+		});
+		accelerar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int velocitatActual = Tauler.timer.getDelay();
+				if(velocitatActual>0) {
+					int novaVelocitat = velocitatActual-100;
+					Tauler.timer.setDelay(novaVelocitat);
+				}
+			}
+		});
+	}
+	
+
+	public int getAmplariaTauler() {
+		return amplariaTauler;
+	}
+
+	public void setAmplariaTauler(int amplariaTauler) {
+		this.amplariaTauler = amplariaTauler;
+	}
+	public void destruirPanell() {
+	    panellBotons.removeAll();
+	    condicionsInicials = new JButton("Dibuixa");
+	    start = new JButton("Start");
+	    pausar = new JButton("Pausar");
+	    alentir = new JButton("Alentir");
+	    accelerar = new JButton("Accelerar");
+	    info = new JButton("Informacio");
+	    acaba = new JButton("Acaba");
+
+	    panellBotons.add(condicionsInicials);
+	    panellBotons.add(start);
+	    panellBotons.add(pausar);
+	    panellBotons.add(acaba);
+	    panellBotons.add(alentir);
+	    panellBotons.add(accelerar);
+	    panellBotons.add(info);
+	    condicionsInicials.setVisible(true);
+	    start.setVisible(true);
+	    pausar.setVisible(true);
+	    alentir.setVisible(true);
+	    accelerar.setVisible(true);
+	    info.setVisible(true);
+	    acaba.setVisible(true);
+	    repaint();
+	    revalidate();
+
+	    iniciarInfoStart();
 	}
 }
