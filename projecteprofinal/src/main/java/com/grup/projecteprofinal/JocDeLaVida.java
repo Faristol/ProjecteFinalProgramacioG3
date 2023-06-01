@@ -9,6 +9,9 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -38,7 +41,7 @@ public class JocDeLaVida extends JFrame {
 	private JButton info;
 	private JButton acaba;
 	private JPanel panellBotons;
-	private Tauler graella = new Tauler(1,1);
+	private Tauler graella = new Tauler(1, 1);
 	private static JocDeLaVida frame;
 
 	/**
@@ -222,15 +225,15 @@ public class JocDeLaVida extends JFrame {
 				if (choice == 0) {
 					Tauler.condicionsManuals();
 					crearListenerStart();
-					
-					
+
 				} else if (choice == 1) {
 					Tauler.condicionsAleatories();
 					crearListenerStart();
 				}
-				//si polsa tant en condicions manuals com en aleatories, es creara el listener per a el start
-				//quan es polse en start es desabilitarà el botó Dibuixa
-				
+				// si polsa tant en condicions manuals com en aleatories, es creara el listener
+				// per a el start
+				// quan es polse en start es desabilitarà el botó Dibuixa
+
 			}
 		});
 		info.addActionListener(new ActionListener() {
@@ -238,87 +241,90 @@ public class JocDeLaVida extends JFrame {
 				String informacio = "\n"
 						+ "El Joc de la Vida, creat per John Conway el 1970, és un joc de simulació de cèl·lules en un tauler bidimensional.\nAquest joc és conegut com a \"autòmat cel·lular\" i ha captivat l'interès de matemàtics i entusiastes durant dècades.\nLes regles son les següents:"
 						+ "\n\nTota cèl·lula viva amb menys de dos veïnes vives mor (de solitud).\n"
-						
+
 						+ "Tota cèl·lula viva amb més de tres veïnes vives mor (d'excés de concentració).\n"
 						+ "Tota cèl·lula viva amb dos o tres veïnes vives segueix viva per a la següent generació.\n"
 						+ "Tota cèl·lula morta amb exactament tres veïnes vives torna a la vida.\n"
-						+ "El joc acaba quan totes les cèl·lules han mort.\n"
-						+ "\n"
+						+ "El joc acaba quan totes les cèl·lules han mort.\n" + "\n"
 						+ "Per a començar polsa en Dibuixa, elegeix entre establir les condicions inicials tú mateixa o aleatoriament i polsa en Start.\n"
-				        + "Podràs pausar, reprendre, aturar, accelerar o alentir les generacions en qualsevol moment.\n"
+						+ "Podràs pausar, reprendre, aturar, accelerar o alentir les generacions en qualsevol moment.\n"
 						+ "En acabar es mostrarà un panell amb estadístiques, així mateix per a generar altres condicions inicials, hauràs\n"
-				        + "d'apretar novament en dibuixa.";
-				JOptionPane.showMessageDialog(null, informacio, "Informació",
-						JOptionPane.INFORMATION_MESSAGE);
+						+ "d'apretar novament en dibuixa.";
+				JOptionPane.showMessageDialog(null, informacio, "Informació", JOptionPane.INFORMATION_MESSAGE);
 
 			}
 		});
 
 	}
+
 	public void crearListenerStart() {
-		start.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				//quan polsa start s'habiliten els botons
-				setEnabled(true);
-				habilitarBotons();
-				condicionsInicials.setEnabled(false);
-				start.setEnabled(false);
-				Tauler.inicia(graella,frame);
-				
-				
-				
-				
+		ActionListener[] actionListeners = start.getActionListeners();
+		boolean hasActionListener = false;
 
+		for (ActionListener listener : actionListeners) {
+			if (listener instanceof ActionListener) {
+				hasActionListener = true;
+				break;
 			}
-		});
+		}
+
+		if (!hasActionListener) {
+			start.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					setEnabled(true);
+					habilitarBotons();
+					condicionsInicials.setEnabled(false);
+					start.setEnabled(false);
+					Tauler.inicia(graella, frame);
+					Tauler.desactivarMouseListener();
+				}
+			});
+		}
 	}
+
 	public void habilitarBotons() {
-		
 
 		pausar.addActionListener(new ActionListener() {
-		    public void actionPerformed(ActionEvent e) {
-		        if (Tauler.jocPausat == false) {
-		            
-		            Tauler.timer.stop();
-		            Tauler.jocPausat = true;
-		            pausar.setText("Continuar");
-		        } else {
-		            
-		        	Tauler.timer.start();
-		        	Tauler.jocPausat = false;
-		            pausar.setText("Pausar");
-		        }
-		    }
+			public void actionPerformed(ActionEvent e) {
+				if (Tauler.jocPausat == false) {
+
+					Tauler.timer.stop();
+					Tauler.jocPausat = true;
+					pausar.setText("Continuar");
+				} else {
+
+					Tauler.timer.start();
+					Tauler.jocPausat = false;
+					pausar.setText("Pausar");
+				}
+			}
 		});
 
 		acaba.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Tauler.timer.start();
 				Tauler.acaba = true;
-				destruirPanell();
+				
 			}
 		});
 		alentir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int velocitatActual = Tauler.timer.getDelay();
-				int novaVelocitat = velocitatActual+100;
+				int novaVelocitat = velocitatActual + 100;
 				Tauler.timer.setDelay(novaVelocitat);
-				
-				
 
 			}
 		});
 		accelerar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int velocitatActual = Tauler.timer.getDelay();
-				if(velocitatActual>0) {
-					int novaVelocitat = velocitatActual-100;
+				if (velocitatActual > 0) {
+					int novaVelocitat = velocitatActual - 100;
 					Tauler.timer.setDelay(novaVelocitat);
 				}
 			}
 		});
 	}
-	
 
 	public int getAmplariaTauler() {
 		return amplariaTauler;
@@ -327,33 +333,34 @@ public class JocDeLaVida extends JFrame {
 	public void setAmplariaTauler(int amplariaTauler) {
 		this.amplariaTauler = amplariaTauler;
 	}
+
 	public void destruirPanell() {
-	    panellBotons.removeAll();
-	    condicionsInicials = new JButton("Dibuixa");
-	    start = new JButton("Start");
-	    pausar = new JButton("Pausar");
-	    alentir = new JButton("Alentir");
-	    accelerar = new JButton("Accelerar");
-	    info = new JButton("Informacio");
-	    acaba = new JButton("Acaba");
+		panellBotons.removeAll();
+		condicionsInicials = new JButton("Dibuixa");
+		start = new JButton("Start");
+		pausar = new JButton("Pausar");
+		alentir = new JButton("Alentir");
+		accelerar = new JButton("Accelerar");
+		info = new JButton("Informacio");
+		acaba = new JButton("Acaba");
 
-	    panellBotons.add(condicionsInicials);
-	    panellBotons.add(start);
-	    panellBotons.add(pausar);
-	    panellBotons.add(acaba);
-	    panellBotons.add(alentir);
-	    panellBotons.add(accelerar);
-	    panellBotons.add(info);
-	    condicionsInicials.setVisible(true);
-	    start.setVisible(true);
-	    pausar.setVisible(true);
-	    alentir.setVisible(true);
-	    accelerar.setVisible(true);
-	    info.setVisible(true);
-	    acaba.setVisible(true);
-	    repaint();
-	    revalidate();
+		panellBotons.add(condicionsInicials);
+		panellBotons.add(start);
+		panellBotons.add(pausar);
+		panellBotons.add(acaba);
+		panellBotons.add(alentir);
+		panellBotons.add(accelerar);
+		panellBotons.add(info);
+		condicionsInicials.setVisible(true);
+		start.setVisible(true);
+		pausar.setVisible(true);
+		alentir.setVisible(true);
+		accelerar.setVisible(true);
+		info.setVisible(true);
+		acaba.setVisible(true);
+		repaint();
+		revalidate();
 
-	    iniciarInfoStart();
+		iniciarInfoStart();
 	}
 }
