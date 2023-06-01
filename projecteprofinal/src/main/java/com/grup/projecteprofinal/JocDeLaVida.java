@@ -39,6 +39,7 @@ public class JocDeLaVida extends JFrame {
 	private JButton acaba;
 	private JPanel panellBotons;
 	private Tauler graella = new Tauler(1,1);
+	private static JocDeLaVida frame;
 
 	/**
 	 * Launch the application.
@@ -47,7 +48,7 @@ public class JocDeLaVida extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					JocDeLaVida frame = new JocDeLaVida();
+					frame = new JocDeLaVida();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -220,14 +221,16 @@ public class JocDeLaVida extends JFrame {
 						JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
 				if (choice == 0) {
 					Tauler.condicionsManuals();
+					crearListenerStart();
 					
 					
 				} else if (choice == 1) {
 					Tauler.condicionsAleatories();
+					crearListenerStart();
 				}
 				//si polsa tant en condicions manuals com en aleatories, es creara el listener per a el start
 				//quan es polse en start es desabilitarà el botó Dibuixa
-				crearListenerStart();
+				
 			}
 		});
 		info.addActionListener(new ActionListener() {
@@ -260,10 +263,9 @@ public class JocDeLaVida extends JFrame {
 				habilitarBotons();
 				condicionsInicials.setEnabled(false);
 				start.setEnabled(false);
-				Tauler.inicia(graella);
-				if(!Tauler.estat) {
-					destruirPanell();
-				}
+				Tauler.inicia(graella,frame);
+				
+				
 				
 				
 
@@ -291,12 +293,9 @@ public class JocDeLaVida extends JFrame {
 
 		acaba.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				Tauler.timer.start();
 				Tauler.acaba = true;
 				destruirPanell();
-				
-				
-				
-				
 			}
 		});
 		alentir.addActionListener(new ActionListener() {
