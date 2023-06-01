@@ -5,6 +5,8 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -25,6 +27,7 @@ public class Tauler extends JPanel {
 	static int celCreades = 0;
 	static boolean jocPausat = false;
 	static boolean acaba = false;
+	private static MouseAdapter mouseListener;
 	
 
 	public Tauler(int files, int columnes) {
@@ -45,18 +48,34 @@ public class Tauler extends JPanel {
 			}
 		}
 	}
+	public static void desactivarMouseListener() {
+	    for (int i = 0; i < files; i++) {
+	        for (int j = 0; j < columnes; j++) {
+	            final JPanel celda = celdes[i][j];
+	            MouseListener[] mouseListeners = celda.getMouseListeners();
+	            if (mouseListeners != null && mouseListeners.length > 0) {
+	                celda.removeMouseListener(mouseListener);
+	            }
+	        }
+	    }
+	}
+
 
 	public static void condicionsManuals() {
-		for (int i = 0; i < files; i++) {
-			for (int j = 0; j < columnes; j++) {
-				final JPanel celda = celdes[i][j];
-				celda.addMouseListener(new java.awt.event.MouseAdapter() {
-					public void mouseClicked(java.awt.event.MouseEvent evt) {
-						celda.setBackground(Color.WHITE);
-					}
-				});
-			}
-		}
+	    mouseListener = new java.awt.event.MouseAdapter() {
+	        public void mouseClicked(java.awt.event.MouseEvent evt) {
+	            JPanel celda = (JPanel) evt.getSource(); 
+	            Celda celdaCelda = (Celda) celda; 
+	            celdaCelda.setViva(true);
+	        }
+	    };
+
+	    for (int i = 0; i < files; i++) {
+	        for (int j = 0; j < columnes; j++) {
+	            final JPanel celda = celdes[i][j];
+	            celda.addMouseListener(mouseListener);
+	        }
+	    }
 	}
 
 	public static void condicionsAleatories() {
@@ -128,12 +147,15 @@ public class Tauler extends JPanel {
 						if (generacionCount >= 2 && generacionAnterior != null
 								&& Arrays.deepEquals(nuevaGeneracion, generacionAnterior)) {
 							// El juego ha llegado a un estado estacionario, detener la ejecución
-							timer.stop();
+							
 							for (int i = 0; i < files; i++) {
 								for (int j = 0; j < columnes; j++) {
 									celdes[i][j].setViva(nuevaGeneracion[i][j].isViva());
 								}
 							}
+							tauler.repaint();
+							tauler.revalidate();
+							timer.stop();
 							int max = Collections.max(celVivesCadaGeneracio);
 							double densitatMaxima = (double) max / (files * columnes);
 							JOptionPane.showMessageDialog(null,
@@ -147,17 +169,23 @@ public class Tauler extends JPanel {
 							joc.repaint();
 							joc.revalidate();
 							
+							
 							return;
 
 						} else if (!hayCambios) {
+							
 							// No hay cambios en la generación, detener la ejecución
 							for (int i = 0; i < files; i++) {
 								for (int j = 0; j < columnes; j++) {
 									celdes[i][j].setViva(nuevaGeneracion[i][j].isViva());
 								}
 							}
-
+							
+							tauler.repaint();
+							tauler.revalidate();
 							timer.stop();
+
+							
 							int max = Collections.max(celVivesCadaGeneracio);
 							double densitatMaxima = (double) max / (files * columnes);
 							JOptionPane.showMessageDialog(null,
@@ -195,11 +223,18 @@ public class Tauler extends JPanel {
 				}
 				if (acaba) {
 					Tauler.timer.stop();
+					
+					
+					joc.destruirPanell();
+					
 					JOptionPane.showMessageDialog(null,
 							"El joc ha sigut aturat.\nNº Generacions: " + comptadorGeneracions
 									+ "\nNº Cèl·lules creades: " + celCreades,
 							"Fi del joc", JOptionPane.INFORMATION_MESSAGE);
 					Tauler.resetejarTauler();
+					joc.repaint();
+					joc.revalidate();
+					acaba = false;
 
 					return;
 				}
