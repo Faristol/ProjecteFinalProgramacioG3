@@ -3,39 +3,74 @@ package com.grup.projecteprofinal;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.Random;
 
-import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
 public class Tauler extends JPanel {
-    private int files;
-    private int columnes;
-    private Celda[][] celdes;
+	private static int files;
+	private static int columnes;
+	private static Celda[][] celdes;
 
-    public Tauler(int files, int columnes) {
-        this.files = files;
-        this.columnes = columnes;
-        celdes = new Celda[files][columnes];
-        setLayout(new GridLayout(files, columnes));
-        setPreferredSize(new Dimension(files, columnes));
-        inicialitzarCeldes();
-        
-    }
+	public Tauler(int files, int columnes) {
+		this.files = files;
+		this.columnes = columnes;
+		celdes = new Celda[files][columnes];
+		setLayout(new GridLayout(files, columnes));
+		setPreferredSize(new Dimension(files, columnes));
+		inicialitzarCeldes();
 
-    private void inicialitzarCeldes() {
-        for (int i = 0; i < files; i++) {
-            for (int j = 0; j < columnes; j++) {
-                Celda celda = new Celda(i, j);
-                celdes[i][j] = celda;
-                add(celda);
-            }
-        }
-    }
+	}
 
-   
+	private void inicialitzarCeldes() {
+		for (int i = 0; i < files; i++) {
+			for (int j = 0; j < columnes; j++) {
+				Celda celda = new Celda(i, j);
+				celdes[i][j] = celda;
+				add(celda);
+			}
+		}
+	}
 
-    public int getFiles() {
+	public static void condicionsManuals() {
+		for (int i = 0; i < files; i++) {
+			for (int j = 0; j < columnes; j++) {
+				final JPanel celda = celdes[i][j];
+				celda.addMouseListener(new MouseAdapter() {
+					public void mouseClicked(MouseEvent e) {
+						celda.setBackground(Color.WHITE);
+					}
+				});
+			}
+		}
+	}
+
+	public static void condicionsAleatories() {
+		Random aleatori = new Random();
+		double densitatMinima = 0.20;
+		double densitatMaxima = 0.30;
+		//establim densitat aleatoria
+		double densitatVives = densitatMinima + (densitatMaxima - densitatMinima) * aleatori.nextDouble();
+		int numVivesDesitjades = (int) (files * columnes * densitatVives);
+		//comptem el num de cel vives a partir de la densitat
+		//establim comptador cel·les vives
+		int celdesVivesGenerades = 0;
+
+		while (celdesVivesGenerades < numVivesDesitjades) {
+			int fila = aleatori.nextInt(files);
+			int columna = aleatori.nextInt(columnes);
+
+			if (!celdes[fila][columna].isViva()) {
+				celdes[fila][columna].setViva(true);
+				celdesVivesGenerades++;
+			}
+		}
+	}
+
+	public int getFiles() {
 		return files;
 	}
 
@@ -60,6 +95,6 @@ public class Tauler extends JPanel {
 	}
 
 	public Celda getCelda(int fila, int columna) {
-        return celdes[fila][columna];
-    }
+		return celdes[fila][columna];
+	}
 }
