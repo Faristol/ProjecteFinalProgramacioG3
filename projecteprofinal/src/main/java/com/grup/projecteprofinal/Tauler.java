@@ -25,7 +25,7 @@ public class Tauler extends JPanel {
 	static int celCreades = 0;
 	static boolean jocPausat = false;
 	static boolean acaba = false;
-	static boolean estat = true;
+
 
 	public Tauler(int files, int columnes) {
 		this.files = files;
@@ -46,18 +46,7 @@ public class Tauler extends JPanel {
 		}
 	}
 
-	public static void condicionsManuals() {
-		for (int i = 0; i < files; i++) {
-			for (int j = 0; j < columnes; j++) {
-				final JPanel celda = celdes[i][j];
-				celda.addMouseListener(new java.awt.event.MouseAdapter() {
-					public void mouseClicked(java.awt.event.MouseEvent evt) {
-						celda.setBackground(Color.WHITE);
-					}
-				});
-			}
-		}
-	}
+	
 
 	public static void condicionsAleatories() {
 		Random aleatori = new Random();
@@ -78,7 +67,7 @@ public class Tauler extends JPanel {
 		}
 	}
 
-	public static void inicia(final Tauler tauler) {
+	public static void inicia(final Tauler tauler, final JocDeLaVida joc) {
 		comptadorGeneracions = 0;
 		celCreades = 0;
 		timer = new Timer(intervaloTiempo, new ActionListener() {
@@ -128,12 +117,15 @@ public class Tauler extends JPanel {
 						if (generacionCount >= 2 && generacionAnterior != null
 								&& Arrays.deepEquals(nuevaGeneracion, generacionAnterior)) {
 							// El juego ha llegado a un estado estacionario, detener la ejecución
-							timer.stop();
+							
 							for (int i = 0; i < files; i++) {
 								for (int j = 0; j < columnes; j++) {
 									celdes[i][j].setViva(nuevaGeneracion[i][j].isViva());
 								}
 							}
+							tauler.repaint();
+							tauler.revalidate();
+							timer.stop();
 							int max = Collections.max(celVivesCadaGeneracio);
 							double densitatMaxima = (double) max / (files * columnes);
 							JOptionPane.showMessageDialog(null,
@@ -142,7 +134,10 @@ public class Tauler extends JPanel {
 											+ max + "\nDensitat Màxima Arribada: " + densitatMaxima * 100 + "%",
 									"Fi del joc", JOptionPane.INFORMATION_MESSAGE);
 							resetejarTauler();
-							estat = false;
+							joc.destruirPanell();
+							joc.repaint();
+							joc.revalidate();
+							
 							return;
 
 						} else if (!hayCambios) {
@@ -153,6 +148,8 @@ public class Tauler extends JPanel {
 								}
 							}
 
+							tauler.repaint();
+							tauler.revalidate();
 							timer.stop();
 							int max = Collections.max(celVivesCadaGeneracio);
 							double densitatMaxima = (double) max / (files * columnes);
@@ -162,7 +159,10 @@ public class Tauler extends JPanel {
 											+ max + "\nDensitat Màxima Arribada: " + densitatMaxima * 100 + "%",
 									"Fi del joc", JOptionPane.INFORMATION_MESSAGE);
 							resetejarTauler();
-							estat = false;
+							joc.destruirPanell();
+							joc.repaint();
+							joc.revalidate();
+							
 							return;
 
 						} else {
@@ -193,7 +193,7 @@ public class Tauler extends JPanel {
 									+ "\nNº Cèl·lules creades: " + celCreades,
 							"Fi del joc", JOptionPane.INFORMATION_MESSAGE);
 					Tauler.resetejarTauler();
-					estat = false;
+					acaba=false;
 					return;
 				}
 

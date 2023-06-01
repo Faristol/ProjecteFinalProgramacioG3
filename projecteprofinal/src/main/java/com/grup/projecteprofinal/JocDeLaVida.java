@@ -39,6 +39,7 @@ public class JocDeLaVida extends JFrame {
 	private JButton acaba;
 	private JPanel panellBotons;
 	private Tauler graella = new Tauler(1,1);
+	static JocDeLaVida frame;
 
 	/**
 	 * Launch the application.
@@ -178,7 +179,7 @@ public class JocDeLaVida extends JFrame {
 	public void panellBotons() {
 		panellBotons = new JPanel(new GridLayout(1, 7));
 
-		condicionsInicials = new JButton("Dibuixa");
+		condicionsInicials = new JButton("Aleatori");
 		start = new JButton("Start");
 		pausar = new JButton("Pausar");
 		alentir = new JButton("Alentir");
@@ -215,37 +216,30 @@ public class JocDeLaVida extends JFrame {
 	public void iniciarInfoStart() {
 		condicionsInicials.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Object[] options = { "Manual", "Aleatori" };
-				int choice = JOptionPane.showOptionDialog(null, "Seleccione una opció", "Condicions Inicials",
-						JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
-				if (choice == 0) {
-					Tauler.condicionsManuals();
-					
-					
-				} else if (choice == 1) {
+				
 					Tauler.condicionsAleatories();
-				}
+				
 				//si polsa tant en condicions manuals com en aleatories, es creara el listener per a el start
-				//quan es polse en start es desabilitarà el botó Dibuixa
+				//quan es polse en start es desabilitarï¿½ el botï¿½ Dibuixa
 				crearListenerStart();
 			}
 		});
 		info.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String informacio = "\n"
-						+ "El Joc de la Vida, creat per John Conway el 1970, és un joc de simulació de cèl·lules en un tauler bidimensional.\nAquest joc és conegut com a \"autòmat cel·lular\" i ha captivat l'interès de matemàtics i entusiastes durant dècades.\nLes regles son les següents:"
-						+ "\n\nTota cèl·lula viva amb menys de dos veïnes vives mor (de solitud).\n"
+						+ "El Joc de la Vida, creat per John Conway el 1970, ï¿½s un joc de simulaciï¿½ de cï¿½lï¿½lules en un tauler bidimensional.\nAquest joc ï¿½s conegut com a \"autï¿½mat celï¿½lular\" i ha captivat l'interï¿½s de matemï¿½tics i entusiastes durant dï¿½cades.\nLes regles son les segï¿½ents:"
+						+ "\n\nTota cï¿½lï¿½lula viva amb menys de dos veï¿½nes vives mor (de solitud).\n"
 						
-						+ "Tota cèl·lula viva amb més de tres veïnes vives mor (d'excés de concentració).\n"
-						+ "Tota cèl·lula viva amb dos o tres veïnes vives segueix viva per a la següent generació.\n"
-						+ "Tota cèl·lula morta amb exactament tres veïnes vives torna a la vida.\n"
-						+ "El joc acaba quan totes les cèl·lules han mort.\n"
+						+ "Tota cï¿½lï¿½lula viva amb mï¿½s de tres veï¿½nes vives mor (d'excï¿½s de concentraciï¿½).\n"
+						+ "Tota cï¿½lï¿½lula viva amb dos o tres veï¿½nes vives segueix viva per a la segï¿½ent generaciï¿½.\n"
+						+ "Tota cï¿½lï¿½lula morta amb exactament tres veï¿½nes vives torna a la vida.\n"
+						+ "El joc acaba quan totes les cï¿½lï¿½lules han mort.\n"
 						+ "\n"
-						+ "Per a començar polsa en Dibuixa, elegeix entre establir les condicions inicials tú mateixa o aleatoriament i polsa en Start.\n"
-				        + "Podràs pausar, reprendre, aturar, accelerar o alentir les generacions en qualsevol moment.\n"
-						+ "En acabar es mostrarà un panell amb estadístiques, així mateix per a generar altres condicions inicials, hauràs\n"
+						+ "Per a comenï¿½ar polsa en Dibuixa, elegeix entre establir les condicions inicials tï¿½ mateixa o aleatoriament i polsa en Start.\n"
+				        + "Podrï¿½s pausar, reprendre, aturar, accelerar o alentir les generacions en qualsevol moment.\n"
+						+ "En acabar es mostrarï¿½ un panell amb estadï¿½stiques, aixï¿½ mateix per a generar altres condicions inicials, haurï¿½s\n"
 				        + "d'apretar novament en dibuixa.";
-				JOptionPane.showMessageDialog(null, informacio, "Informació",
+				JOptionPane.showMessageDialog(null, informacio, "Informaciï¿½",
 						JOptionPane.INFORMATION_MESSAGE);
 
 			}
@@ -260,10 +254,8 @@ public class JocDeLaVida extends JFrame {
 				habilitarBotons();
 				condicionsInicials.setEnabled(false);
 				start.setEnabled(false);
-				Tauler.inicia(graella);
-				if(!Tauler.estat) {
-					destruirPanell();
-				}
+				Tauler.inicia(graella,frame);
+				
 				
 				
 
@@ -291,6 +283,8 @@ public class JocDeLaVida extends JFrame {
 
 		acaba.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				Tauler.timer.start();
+				Tauler.jocPausat=false;
 				Tauler.acaba = true;
 				destruirPanell();
 				
@@ -330,7 +324,7 @@ public class JocDeLaVida extends JFrame {
 	}
 	public void destruirPanell() {
 	    panellBotons.removeAll();
-	    condicionsInicials = new JButton("Dibuixa");
+	    condicionsInicials = new JButton("Aleatori");
 	    start = new JButton("Start");
 	    pausar = new JButton("Pausar");
 	    alentir = new JButton("Alentir");
