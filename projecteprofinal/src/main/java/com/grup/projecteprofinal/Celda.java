@@ -8,47 +8,72 @@ import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
 public class Celda extends JPanel {
-    private boolean viva;
-    private int posX;
-    private int posY;
-    private int amplaria = 5;
-    private int altura = 5;
 
-    public Celda(int posX, int posY) {
-        this.viva = false;
-        this.posX = posX;
-        this.posY = posY;
-        setPreferredSize(new Dimension(amplaria, altura));
-        setBackground(Color.BLACK);
-        setBorder(BorderFactory.createLineBorder(Color.WHITE));
-    }
+	private boolean viva;
+	private int posX;
+	private int posY;
+	private static int amplaria = 5;
+	private static int altura = 5;
 
-    public boolean estaViva() {
-        return viva;
-    }
+	public Celda(int posX, int posY) {
+		this.viva = false;
+		this.posX = posX;
+		this.posY = posY;
+		setPreferredSize(new Dimension(amplaria, altura));
+		setBackground(Color.BLACK);
+		setBorder(BorderFactory.createLineBorder(Color.WHITE, 1));
+	}
 
-    public void setViva(boolean viva) {
-        this.viva = viva;
-        actualitzarColor();
-    }
+	public boolean isViva() {
+		return viva;
+	}
 
-    public int getPosX() {
-        return posX;
-    }
+	public int getAmplaria() {
+		return amplaria;
+	}
 
-    public int getPosY() {
-        return posY;
-    }
+	public int getAltura() {
+		return altura;
+	}
 
-    private void actualitzarColor() {
-        if (viva) {
-            setBackground(Color.WHITE);
-        } else {
-            setBackground(Color.BLACK);
-        }
-    }
+	public void setPosX(int posX) {
+		this.posX = posX;
+	}
+
+	public void setPosY(int posY) {
+		this.posY = posY;
+	}
+
+	public void setAmplaria(int amplaria) {
+		Celda.amplaria = amplaria;
+	}
+
+	public void setAltura(int altura) {
+		Celda.altura = altura;
+	}
+
+	public boolean estaViva() {
+		return viva;
+	}
+
+	public void setViva(boolean viva) {
+		this.viva = viva;
+		actualitzarColor();
+	}
+
+	public int getPosX() {
+		return posX;
+	}
+
+	public int getPosY() {
+		return posY;
+	}
+
+	private void actualitzarColor() {
+		if (viva) {
+			setBackground(Color.WHITE);
+		} else {
+			setBackground(Color.BLACK);
+		}
+	}
 }
-
-
-
-
