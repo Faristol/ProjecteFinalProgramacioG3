@@ -48,7 +48,7 @@ public class JocDeLaVida extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					JocDeLaVida frame = new JocDeLaVida();
+					frame = new JocDeLaVida();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
