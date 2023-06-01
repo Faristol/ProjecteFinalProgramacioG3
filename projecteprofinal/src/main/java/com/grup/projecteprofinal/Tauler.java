@@ -27,8 +27,7 @@ public class Tauler extends JPanel {
 	static int celCreades = 0;
 	static boolean jocPausat = false;
 	static boolean acaba = false;
-	private static MouseAdapter mouseListener;
-	
+
 
 	public Tauler(int files, int columnes) {
 		this.files = files;
@@ -60,23 +59,7 @@ public class Tauler extends JPanel {
 	    }
 	}
 
-
-	public static void condicionsManuals() {
-	    mouseListener = new java.awt.event.MouseAdapter() {
-	        public void mouseClicked(java.awt.event.MouseEvent evt) {
-	            JPanel celda = (JPanel) evt.getSource(); 
-	            Celda celdaCelda = (Celda) celda; 
-	            celdaCelda.setViva(true);
-	        }
-	    };
-
-	    for (int i = 0; i < files; i++) {
-	        for (int j = 0; j < columnes; j++) {
-	            final JPanel celda = celdes[i][j];
-	            celda.addMouseListener(mouseListener);
-	        }
-	    }
-	}
+	
 
 	public static void condicionsAleatories() {
 		Random aleatori = new Random();
@@ -120,20 +103,20 @@ public class Tauler extends JPanel {
 
 								if (celdes[i][j].isViva()) {
 									celVives++;
-									// Célula viva
+									// Cï¿½lula viva
 									if (vecinosVivos < 2 || vecinosVivos > 3) {
-										// Muere por soledad o sobrepoblación
+										// Muere por soledad o sobrepoblaciï¿½n
 										nuevaGeneracion[i][j].setViva(false);
 										hayCambios = true;
 
 									} else {
-										// Sobrevive a la siguiente generación
+										// Sobrevive a la siguiente generaciï¿½n
 										nuevaGeneracion[i][j].setViva(true);
 									}
 								} else {
-									// Célula muerta
+									// Cï¿½lula muerta
 									if (vecinosVivos == 3) {
-										// Nace una nueva célula
+										// Nace una nueva cï¿½lula
 										celCreades++;
 										nuevaGeneracion[i][j].setViva(true);
 										hayCambios = true;
@@ -146,7 +129,7 @@ public class Tauler extends JPanel {
 
 						if (generacionCount >= 2 && generacionAnterior != null
 								&& Arrays.deepEquals(nuevaGeneracion, generacionAnterior)) {
-							// El juego ha llegado a un estado estacionario, detener la ejecución
+							// El juego ha llegado a un estado estacionario, detener la ejecuciï¿½n
 							
 							for (int i = 0; i < files; i++) {
 								for (int j = 0; j < columnes; j++) {
@@ -159,22 +142,20 @@ public class Tauler extends JPanel {
 							int max = Collections.max(celVivesCadaGeneracio);
 							double densitatMaxima = (double) max / (files * columnes);
 							JOptionPane.showMessageDialog(null,
-									"El joc ha arribat a un estat estacionari.\nNº Generacions: " + comptadorGeneracions
-											+ "\nNº Cèl·lules creades: " + celCreades + "\nNº Cèl·lules Màxim Arribat: "
-											+ max + "\nDensitat Màxima Arribada: " + densitatMaxima * 100 + "%",
+									"El joc ha arribat a un estat estacionari.\nNï¿½ Generacions: " + comptadorGeneracions
+											+ "\nNï¿½ Cï¿½lï¿½lules creades: " + celCreades + "\nNï¿½ Cï¿½lï¿½lules Mï¿½xim Arribat: "
+											+ max + "\nDensitat Mï¿½xima Arribada: " + densitatMaxima * 100 + "%",
 									"Fi del joc", JOptionPane.INFORMATION_MESSAGE);
 							resetejarTauler();
-							
 							joc.destruirPanell();
 							joc.repaint();
 							joc.revalidate();
-							
 							
 							return;
 
 						} else if (!hayCambios) {
 							
-							// No hay cambios en la generación, detener la ejecución
+							// No hay cambios en la generaciï¿½n, detener la ejecuciï¿½n
 							for (int i = 0; i < files; i++) {
 								for (int j = 0; j < columnes; j++) {
 									celdes[i][j].setViva(nuevaGeneracion[i][j].isViva());
@@ -185,13 +166,15 @@ public class Tauler extends JPanel {
 							tauler.revalidate();
 							timer.stop();
 
-							
+							tauler.repaint();
+							tauler.revalidate();
+							timer.stop();
 							int max = Collections.max(celVivesCadaGeneracio);
 							double densitatMaxima = (double) max / (files * columnes);
 							JOptionPane.showMessageDialog(null,
-									"Totes les cèl·lules han mort.\nNº Generacions: " + comptadorGeneracions
-											+ "\nNº Cèl·lules creades: " + celCreades + "\nNº Cèl·lules Màxim Arribat: "
-											+ max + "\nDensitat Màxima Arribada: " + densitatMaxima * 100 + "%",
+									"Totes les cï¿½lï¿½lules han mort.\nNï¿½ Generacions: " + comptadorGeneracions
+											+ "\nNï¿½ Cï¿½lï¿½lules creades: " + celCreades + "\nNï¿½ Cï¿½lï¿½lules Mï¿½xim Arribat: "
+											+ max + "\nDensitat Mï¿½xima Arribada: " + densitatMaxima * 100 + "%",
 									"Fi del joc", JOptionPane.INFORMATION_MESSAGE);
 							resetejarTauler();
 							joc.destruirPanell();
@@ -201,7 +184,7 @@ public class Tauler extends JPanel {
 							return;
 
 						} else {
-							// Actualizar la generación anterior y el contador
+							// Actualizar la generaciï¿½n anterior y el contador
 							generacionAnterior = new Celda[files][columnes];
 							for (int i = 0; i < files; i++) {
 								for (int j = 0; j < columnes; j++) {
@@ -228,14 +211,11 @@ public class Tauler extends JPanel {
 					joc.destruirPanell();
 					
 					JOptionPane.showMessageDialog(null,
-							"El joc ha sigut aturat.\nNº Generacions: " + comptadorGeneracions
-									+ "\nNº Cèl·lules creades: " + celCreades,
+							"El joc ha sigut aturat.\nNï¿½ Generacions: " + comptadorGeneracions
+									+ "\nNï¿½ Cï¿½lï¿½lules creades: " + celCreades,
 							"Fi del joc", JOptionPane.INFORMATION_MESSAGE);
 					Tauler.resetejarTauler();
-					joc.repaint();
-					joc.revalidate();
-					acaba = false;
-
+					acaba=false;
 					return;
 				}
 
@@ -278,7 +258,7 @@ public class Tauler extends JPanel {
 			}
 		}
 
-		// Restar la propia celda si está viva
+		// Restar la propia celda si estï¿½ viva
 		if (celdes[fila][columna].isViva()) {
 			contador--;
 		}
