@@ -16,6 +16,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -59,7 +62,7 @@ public class Buscaminas extends JFrame implements ActionListener, MouseListener 
 		this.WIDTH = 400;
 		this.HEIGHT = 400;
 		this.PIXEL_SIZE = 400;
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -123,11 +126,52 @@ public class Buscaminas extends JFrame implements ActionListener, MouseListener 
 	}
 
 	public void creacioPanell() {
+		
+		// Crear el menú
+        JMenuBar menuBar = new JMenuBar();
+
+        // Crear el primer campo del menú
+        JMenu menu1 = new JMenu("Juego");
+        menuBar.add(menu1);
+
+        // Agregar opciones al primer campo del menú
+        JMenuItem opcion1 = new JMenuItem("Nueva partida");
+        opcion1.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+        });
+			
+        JMenuItem opcion2 = new JMenuItem("Ranking");
+        opcion2.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				JFrame newFrame = new JFrame("Ranking");
+	            newFrame.setSize(200, 200);
+	            newFrame.setVisible(true);
+	            newFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+	            newFrame.setLayout(new BorderLayout(0, 0));
+	            JPanel panelRanking=new JPanel();
+				
+			}
+        });
+        menu1.add(opcion1);
+        menu1.add(opcion2);
+
+        // Crear el segundo campo del menú
+        JMenu menu2 = new JMenu("Ayuda");
+        menuBar.add(menu2);
+        
+        setJMenuBar(menuBar);
 
 		getContentPane().removeAll();
 		bombas = ponerBombas();
 		setTitle("Tablero");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
 		// Crear el panel estadistiques
 		labelBombas = new JLabel();
@@ -216,7 +260,7 @@ public class Buscaminas extends JFrame implements ActionListener, MouseListener 
 		MouseEvent eventoRaton = e;
 
 		if (eventoRaton.getButton() == MouseEvent.BUTTON1) {
-			if (botonPulsado.getIcon() != null || botonPulsado.getIcon() == new ImageIcon("bandera.png")) {
+			if (botonPulsado.getIcon() != null || botonPulsado.getIcon() == new ImageIcon("img/bandera.png")) {
 				botonPulsado.setBackground(Color.GRAY);
 				botonPulsado.setIcon(null);
 				contBombas++;
@@ -232,7 +276,7 @@ public class Buscaminas extends JFrame implements ActionListener, MouseListener 
 			}
 		} else {
 			if (botonPulsado.getBackground() == Color.GRAY) {
-				ImageIcon imagen = new ImageIcon("bandera.png");
+				ImageIcon imagen = new ImageIcon("img/bandera.png");
 				botonPulsado.setBackground(Color.YELLOW);
 				botonPulsado.setIcon(imagen);
 				contBombas--;
@@ -262,45 +306,21 @@ public class Buscaminas extends JFrame implements ActionListener, MouseListener 
 		int cont = 0, finalBombas = numCasillas;
 		Random random = new Random();
 
-    public void pisarBomba(int num1, int num2) {
-        casillas[num1][num2].setBackground(Color.red);
-        ImageIcon imagen = new ImageIcon("mina.png");
-        for (int a = 0; a < casillas.length; a++) {
-            for (int b = 0; b < casillas.length; b++) {
-                if (bombas[a][b] == true) {
-                    casillas[a][b].setBackground(Color.red);
-                    casillas[a][b].setIcon(imagen);
-                }
-            }
-        }
-        String resultadoFinal="Has durado: "+tiempoTranscurrido+" seg. \n"+"Casillas por desvelar: "+contCasillas;
-        JOptionPane.showMessageDialog(null, resultadoFinal);
-        /*
-        String result = showInputDialog(resultadoFinal, "Fin de la partida");
-        if (result != null) {
-            JOptionPane.showMessageDialog(null, "El valor ingresado fue: " + result);
-        } else {
-            JOptionPane.showMessageDialog(null, "No se ingresï¿½ ningï¿½n valor.");
-        }
-        */
-        dispose();
-    }
-    public static String showInputDialog(String message, String title) {
-        JTextField textField = new JTextField();
-        Object[] components = { message, textField };
-        
-        int option = JOptionPane.showConfirmDialog(null, components, title, JOptionPane.OK_CANCEL_OPTION);
-        
-        if (option == JOptionPane.OK_OPTION) {
-            return textField.getText();
-        }
-        
-        return null;
-    }
+		while (cont < finalBombas) {
+			int fila = random.nextInt(numCasillas);
+			int columna = random.nextInt(numCasillas);
+			if (!bombas[fila][columna]) {
+				bombas[fila][columna] = true;
+				cont++;
+				contBombas++;
+			}
+		}
+		return bombas;
+	}
 
 	public void pisarBomba(int num1, int num2) {
 		casillas[num1][num2].setBackground(Color.red);
-		ImageIcon imagen = new ImageIcon("mina.png");
+		ImageIcon imagen = new ImageIcon("img/mina.png");
 		for (int a = 0; a < casillas.length; a++) {
 			for (int b = 0; b < casillas.length; b++) {
 				if (bombas[a][b] == true) {
@@ -309,6 +329,29 @@ public class Buscaminas extends JFrame implements ActionListener, MouseListener 
 				}
 			}
 		}
+		String resultadoFinal = "Has durado: " + tiempoTranscurrido + " seg. \n" + "Casillas por desvelar: "
+				+ contCasillas;
+		JOptionPane.showMessageDialog(null, resultadoFinal);
+		/*
+		 * String result = showInputDialog(resultadoFinal, "Fin de la partida"); if
+		 * (result != null) { JOptionPane.showMessageDialog(null,
+		 * "El valor ingresado fue: " + result); } else {
+		 * JOptionPane.showMessageDialog(null, "No se ingresï¿½ ningï¿½n valor."); }
+		 */
+		dispose();
+	}
+
+	public static String showInputDialog(String message, String title) {
+		JTextField textField = new JTextField();
+		Object[] components = { message, textField };
+
+		int option = JOptionPane.showConfirmDialog(null, components, title, JOptionPane.OK_CANCEL_OPTION);
+
+		if (option == JOptionPane.OK_OPTION) {
+			return textField.getText();
+		}
+
+		return null;
 	}
 
 	public int contarBombas(int num1, int num2) {
@@ -324,12 +367,39 @@ public class Buscaminas extends JFrame implements ActionListener, MouseListener 
 		}
 		return contador;
 	}
+	public void guardarDatos() {
+		//se guarda depende del tamaño (numCasillas) en una tabla o otra
+		//guardar id usuario, tiempo (tiempoTranscurrido)
+		switch(numCasillas) {
+		case 40:
+			//tamaño grande
+			
+			break;
+		case 20:
+			//tamaño mediano
+			
+			break;
+		case 10:
+			//tamaño pequeño
+			
+			break;
+		}
+	}
+	
+	public void terminarP() {
+		String resultadoFinal = "Has durado: " + tiempoTranscurrido + " seg.";
+		JOptionPane.showMessageDialog(null, resultadoFinal);
+		guardarDatos();
+	}
 
 	public void desvelarAdj(int num1, int num2) {
 		if (bombas[num1][num2]) {
 			timer.stop();
 			pisarBomba(num1, num2);
-		} else {
+		}if(contCasillas==0) {
+			timer.stop();
+			terminarP();
+		}else {
 			int bombasAdyacentes = contarBombas(num1, num2);
 			casillas[num1][num2].setText(Integer.toString(bombasAdyacentes));
 			casillas[num1][num2].setEnabled(false);
