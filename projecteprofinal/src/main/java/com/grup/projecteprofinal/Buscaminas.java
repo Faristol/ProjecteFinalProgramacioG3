@@ -47,7 +47,8 @@ public class Buscaminas extends JFrame implements ActionListener, MouseListener 
 	private int numCasillas, contBombas, contCasillas, tiempoTranscurrido;
 	private boolean[][] bombas;
 	private Timer timer;
-
+	private JButton boton;
+	
 	private JPanel contentPane;
 
 	private int WIDTH = 1;
@@ -157,9 +158,6 @@ public class Buscaminas extends JFrame implements ActionListener, MouseListener 
 		// Agregar opciones al primer campo del menï¿½
 		JMenuItem opcion1 = new JMenuItem("Nueva partida");
 		opcion1.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -244,6 +242,7 @@ public class Buscaminas extends JFrame implements ActionListener, MouseListener 
 		                    espaisCorreuE=0;
 		                }
 		                textRank+="<pre>"+(posicio+"")+". "+correuE+" ".repeat(espaisCorreuE)+"|"+temps+"</pre><br>";
+		                posicio++;
 		            }
 		            c.close();
 		            rankingLabel.setText("<html>" + textRank + "</html>");
@@ -436,7 +435,22 @@ public class Buscaminas extends JFrame implements ActionListener, MouseListener 
 		 obtindreIdUsuari();
 		 guardarDatos();
 		 
-		dispose();
+		 int confirm = JOptionPane.showConfirmDialog(null, "¿Quieres jugar otra partida?", "Confirmar", JOptionPane.YES_NO_OPTION);
+
+			if (confirm == JOptionPane.YES_OPTION) {
+			    // Código a ejecutar si el usuario pulsa "Vale"
+				repintarPartida();
+			} else if (confirm == JOptionPane.NO_OPTION) {
+			    // Código a ejecutar si el usuario pulsa "No"
+				dispose();
+			}
+	}
+	
+	public void repintarPartida() {
+		getContentPane().removeAll();
+		revalidate();
+		repaint();
+		creacioPanell();
 	}
 
 	public static String showInputDialog(String message, String title) {
