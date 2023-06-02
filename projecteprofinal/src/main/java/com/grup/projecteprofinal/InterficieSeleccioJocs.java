@@ -327,4 +327,9 @@ public class InterficieSeleccioJocs extends JFrame implements ActionListener {
 
 	}
 
+	public static String getCorreuElectronic() {
+		return correuElectronic;
+	}
+	
+
 }

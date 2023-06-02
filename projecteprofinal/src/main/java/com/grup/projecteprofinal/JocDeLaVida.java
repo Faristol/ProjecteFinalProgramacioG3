@@ -344,4 +344,5 @@ public class JocDeLaVida extends JFrame {
 		revalidate();
 		iniciarInfoStart();
 	}
+	
 }
