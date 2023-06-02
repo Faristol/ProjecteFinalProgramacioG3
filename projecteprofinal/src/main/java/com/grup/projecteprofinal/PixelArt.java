@@ -8,9 +8,10 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -52,14 +53,15 @@ public class PixelArt extends JFrame {
 	private Color currentColor = Color.BLACK;
 
 	public static void main(String[] args) {
-	    EventQueue.invokeLater(() -> {
-	        try {
-	            PixelArt frame = new PixelArt();
-	            frame.setVisible(true);
-	        } catch (Exception e) {
-	            e.printStackTrace();
-	        }
-	    });
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					PixelArt frame = new PixelArt();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
 	}
 
 	public PixelArt() {
@@ -93,31 +95,40 @@ public class PixelArt extends JFrame {
 	    btnNewButton_1 = new JButton("Mediano");
 	    btnNewButton_2 = new JButton("PequeÃ±o");
 
-	    btnNewButton.addActionListener(e -> {
-	        WIDTH = 500;
-	        HEIGHT = 500;
-	        PIXEL_SIZE = 10;
-	        GRID_SIZE = WIDTH / PIXEL_SIZE;
-	        creacioPanell();
+	    btnNewButton.addActionListener(new ActionListener() {
+	        @Override
+	        public void actionPerformed(ActionEvent e) {
+	            WIDTH = 500;
+	            HEIGHT = 500;
+	            PIXEL_SIZE = 10;
+	            GRID_SIZE = WIDTH / PIXEL_SIZE;
+	            creacioPanell();
+	        }
 	    });
 
 	    panel1.add(btnNewButton);
 
-	    btnNewButton_1.addActionListener(e -> {
-	        WIDTH = 500;
-	        HEIGHT = 500;
-	        PIXEL_SIZE = 30;
-	        GRID_SIZE = WIDTH / PIXEL_SIZE;
-	        creacioPanell();
+	    btnNewButton_1.addActionListener(new ActionListener() {
+	        @Override
+	        public void actionPerformed(ActionEvent e) {
+	            WIDTH = 500;
+	            HEIGHT = 500;
+	            PIXEL_SIZE = 30;
+	            GRID_SIZE = WIDTH / PIXEL_SIZE;
+	            creacioPanell();
+	        }
 	    });
 	    panel1.add(btnNewButton_1);
 
-	    btnNewButton_2.addActionListener(e -> {
-	        WIDTH = 500;
-	        HEIGHT = 500;
-	        PIXEL_SIZE = 50;
-	        GRID_SIZE = WIDTH / PIXEL_SIZE;
-	        creacioPanell();
+	    btnNewButton_2.addActionListener(new ActionListener() {
+	        @Override
+	        public void actionPerformed(ActionEvent e) {
+	            WIDTH = 500;
+	            HEIGHT = 500;
+	            PIXEL_SIZE = 50;
+	            GRID_SIZE = WIDTH / PIXEL_SIZE;
+	            creacioPanell();
+	        }
 	    });
 	    panel1.add(btnNewButton_2);
 	}
@@ -144,8 +155,11 @@ public class PixelArt extends JFrame {
 	    panellGeneral.add(bottomPanel, BorderLayout.SOUTH);
 
 	    getContentPane().add(panellGeneral);
-	    btnNewButton_3.addActionListener(e -> {
-	        currentColor = JColorChooser.showDialog(null, "Selecciona un color", currentColor);
+	    btnNewButton_3.addActionListener(new ActionListener() {
+	        @Override
+	        public void actionPerformed(ActionEvent e) {
+	            currentColor = JColorChooser.showDialog(null, "Selecciona un color", currentColor);
+	        }
 	    });
 	    panel2 = new JPanel();
 
@@ -163,7 +177,7 @@ public class PixelArt extends JFrame {
 
 	    for (int x = 0; x < GRID_SIZE; x++) {
 	        for (int y = 0; y < GRID_SIZE; y++) {
-	            JButton button = new JButton();
+	            final JButton button = new JButton();
 	            button.setPreferredSize(new Dimension(PIXEL_SIZE, PIXEL_SIZE));
 	            button.setBorder(BorderFactory.createLineBorder(Color.GRAY));
 	            button.setBackground(Color.WHITE);
@@ -191,46 +205,52 @@ public class PixelArt extends JFrame {
 	        }
 	    }
 	
-	    btnDescription.addActionListener(e -> {
-	        JOptionPane.showMessageDialog(null, "Bienvenido a Pixel Art. AquÃ­ puedes crear tu propio arte pixel por pixel.\n"
-	                + "1. Elije un tamaÃ±o de cuadrÃ­cula para comenzar.\n"
-	                + "2. Selecciona un color usando el botÃ³n 'Selecciona Color'.\n"
-	                + "3. Haz clic izquierdo en un cuadro para pintarlo con el color seleccionado.\n"
-	                + "4. Haz clic derecho en un cuadro para borrarlo y volverlo blanco.\n"
-	                + "Â¡DiviÃ©rtete creando!");
+	    btnDescription.addActionListener(new ActionListener() {
+	        @Override
+	        public void actionPerformed(ActionEvent e) {
+	            JOptionPane.showMessageDialog(null, "Bienvenido a Pixel Art. Aquí puedes crear tu propio arte pixel por pixel.\n"
+	                    + "1. Elije un tamaño de cuadrícula para comenzar.\n"
+	                    + "2. Selecciona un color usando el botón 'Selecciona Color'.\n"
+	                    + "3. Haz clic izquierdo en un cuadro para pintarlo con el color seleccionado.\n"
+	                    + "4. Haz clic derecho en un cuadro para borrarlo y volverlo blanco.\n"
+	                    + "¡Diviértete creando!");
+	        }
 	    });
 
 	    panellGeneral.add(panel2, BorderLayout.CENTER);
 	    panellGeneral.setVisible(true);
 
-	    btnGuar.addActionListener(e -> {
-            JFileChooser filechooser = new JFileChooser();
-            int option = filechooser.showSaveDialog(this);
-            if (option == JFileChooser.APPROVE_OPTION) {
-                File archivo = filechooser.getSelectedFile();
-                int anc = WIDTH;
-                int alt = HEIGHT;
+	    btnGuar.addActionListener(new ActionListener() {
+	        @Override
+	        public void actionPerformed(ActionEvent e) {
+	            JFileChooser filechooser = new JFileChooser();
+	            int option = filechooser.showSaveDialog(PixelArt.this);
+	            if (option == JFileChooser.APPROVE_OPTION) {
+	                File archivo = filechooser.getSelectedFile();
+	                int anc = WIDTH;
+	                int alt = HEIGHT;
 
-                BufferedImage img = new BufferedImage(anc, alt, BufferedImage.TYPE_INT_RGB);
-                Graphics2D graphics = img.createGraphics();
+	                BufferedImage img = new BufferedImage(anc, alt, BufferedImage.TYPE_INT_RGB);
+	                Graphics2D graphics = img.createGraphics();
 
-                for (int i = 0; i < GRID_SIZE; i++) {
-                    for (int j = 0; j < GRID_SIZE; j++) {
-                        Color color = pixelButtons[i][j].getBackground();
-                        graphics.setColor(color);
-                        graphics.fillRect(i * PIXEL_SIZE, j * PIXEL_SIZE, PIXEL_SIZE, PIXEL_SIZE);
-                    }
-                }
+	                for (int i = 0; i < GRID_SIZE; i++) {
+	                    for (int j = 0; j < GRID_SIZE; j++) {
+	                        Color color = pixelButtons[i][j].getBackground();
+	                        graphics.setColor(color);
+	                        graphics.fillRect(i * PIXEL_SIZE, j * PIXEL_SIZE, PIXEL_SIZE, PIXEL_SIZE);
+	                    }
+	                }
 
-                graphics.dispose();
-                try {
-                    ImageIO.write(img, "png", archivo);
-                    JOptionPane.showMessageDialog(this, "Guardado correctamente.", "Guardar", JOptionPane.INFORMATION_MESSAGE);
-                } catch (IOException e1) {
-                    e1.printStackTrace();
-                }
-            }
-        });
+	                graphics.dispose();
+	                try {
+	                    ImageIO.write(img, "png", archivo);
+	                    JOptionPane.showMessageDialog(PixelArt.this, "Guardado correctamente.", "Guardar", JOptionPane.INFORMATION_MESSAGE);
+	                } catch (IOException e1) {
+	                    e1.printStackTrace();
+	                }
+	            }
+	        }
+	    });
 
 	    panellGeneral.add(panel2, BorderLayout.CENTER);
 	    panellGeneral.setVisible(true);
