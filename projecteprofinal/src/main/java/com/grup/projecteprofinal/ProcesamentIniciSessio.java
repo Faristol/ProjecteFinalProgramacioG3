@@ -48,9 +48,17 @@ public class ProcesamentIniciSessio {
 		// desxifrar-los
 
 		String consulta = "SELECT * FROM tabla2 WHERE id = (SELECT id FROM tabla1 WHERE correuElectronic = ?)";
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			
+		} catch (ClassNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 
 		try (Connection connection = DriverManager.getConnection(url, user, password);
 				PreparedStatement statement = connection.prepareStatement(consulta)) {
+			
 
 			statement.setString(1, correuElectronic);
 			ResultSet resultSet = statement.executeQuery();

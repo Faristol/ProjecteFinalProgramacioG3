@@ -57,6 +57,12 @@ public class ProcessamentRegistre {
 		obtindreLesConnexion();
 
 		try {
+			try {
+				Class.forName("com.mysql.cj.jdbc.Driver");
+			} catch (ClassNotFoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 
 			Connection connection = DriverManager.getConnection(url, user, password);
 			Statement cerca = connection.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
@@ -87,6 +93,12 @@ public class ProcessamentRegistre {
 
 		PreparedStatement statement = null;
 		try {
+			try {
+				Class.forName("com.mysql.cj.jdbc.Driver");
+			} catch (ClassNotFoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 
 			Connection connection = DriverManager.getConnection(url, user, password);
 			String input = "INSERT INTO tabla1 (nom, cognoms, poblacio, correuElectronic, imatgeBytes) VALUES (?, ?, ?, ?, ?)";
@@ -112,6 +124,12 @@ public class ProcessamentRegistre {
 
 		PreparedStatement statement = null;
 		try {
+			try {
+				Class.forName("com.mysql.cj.jdbc.Driver");
+			} catch (ClassNotFoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 
 			Connection connection = DriverManager.getConnection(url, user, password);
 			String input = "INSERT INTO tabla2 (contrassenyaXifrada, fortalesa, salt, longitudHash) VALUES (?, ?, ?, ?)";

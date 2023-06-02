@@ -82,6 +82,12 @@ public class InterficieSeleccioJocs extends JFrame implements ActionListener {
 				InterficieSeleccioJocs.obtindreLesConnexion();
 
 				try {
+					try {
+						Class.forName("com.mysql.cj.jdbc.Driver");
+					} catch (ClassNotFoundException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 					c = DriverManager.getConnection(url, user, password);
 					Statement cerca = c.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
 					String sentenciaIdUser = "SELECT id FROM tabla1 WHERE correuElectronic = '" + correuElectronic
@@ -147,10 +153,19 @@ public class InterficieSeleccioJocs extends JFrame implements ActionListener {
 		JLabel img = new JLabel();
 
 		try {
+			obtindreLesConnexion();
+		
+				try {
+					Class.forName("com.mysql.cj.jdbc.Driver");
+				} catch (ClassNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			
 
 			Connection connection = DriverManager.getConnection(url, user, password);
 			Statement cerca = connection.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
-			String consulta = "SELECT imageBytes FROM tabla1 WHERE correuElectronic='" + correuElectronic + "'";
+			String consulta = "SELECT imatgeBytes FROM tabla1 WHERE correuElectronic='" + correuElectronic + "'";
 			ResultSet r = cerca.executeQuery(consulta);
 			connection.close();
 
@@ -218,15 +233,7 @@ public class InterficieSeleccioJocs extends JFrame implements ActionListener {
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				PixelArt framePixelArt = null;
-				try {
-					framePixelArt = new PixelArt();
-				} catch (FontFormatException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+				framePixelArt = new PixelArt();
 				framePixelArt.setVisible(true);
 			}
 		});
@@ -319,5 +326,10 @@ public class InterficieSeleccioJocs extends JFrame implements ActionListener {
 		// TODO Auto-generated method stub
 
 	}
+
+	public static String getCorreuElectronic() {
+		return correuElectronic;
+	}
+	
 
 }
