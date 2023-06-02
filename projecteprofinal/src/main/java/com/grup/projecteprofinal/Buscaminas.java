@@ -10,6 +10,17 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.Random;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -58,6 +69,13 @@ public class Buscaminas extends JFrame implements ActionListener, MouseListener 
 	private JButton btnNewButton_3;
 
 	private JPanel panellGeneral;
+	static String url = "";
+	static String user = "1daw03_pro";
+	static String password = "dEQ1e3Q2ZD";
+	static int id;
+	static String correuUsuari;
+	static String ranking="";
+	static JLabel rankingLabel;
 
 	public Buscaminas() {
 
@@ -128,26 +146,20 @@ public class Buscaminas extends JFrame implements ActionListener, MouseListener 
 	}
 
 	public void creacioPanell() {
-		
-		// Crear el menú
-        JMenuBar menuBar = new JMenuBar();
 
-        // Crear el primer campo del menú
-        JMenu menu1 = new JMenu("Juego");
-        menuBar.add(menu1);
+		// Crear el menï¿½
+		JMenuBar menuBar = new JMenuBar();
 
-        // Agregar opciones al primer campo del menú
-        JMenuItem opcion1 = new JMenuItem("Nueva partida");
-        opcion1.addActionListener(new ActionListener() {
+		// Crear el primer campo del menï¿½
+		JMenu menu1 = new JMenu("Juego");
+		menuBar.add(menu1);
+
+		// Agregar opciones al primer campo del menï¿½
+		JMenuItem opcion1 = new JMenuItem("Nueva partida");
+		opcion1.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				
-			}
-        });
-			
-        JMenuItem opcion2 = new JMenuItem("Ranking");
-        opcion2.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -168,15 +180,89 @@ public class Buscaminas extends JFrame implements ActionListener, MouseListener 
 	            }
 				newFrame.add(panelRanking, BorderLayout.CENTER);
 			}
-        });
-        menu1.add(opcion1);
-        menu1.add(opcion2);
+		});
 
-        // Crear el segundo campo del menú
-        JMenu menu2 = new JMenu("Ayuda");
-        menuBar.add(menu2);
-        
-        setJMenuBar(menuBar);
+		JMenuItem opcion2 = new JMenuItem("Ranking");
+		opcion2.addActionListener(new ActionListener() {
+
+		    @Override
+		    public void actionPerformed(ActionEvent e) {
+		        // TODO Auto-generated method stub
+		        JFrame newFrame = new JFrame("Ranking");
+		        newFrame.setSize(200, 200);
+		        newFrame.setVisible(true);
+		        newFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		        newFrame.setLayout(new BorderLayout(0, 0));
+		        JPanel panelRanking = new JPanel();
+		        rankingLabel = new JLabel();
+		        String textRank = "<pre>Correu Electrï¿½nic        | Temps         </pre><br>";
+		        String taula = "";
+		        String consulta = "";
+		        String correu = "";
+		        switch (numCasillas) {
+		            case 40:
+		                taula = "buscaminesDif";
+		                break;
+		            case 20:
+		                // tamaï¿½o mediano
+		                taula = "buscaminesMed";
+		                break;
+		            case 10:
+		                // tamaï¿½o pequeï¿½o
+		                taula = "buscaminesFacil";		
+		                break;
+		        }
+		        obtindreLesConnexion();
+
+		        consulta = "SELECT t1.correuElectronic, t2.tempsMin " +
+		                   "FROM tabla1 AS t1 " +
+		                   "JOIN (SELECT id, MIN(temps) AS tempsMin " +
+		                   "      FROM " + taula +
+		                   "      GROUP BY id " +
+		                   "      ORDER BY tempsMin ASC " +
+		                   "      LIMIT 10) AS t2 ON t1.id = t2.id";
+
+		        try {
+		            try {
+		                Class.forName("com.mysql.cj.jdbc.Driver");
+		            } catch (ClassNotFoundException e1) {
+		                // TODO Auto-generated catch block
+		                e1.printStackTrace();
+		            }
+		            Connection c = DriverManager.getConnection(url, user, password);
+		            Statement cerca = c.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+		            ResultSet rs = cerca.executeQuery(consulta);
+		            int posicio = 1;
+
+		          
+
+		            while (rs.next()) {
+		                String correuE = rs.getString("correuElectronic");
+		                int temps= rs.getInt("tempsMin");
+		                int espaisCorreuE = 22-correuE.length();
+		                if(espaisCorreuE<0) {
+		                    espaisCorreuE=0;
+		                }
+		                textRank+="<pre>"+(posicio+"")+". "+correuE+" ".repeat(espaisCorreuE)+"|"+temps+"</pre><br>";
+		            }
+		            c.close();
+		            rankingLabel.setText("<html>" + textRank + "</html>");
+		            panelRanking.add(rankingLabel);
+		            newFrame.add(panelRanking);
+		            
+		        } catch (SQLException e1) {
+		            e1.printStackTrace();
+		        }
+		    }
+		});
+		menu1.add(opcion1);
+		menu1.add(opcion2);
+
+		// Crear el segundo campo del menï¿½
+		JMenu menu2 = new JMenu("Ayuda");
+		menuBar.add(menu2);
+
+		setJMenuBar(menuBar);
 
 		getContentPane().removeAll();
 		bombas = ponerBombas();
@@ -342,12 +428,14 @@ public class Buscaminas extends JFrame implements ActionListener, MouseListener 
 		String resultadoFinal = "Has durado: " + tiempoTranscurrido + " seg. \n" + "Casillas por desvelar: "
 				+ contCasillas;
 		JOptionPane.showMessageDialog(null, resultadoFinal);
-		/*
-		 * String result = showInputDialog(resultadoFinal, "Fin de la partida"); if
-		 * (result != null) { JOptionPane.showMessageDialog(null,
-		 * "El valor ingresado fue: " + result); } else {
-		 * JOptionPane.showMessageDialog(null, "No se ingresï¿½ ningï¿½n valor."); }
-		 */
+//		/*
+//		 * String result = showInputDialog(resultadoFinal, "Fin de la partida"); if
+//		 * (result != null) { JOptionPane.showMessageDialog(null,
+//		 * "El valor ingresado fue: " + result); } else {
+//		 * JOptionPane.showMessageDialog(null, "No se ingresï¿½ ningï¿½n valor."); }
+		 obtindreIdUsuari();
+		 guardarDatos();
+		 
 		dispose();
 	}
 
@@ -377,23 +465,46 @@ public class Buscaminas extends JFrame implements ActionListener, MouseListener 
 		}
 		return contador;
 	}
+
 	public void guardarDatos() {
-		//se guarda depende del tamaño (numCasillas) en una tabla o otra
-		//guardar id usuario, tiempo (tiempoTranscurrido)
-		switch(numCasillas) {
-		case 40:
-			//tamaño grande
-			
-			break;
-		case 20:
-			//tamaño mediano
-			
-			break;
-		case 10:
-			//tamaño pequeño
-			
-			break;
-		}
+	    // se guarda depende del tamaï¿½o (numCasillas) en una tabla o otra
+	    // guardar id usuario, tiempo (tiempoTranscurrido)
+
+	    String taulaAlterar = "";
+	    String insert;
+
+	    switch (numCasillas) {
+	        case 40:
+	            taulaAlterar = "buscaminesDif";
+	            insert = "INSERT INTO " + taulaAlterar + "(`id`,`temps`) VALUES ('" + id + "','" + tiempoTranscurrido + "')";
+	            break;
+	        case 20:
+	            // tamaï¿½o mediano
+	            taulaAlterar = "buscaminesMed";
+	            insert = "INSERT INTO " + taulaAlterar + "(`id`,`temps`) VALUES ('" + id + "','" + tiempoTranscurrido + "')";
+	            break;
+	        case 10:
+	            // tamaï¿½o pequeï¿½o
+	            taulaAlterar = "buscaminesFacil";
+	            insert = "INSERT INTO " + taulaAlterar + "(`id`,`temps`) VALUES ('" + id + "','" + tiempoTranscurrido + "')";
+	            break;
+	        default:
+	            // Valor de numCasillas no vï¿½lido
+	            return;
+	    }
+	    try {
+	        try {
+	            Class.forName("com.mysql.cj.jdbc.Driver");
+	        } catch (ClassNotFoundException e) {
+	            e.printStackTrace();
+	        }
+	        Connection c = DriverManager.getConnection(url, user, password);
+	        Statement cerca = c.createStatement();
+	        cerca.executeUpdate(insert);
+	        c.close();
+	    } catch (SQLException e1) {
+	        e1.printStackTrace();
+	    }
 	}
 	
 	public String[] top10(){
@@ -418,10 +529,11 @@ public class Buscaminas extends JFrame implements ActionListener, MouseListener 
 		if (bombas[num1][num2]) {
 			timer.stop();
 			pisarBomba(num1, num2);
-		}if(contCasillas==0) {
+		}
+		if (contCasillas == 0) {
 			timer.stop();
 			terminarP();
-		}else {
+		} else {
 			int bombasAdyacentes = contarBombas(num1, num2);
 			casillas[num1][num2].setText(Integer.toString(bombasAdyacentes));
 			casillas[num1][num2].setEnabled(false);
@@ -468,4 +580,58 @@ public class Buscaminas extends JFrame implements ActionListener, MouseListener 
 			}
 		});
 	}
+
+	public static void obtindreLesConnexion() {
+		Enumeration e;
+		try {
+			e = NetworkInterface.getNetworkInterfaces();
+			while (e.hasMoreElements()) {
+				NetworkInterface n = (NetworkInterface) e.nextElement();
+				Enumeration ee = n.getInetAddresses();
+				while (ee.hasMoreElements()) {
+					InetAddress i = (InetAddress) ee.nextElement();
+					String adress = "" + (i.getHostAddress());
+
+					if (adress.contains("192.168.14")) {
+						url = "jdbc:mysql://" + adress + "/1daw03_pro";
+
+						return;
+					}
+
+				}
+			}
+		} catch (SocketException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		url = "jdbc:mysql://ticsimarro.org:3306/1daw03_pro";
+
+	}
+
+	public static void obtindreIdUsuari() {
+		correuUsuari = InterficieSeleccioJocs.getCorreuElectronic();
+		obtindreLesConnexion();
+		try {
+			try {
+				Class.forName("com.mysql.cj.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			Connection c = DriverManager.getConnection(url, user, password);
+			Statement cerca = c.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+			String sentenciaIdUser = "SELECT id FROM tabla1 WHERE correuElectronic = '" + correuUsuari + "'";
+			ResultSet idUser = cerca.executeQuery(sentenciaIdUser);
+			if (idUser.next()) {
+				id = idUser.getInt("id");
+
+			}
+			c.close();
+
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+
+	}
+
 }
