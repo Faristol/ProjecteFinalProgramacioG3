@@ -12,6 +12,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -25,6 +26,7 @@ import javax.swing.JTextField;
 import javax.swing.Timer;
 import javax.swing.border.EmptyBorder;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Buscaminas extends JFrame implements ActionListener, MouseListener {
@@ -155,8 +157,16 @@ public class Buscaminas extends JFrame implements ActionListener, MouseListener 
 	            newFrame.setVisible(true);
 	            newFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	            newFrame.setLayout(new BorderLayout(0, 0));
-	            JPanel panelRanking=new JPanel();
-				
+	            JLabel tituloRanking= new JLabel("Top 5 Rankig Buscaminas");
+	            newFrame.add(tituloRanking, BorderLayout.NORTH);
+	            JPanel panelRanking=new JPanel(new GridLayout(10, 1));
+	            String[] nombres= top10();
+	            JLabel nomPlayer= new JLabel("");
+	            for(int i=0; i<nombres.length;i++) {
+	            	nomPlayer.setText(nombres[i]);
+	            	panelRanking.add(nomPlayer);
+	            }
+				newFrame.add(panelRanking, BorderLayout.CENTER);
 			}
         });
         menu1.add(opcion1);
@@ -386,10 +396,22 @@ public class Buscaminas extends JFrame implements ActionListener, MouseListener 
 		}
 	}
 	
+	public String[] top10(){
+		//per fer
+		String[] top10 = new String[10];
+		top10[0]="loko1";
+		top10[1]="loko2";
+		top10[2]="loko3";
+		top10[3]="loko4";
+		top10[4]="loko5";
+		return top10;
+	}
+	
 	public void terminarP() {
 		String resultadoFinal = "Has durado: " + tiempoTranscurrido + " seg.";
 		JOptionPane.showMessageDialog(null, resultadoFinal);
 		guardarDatos();
+		timer.restart();
 	}
 
 	public void desvelarAdj(int num1, int num2) {
