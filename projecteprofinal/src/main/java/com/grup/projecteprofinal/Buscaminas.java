@@ -48,7 +48,7 @@ public class Buscaminas extends JFrame implements ActionListener, MouseListener 
 	private boolean[][] bombas;
 	private Timer timer;
 	private JButton boton;
-	
+
 	private JPanel contentPane;
 
 	private int WIDTH = 1;
@@ -75,7 +75,7 @@ public class Buscaminas extends JFrame implements ActionListener, MouseListener 
 	static String password = "dEQ1e3Q2ZD";
 	static int id;
 	static String correuUsuari;
-	static String ranking="";
+	static String ranking = "";
 	static JLabel rankingLabel;
 
 	public Buscaminas() {
@@ -103,7 +103,7 @@ public class Buscaminas extends JFrame implements ActionListener, MouseListener 
 
 		btnNewButton = new JButton("Grande");
 		btnNewButton_1 = new JButton("Mediano");
-		btnNewButton_2 = new JButton("Pequeño");
+		btnNewButton_2 = new JButton("PequeÃ±o");
 
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -148,14 +148,14 @@ public class Buscaminas extends JFrame implements ActionListener, MouseListener 
 
 	public void creacioPanell() {
 
-		// Crear el men�
+		// Crear el menï¿½
 		JMenuBar menuBar = new JMenuBar();
 
-		// Crear el primer campo del men�
+		// Crear el primer campo del menï¿½
 		JMenu menu1 = new JMenu("Juego");
 		menuBar.add(menu1);
 
-		// Agregar opciones al primer campo del men�
+		// Agregar opciones al primer campo del menï¿½
 		JMenuItem opcion1 = new JMenuItem("Nueva partida");
 		opcion1.addActionListener(new ActionListener() {
 
@@ -163,19 +163,19 @@ public class Buscaminas extends JFrame implements ActionListener, MouseListener 
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				JFrame newFrame = new JFrame("Ranking");
-	            newFrame.setSize(200, 200);
-	            newFrame.setVisible(true);
-	            newFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-	            newFrame.setLayout(new BorderLayout(0, 0));
-	            JLabel tituloRanking= new JLabel("Top 5 Rankig Buscaminas");
-	            newFrame.add(tituloRanking, BorderLayout.NORTH);
-	            JPanel panelRanking=new JPanel(new GridLayout(10, 1));
-	            String[] nombres= top10();
-	            JLabel nomPlayer= new JLabel("");
-	            for(int i=0; i<nombres.length;i++) {
-	            	nomPlayer.setText(nombres[i]);
-	            	panelRanking.add(nomPlayer);
-	            }
+				newFrame.setSize(200, 200);
+				newFrame.setVisible(true);
+				newFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+				newFrame.setLayout(new BorderLayout(0, 0));
+				JLabel tituloRanking = new JLabel("Top 5 Rankig Buscaminas");
+				newFrame.add(tituloRanking, BorderLayout.NORTH);
+				JPanel panelRanking = new JPanel(new GridLayout(10, 1));
+				String[] nombres = top10();
+				JLabel nomPlayer = new JLabel("");
+				for (int i = 0; i < nombres.length; i++) {
+					nomPlayer.setText(nombres[i]);
+					panelRanking.add(nomPlayer);
+				}
 				newFrame.add(panelRanking, BorderLayout.CENTER);
 			}
 		});
@@ -183,81 +183,76 @@ public class Buscaminas extends JFrame implements ActionListener, MouseListener 
 		JMenuItem opcion2 = new JMenuItem("Ranking");
 		opcion2.addActionListener(new ActionListener() {
 
-		    @Override
-		    public void actionPerformed(ActionEvent e) {
-		        // TODO Auto-generated method stub
-		        JFrame newFrame = new JFrame("Ranking");
-		        newFrame.setSize(200, 200);
-		        newFrame.setVisible(true);
-		        newFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		        newFrame.setLayout(new BorderLayout(0, 0));
-		        JPanel panelRanking = new JPanel();
-		        rankingLabel = new JLabel();
-		        String textRank = "<pre>Correu Electr�nic        | Temps         </pre><br>";
-		        String taula = "";
-		        String consulta = "";
-		        String correu = "";
-		        switch (numCasillas) {
-		            case 40:
-		                taula = "buscaminesDif";
-		                break;
-		            case 20:
-		                // tama�o mediano
-		                taula = "buscaminesMed";
-		                break;
-		            case 10:
-		                // tama�o peque�o
-		                taula = "buscaminesFacil";		
-		                break;
-		        }
-		        obtindreLesConnexion();
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				JFrame newFrame = new JFrame("Ranking");
+				newFrame.setSize(200, 200);
+				newFrame.setVisible(true);
+				newFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+				newFrame.setLayout(new BorderLayout(0, 0));
+				JPanel panelRanking = new JPanel();
+				rankingLabel = new JLabel();
+				String textRank = "<pre>Correu Electrï¿½nic        | Temps         </pre><br>";
+				String taula = "";
+				String consulta = "";
+				String correu = "";
+				switch (numCasillas) {
+				case 40:
+					taula = "buscaminesDif";
+					break;
+				case 20:
+					// tamaï¿½o mediano
+					taula = "buscaminesMed";
+					break;
+				case 10:
+					// tamaï¿½o pequeï¿½o
+					taula = "buscaminesFacil";
+					break;
+				}
+				obtindreLesConnexion();
 
-		        consulta = "SELECT t1.correuElectronic, t2.tempsMin " +
-		                   "FROM tabla1 AS t1 " +
-		                   "JOIN (SELECT id, MIN(temps) AS tempsMin " +
-		                   "      FROM " + taula +
-		                   "      GROUP BY id " +
-		                   "      ORDER BY tempsMin ASC " +
-		                   "      LIMIT 10) AS t2 ON t1.id = t2.id";
+				consulta = "SELECT t1.correuElectronic, t2.tempsMin " + "FROM tabla1 AS t1 "
+						+ "JOIN (SELECT id, MIN(temps) AS tempsMin " + "      FROM " + taula + "      GROUP BY id "
+						+ "      ORDER BY tempsMin ASC " + "      LIMIT 10) AS t2 ON t1.id = t2.id";
 
-		        try {
-		            try {
-		                Class.forName("com.mysql.cj.jdbc.Driver");
-		            } catch (ClassNotFoundException e1) {
-		                // TODO Auto-generated catch block
-		                e1.printStackTrace();
-		            }
-		            Connection c = DriverManager.getConnection(url, user, password);
-		            Statement cerca = c.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
-		            ResultSet rs = cerca.executeQuery(consulta);
-		            int posicio = 1;
+				try {
+					try {
+						Class.forName("com.mysql.cj.jdbc.Driver");
+					} catch (ClassNotFoundException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					Connection c = DriverManager.getConnection(url, user, password);
+					Statement cerca = c.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+					ResultSet rs = cerca.executeQuery(consulta);
+					int posicio = 1;
 
-		          
+					while (rs.next()) {
+						String correuE = rs.getString("correuElectronic");
+						int temps = rs.getInt("tempsMin");
+						int espaisCorreuE = 22 - correuE.length();
+						if (espaisCorreuE < 0) {
+							espaisCorreuE = 0;
+						}
+						textRank += "<pre>" + (posicio + "") + ". " + correuE + " ".repeat(espaisCorreuE) + "|" + temps
+								+ "</pre><br>";
+						posicio++;
+					}
+					c.close();
+					rankingLabel.setText("<html>" + textRank + "</html>");
+					panelRanking.add(rankingLabel);
+					newFrame.add(panelRanking);
 
-		            while (rs.next()) {
-		                String correuE = rs.getString("correuElectronic");
-		                int temps= rs.getInt("tempsMin");
-		                int espaisCorreuE = 22-correuE.length();
-		                if(espaisCorreuE<0) {
-		                    espaisCorreuE=0;
-		                }
-		                textRank+="<pre>"+(posicio+"")+". "+correuE+" ".repeat(espaisCorreuE)+"|"+temps+"</pre><br>";
-		                posicio++;
-		            }
-		            c.close();
-		            rankingLabel.setText("<html>" + textRank + "</html>");
-		            panelRanking.add(rankingLabel);
-		            newFrame.add(panelRanking);
-		            
-		        } catch (SQLException e1) {
-		            e1.printStackTrace();
-		        }
-		    }
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+			}
 		});
 		menu1.add(opcion1);
 		menu1.add(opcion2);
 
-		// Crear el segundo campo del men�
+		// Crear el segundo campo del menï¿½
 		JMenu menu2 = new JMenu("Ayuda");
 		menuBar.add(menu2);
 
@@ -431,21 +426,22 @@ public class Buscaminas extends JFrame implements ActionListener, MouseListener 
 //		 * String result = showInputDialog(resultadoFinal, "Fin de la partida"); if
 //		 * (result != null) { JOptionPane.showMessageDialog(null,
 //		 * "El valor ingresado fue: " + result); } else {
-//		 * JOptionPane.showMessageDialog(null, "No se ingres� ning�n valor."); }
-		 obtindreIdUsuari();
-		 guardarDatos();
-		 
-		 int confirm = JOptionPane.showConfirmDialog(null, "�Quieres jugar otra partida?", "Confirmar", JOptionPane.YES_NO_OPTION);
+//		 * JOptionPane.showMessageDialog(null, "No se ingresï¿½ ningï¿½n valor."); }
+		obtindreIdUsuari();
+		guardarDatos();
 
-			if (confirm == JOptionPane.YES_OPTION) {
-			    // C�digo a ejecutar si el usuario pulsa "Vale"
-				repintarPartida();
-			} else if (confirm == JOptionPane.NO_OPTION) {
-			    // C�digo a ejecutar si el usuario pulsa "No"
-				dispose();
-			}
+		int confirm = JOptionPane.showConfirmDialog(null, "¿Quieres jugar otra partida?", "Confirmar",
+				JOptionPane.YES_NO_OPTION);
+
+		if (confirm == JOptionPane.YES_OPTION) {
+			// Código a ejecutar si el usuario pulsa "Vale"
+			repintarPartida();
+		} else if (confirm == JOptionPane.NO_OPTION) {
+			// Código a ejecutar si el usuario pulsa "No"
+			dispose();
+		}
 	}
-	
+
 	public void repintarPartida() {
 		getContentPane().removeAll();
 		revalidate();
@@ -481,61 +477,63 @@ public class Buscaminas extends JFrame implements ActionListener, MouseListener 
 	}
 
 	public void guardarDatos() {
-	    // se guarda depende del tama�o (numCasillas) en una tabla o otra
-	    // guardar id usuario, tiempo (tiempoTranscurrido)
+		// se guarda depende del tamaï¿½o (numCasillas) en una tabla o otra
+		// guardar id usuario, tiempo (tiempoTranscurrido)
 
-	    String taulaAlterar = "";
-	    String insert;
+		String taulaAlterar = "";
+		String insert;
 
-	    switch (numCasillas) {
-	        case 40:
-	            taulaAlterar = "buscaminesDif";
-	            insert = "INSERT INTO " + taulaAlterar + "(`id`,`temps`) VALUES ('" + id + "','" + tiempoTranscurrido + "')";
-	            break;
-	        case 20:
-	            // tama�o mediano
-	            taulaAlterar = "buscaminesMed";
-	            insert = "INSERT INTO " + taulaAlterar + "(`id`,`temps`) VALUES ('" + id + "','" + tiempoTranscurrido + "')";
-	            break;
-	        case 10:
-	            // tama�o peque�o
-	            taulaAlterar = "buscaminesFacil";
-	            insert = "INSERT INTO " + taulaAlterar + "(`id`,`temps`) VALUES ('" + id + "','" + tiempoTranscurrido + "')";
-	            break;
-	        default:
-	            // Valor de numCasillas no v�lido
-	            return;
-	    }
-	    try {
-	        try {
-	            Class.forName("com.mysql.cj.jdbc.Driver");
-	        } catch (ClassNotFoundException e) {
-	            e.printStackTrace();
-	        }
-	        Connection c = DriverManager.getConnection(url, user, password);
-	        Statement cerca = c.createStatement();
-	        cerca.executeUpdate(insert);
-	        c.close();
-	    } catch (SQLException e1) {
-	        e1.printStackTrace();
-	    }
+		switch (numCasillas) {
+		case 40:
+			taulaAlterar = "buscaminesDif";
+			insert = "INSERT INTO " + taulaAlterar + "(`id`,`temps`) VALUES ('" + id + "','" + tiempoTranscurrido
+					+ "')";
+			break;
+		case 20:
+			// tamaï¿½o mediano
+			taulaAlterar = "buscaminesMed";
+			insert = "INSERT INTO " + taulaAlterar + "(`id`,`temps`) VALUES ('" + id + "','" + tiempoTranscurrido
+					+ "')";
+			break;
+		case 10:
+			// tamaï¿½o pequeï¿½o
+			taulaAlterar = "buscaminesFacil";
+			insert = "INSERT INTO " + taulaAlterar + "(`id`,`temps`) VALUES ('" + id + "','" + tiempoTranscurrido
+					+ "')";
+			break;
+		default:
+			// Valor de numCasillas no vï¿½lido
+			return;
+		}
+		try {
+			try {
+				Class.forName("com.mysql.cj.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+			Connection c = DriverManager.getConnection(url, user, password);
+			Statement cerca = c.createStatement();
+			cerca.executeUpdate(insert);
+			c.close();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
 	}
-	
-	public String[] top10(){
-		//per fer
+
+	public String[] top10() {
+		// per fer
 		String[] top10 = new String[10];
-		top10[0]="loko1";
-		top10[1]="loko2";
-		top10[2]="loko3";
-		top10[3]="loko4";
-		top10[4]="loko5";
+		top10[0] = "loko1";
+		top10[1] = "loko2";
+		top10[2] = "loko3";
+		top10[3] = "loko4";
+		top10[4] = "loko5";
 		return top10;
 	}
-	
+
 	public void terminarP() {
 		String resultadoFinal = "Has durado: " + tiempoTranscurrido + " seg.";
 		JOptionPane.showMessageDialog(null, resultadoFinal);
-		 obtindreIdUsuari();
 		guardarDatos();
 		timer.restart();
 	}
