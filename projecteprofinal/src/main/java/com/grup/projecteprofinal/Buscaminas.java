@@ -435,13 +435,13 @@ public class Buscaminas extends JFrame implements ActionListener, MouseListener 
 		 obtindreIdUsuari();
 		 guardarDatos();
 		 
-		 int confirm = JOptionPane.showConfirmDialog(null, "¿Quieres jugar otra partida?", "Confirmar", JOptionPane.YES_NO_OPTION);
+		 int confirm = JOptionPane.showConfirmDialog(null, "ï¿½Quieres jugar otra partida?", "Confirmar", JOptionPane.YES_NO_OPTION);
 
 			if (confirm == JOptionPane.YES_OPTION) {
-			    // Código a ejecutar si el usuario pulsa "Vale"
+			    // Cï¿½digo a ejecutar si el usuario pulsa "Vale"
 				repintarPartida();
 			} else if (confirm == JOptionPane.NO_OPTION) {
-			    // Código a ejecutar si el usuario pulsa "No"
+			    // Cï¿½digo a ejecutar si el usuario pulsa "No"
 				dispose();
 			}
 	}
@@ -535,6 +535,7 @@ public class Buscaminas extends JFrame implements ActionListener, MouseListener 
 	public void terminarP() {
 		String resultadoFinal = "Has durado: " + tiempoTranscurrido + " seg.";
 		JOptionPane.showMessageDialog(null, resultadoFinal);
+		 obtindreIdUsuari();
 		guardarDatos();
 		timer.restart();
 	}
