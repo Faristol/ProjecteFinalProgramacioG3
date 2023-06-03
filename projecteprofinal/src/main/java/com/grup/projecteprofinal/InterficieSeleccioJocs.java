@@ -3,13 +3,13 @@ package com.grup.projecteprofinal;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
-import java.awt.FontFormatException;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.awt.Insets;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
@@ -20,8 +20,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Enumeration;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -38,6 +38,10 @@ public class InterficieSeleccioJocs extends JFrame implements ActionListener {
 	private String user = "1daw03_pro";
 	private String password = "dEQ1e3Q2ZD";
 	private static String correuElectronic;
+	private ImageIcon imagenUsuario;
+	private JLabel lblNombreApellidos;
+	private JLabel lblPoblacion;
+	private JLabel lblCorreoElectronico;
 
 	/**
 	 * Launch the application.
@@ -57,6 +61,8 @@ public class InterficieSeleccioJocs extends JFrame implements ActionListener {
 
 	/**
 	 * Create the frame.
+	 * 
+	 * @throws SQLException
 	 */
 	public InterficieSeleccioJocs() {
 
@@ -143,46 +149,75 @@ public class InterficieSeleccioJocs extends JFrame implements ActionListener {
 		gbl_panel_1.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
 		panel_1.setLayout(gbl_panel_1);
 
-		JLabel lblNewLabel_4 = new JLabel("La img de l'usuari");
-		GridBagConstraints gbc_lblNewLabel_4 = new GridBagConstraints();
-		gbc_lblNewLabel_4.insets = new Insets(40, 5, 5, 0);
-		gbc_lblNewLabel_4.gridx = 0;
-		gbc_lblNewLabel_4.gridy = 0;
-		panel_1.add(lblNewLabel_4, gbc_lblNewLabel_4);
-
 		JLabel img = new JLabel();
+		GridBagConstraints gbc_img = new GridBagConstraints();
+		gbc_img.insets = new Insets(40, 5, 5, 0);
+		gbc_img.gridx = 0;
+		gbc_img.gridy = GridBagConstraints.RELATIVE;
+		gbc_img.anchor = GridBagConstraints.CENTER;
+		
+		GridBagConstraints gbc_etiquetas = new GridBagConstraints();
+		gbc_etiquetas.anchor = GridBagConstraints.WEST;
+		gbc_etiquetas.insets = new Insets(20, 15, 5, 0);
+		gbc_etiquetas.gridx = 0;
+		gbc_etiquetas.gridy = GridBagConstraints.RELATIVE;
 
 		try {
 			obtindreLesConnexion();
-		
-				try {
-					Class.forName("com.mysql.cj.jdbc.Driver");
-				} catch (ClassNotFoundException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-			
+
+			try {
+				Class.forName("com.mysql.cj.jdbc.Driver");
+			} catch (ClassNotFoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 
 			Connection connection = DriverManager.getConnection(url, user, password);
 			Statement cerca = connection.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
-			String consulta = "SELECT imatgeBytes FROM tabla1 WHERE correuElectronic='" + correuElectronic + "'";
+			String consulta = "SELECT nom, cognoms, poblacio, correuElectronic, imatgeBytes FROM tabla1 WHERE correuElectronic='"
+					+ correuElectronic + "'";
 			ResultSet r = cerca.executeQuery(consulta);
+
+			if (r.next()) {
+
+				String nombre = r.getString("nom");
+				String apellidos = r.getString("cognoms");
+				String poblacion = r.getString("poblacio");
+				String correoElectronico = r.getString("correuElectronic");
+				byte[] imagenBytes = r.getBytes("imatgeBytes");
+			
+				if (imagenBytes != null) {
+					Image imagen = Toolkit.getDefaultToolkit().createImage(imagenBytes);
+					int nuevoAncho = 80; 
+				    int nuevoAlto = 80; 
+				    Image imagenRedimensionada = imagen.getScaledInstance(nuevoAncho, nuevoAlto, Image.SCALE_SMOOTH);
+					ImageIcon imagenUsuario = new ImageIcon(imagenRedimensionada);
+
+					img.setIcon(imagenUsuario);
+					panel_1.add(img, gbc_img);
+
+				}
+
+				 lblNombreApellidos = new JLabel(nombre +" "+apellidos);
+				 lblPoblacion = new JLabel(poblacion);
+				 lblCorreoElectronico = new JLabel(correoElectronico);
+				panel_1.add(lblNombreApellidos, gbc_etiquetas);
+				panel_1.add(lblPoblacion, gbc_etiquetas);
+				panel_1.add(lblCorreoElectronico, gbc_etiquetas);
+			
+			}
 			connection.close();
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		GridBagConstraints gbc_comboBox = new GridBagConstraints();
-		gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
-		gbc_comboBox.gridx = 0;
-		gbc_comboBox.gridy = 5;
-		panel_1.add(img, gbc_comboBox);
-
+	
+		
 		JPanel panel_2 = new JPanel();
 		contentPane.add(panel_2, BorderLayout.NORTH);
 
-		JLabel lblNewLabel_3 = new JLabel("La Llar Dels Jocs");
+		JLabel lblNewLabel_3 = new JLabel("La Llar Dels Jocs ");
 		panel_2.add(lblNewLabel_3);
 
 		JPanel panel_3 = new JPanel();
@@ -330,6 +365,5 @@ public class InterficieSeleccioJocs extends JFrame implements ActionListener {
 	public static String getCorreuElectronic() {
 		return correuElectronic;
 	}
-	
 
 }

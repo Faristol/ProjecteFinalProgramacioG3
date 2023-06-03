@@ -61,7 +61,7 @@ public class JocDeLaVida extends JFrame {
 	 * Create the frame.
 	 */
 	public JocDeLaVida() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 400, 400);
 		setTitle("Joc de la Vida");
 		contentPane = new JPanel();
@@ -229,17 +229,17 @@ public class JocDeLaVida extends JFrame {
 		info.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String informacio = "\n"
-						+ "El Joc de la Vida, creat per John Conway el 1970, és un joc de simulació de cèl·lules en un tauler bidimensional.\n"
-						+ "Aquest joc és conegut com a \"autòmat cel·lular\" i ha captivat l'interès de matemàtics i entusiastes durant dècades.\n"
-						+ "Les regles són les següents:\n\n"
-						+ "Tota cèl·lula viva amb menys de dos veïnes vives mor (de solitud).\n"
-						+ "Tota cèl·lula viva amb més de tres veïnes vives mor (d'excés de concentració).\n"
-						+ "Tota cèl·lula viva amb dos o tres veïnes vives segueix viva per a la següent generació.\n"
-						+ "Tota cèl·lula morta amb exactament tres veïnes vives torna a la vida.\n"
-						+ "El joc acaba quan totes les cèl·lules han mort.\n\n"
-						+ "Per a començar, polsa en Aleatori, així s'establiran les condicions inicials, i polsa en Start.\n"
-						+ "Podràs pausar, reprendre, aturar, accelerar o alentir les generacions en qualsevol moment.\n"
-						+ "En acabar, es mostrarà un panell amb estadístiques. Així mateix, per a generar altres condicions inicials, hauràs\n"
+						+ "El Joc de la Vida, creat per John Conway el 1970, ï¿½s un joc de simulaciï¿½ de cï¿½lï¿½lules en un tauler bidimensional.\n"
+						+ "Aquest joc ï¿½s conegut com a \"autï¿½mat celï¿½lular\" i ha captivat l'interï¿½s de matemï¿½tics i entusiastes durant dï¿½cades.\n"
+						+ "Les regles sï¿½n les segï¿½ents:\n\n"
+						+ "Tota cï¿½lï¿½lula viva amb menys de dos veï¿½nes vives mor (de solitud).\n"
+						+ "Tota cï¿½lï¿½lula viva amb mï¿½s de tres veï¿½nes vives mor (d'excï¿½s de concentraciï¿½).\n"
+						+ "Tota cï¿½lï¿½lula viva amb dos o tres veï¿½nes vives segueix viva per a la segï¿½ent generaciï¿½.\n"
+						+ "Tota cï¿½lï¿½lula morta amb exactament tres veï¿½nes vives torna a la vida.\n"
+						+ "El joc acaba quan totes les cï¿½lï¿½lules han mort.\n\n"
+						+ "Per a comenï¿½ar, polsa en Aleatori, aixï¿½ s'establiran les condicions inicials, i polsa en Start.\n"
+						+ "Podrï¿½s pausar, reprendre, aturar, accelerar o alentir les generacions en qualsevol moment.\n"
+						+ "En acabar, es mostrarï¿½ un panell amb estadï¿½stiques. Aixï¿½ mateix, per a generar altres condicions inicials, haurï¿½s\n"
 						+ "d'apretar novament en Dibuixa.";
 				JOptionPane.showMessageDialog(null, informacio, "Informaciï¿½", JOptionPane.INFORMATION_MESSAGE);
 

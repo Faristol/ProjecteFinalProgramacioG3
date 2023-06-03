@@ -48,7 +48,8 @@ public class Buscaminas extends JFrame implements ActionListener, MouseListener 
 	private boolean[][] bombas;
 	private Timer timer;
 	private JButton boton;
-
+	private boolean partidaNueva=false;
+	
 	private JPanel contentPane;
 
 	private int WIDTH = 1;
@@ -75,7 +76,7 @@ public class Buscaminas extends JFrame implements ActionListener, MouseListener 
 	static String password = "dEQ1e3Q2ZD";
 	static int id;
 	static String correuUsuari;
-	static String ranking = "";
+	static String ranking="";
 	static JLabel rankingLabel;
 
 	public Buscaminas() {
@@ -103,7 +104,7 @@ public class Buscaminas extends JFrame implements ActionListener, MouseListener 
 
 		btnNewButton = new JButton("Grande");
 		btnNewButton_1 = new JButton("Mediano");
-		btnNewButton_2 = new JButton("PequeÃ±o");
+		btnNewButton_2 = new JButton("PequeÃÂ±o");
 
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -148,111 +149,104 @@ public class Buscaminas extends JFrame implements ActionListener, MouseListener 
 
 	public void creacioPanell() {
 
-		// Crear el menï¿½
+		// Crear el menÃ¯Â¿Â½
 		JMenuBar menuBar = new JMenuBar();
 
-		// Crear el primer campo del menï¿½
+		// Crear el primer campo del menÃ¯Â¿Â½
 		JMenu menu1 = new JMenu("Juego");
 		menuBar.add(menu1);
 
-		// Agregar opciones al primer campo del menï¿½
+		// Agregar opciones al primer campo del menÃ¯Â¿Â½
 		JMenuItem opcion1 = new JMenuItem("Nueva partida");
 		opcion1.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				JFrame newFrame = new JFrame("Ranking");
-				newFrame.setSize(200, 200);
-				newFrame.setVisible(true);
-				newFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-				newFrame.setLayout(new BorderLayout(0, 0));
-				JLabel tituloRanking = new JLabel("Top 5 Rankig Buscaminas");
-				newFrame.add(tituloRanking, BorderLayout.NORTH);
-				JPanel panelRanking = new JPanel(new GridLayout(10, 1));
-				String[] nombres = top10();
-				JLabel nomPlayer = new JLabel("");
-				for (int i = 0; i < nombres.length; i++) {
-					nomPlayer.setText(nombres[i]);
-					panelRanking.add(nomPlayer);
-				}
-				newFrame.add(panelRanking, BorderLayout.CENTER);
+				dispose();
+		        Buscaminas frame2 = new Buscaminas();
+		        frame2.setVisible(true);
 			}
 		});
 
 		JMenuItem opcion2 = new JMenuItem("Ranking");
 		opcion2.addActionListener(new ActionListener() {
 
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				JFrame newFrame = new JFrame("Ranking");
-				newFrame.setSize(200, 200);
-				newFrame.setVisible(true);
-				newFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-				newFrame.setLayout(new BorderLayout(0, 0));
-				JPanel panelRanking = new JPanel();
-				rankingLabel = new JLabel();
-				String textRank = "<pre>Correu Electrï¿½nic        | Temps         </pre><br>";
-				String taula = "";
-				String consulta = "";
-				String correu = "";
-				switch (numCasillas) {
-				case 40:
-					taula = "buscaminesDif";
-					break;
-				case 20:
-					// tamaï¿½o mediano
-					taula = "buscaminesMed";
-					break;
-				case 10:
-					// tamaï¿½o pequeï¿½o
-					taula = "buscaminesFacil";
-					break;
-				}
-				obtindreLesConnexion();
+		    @Override
+		    public void actionPerformed(ActionEvent e) {
+		        // TODO Auto-generated method stub
+		        JFrame newFrame = new JFrame("Ranking");
+		        newFrame.setSize(200, 200);
+		        newFrame.setVisible(true);
+		        newFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		        newFrame.setLayout(new BorderLayout(0, 0));
+		        JPanel panelRanking = new JPanel();
+		        rankingLabel = new JLabel();
+		        String textRank = "<pre>Correu ElectrÃ¯Â¿Â½nic        | Temps         </pre><br>";
+		        String taula = "";
+		        String consulta = "";
+		        String correu = "";
+		        switch (numCasillas) {
+		            case 40:
+		                taula = "buscaminesDif";
+		                break;
+		            case 20:
+		                // tamaÃ¯Â¿Â½o mediano
+		                taula = "buscaminesMed";
+		                break;
+		            case 10:
+		                // tamaÃ¯Â¿Â½o pequeÃ¯Â¿Â½o
+		                taula = "buscaminesFacil";		
+		                break;
+		        }
+		        obtindreLesConnexion();
 
-				consulta = "SELECT t1.correuElectronic, t2.tempsMin " + "FROM tabla1 AS t1 "
-						+ "JOIN (SELECT id, MIN(temps) AS tempsMin " + "      FROM " + taula + "      GROUP BY id "
-						+ "      ORDER BY tempsMin ASC " + "      LIMIT 10) AS t2 ON t1.id = t2.id";
+		        consulta = "SELECT t1.correuElectronic, t2.tempsMin " +
+		                   "FROM tabla1 AS t1 " +
+		                   "JOIN (SELECT id, MIN(temps) AS tempsMin " +
+		                   "      FROM " + taula +
+		                   "      GROUP BY id " +
+		                   "      ORDER BY tempsMin ASC " +
+		                   "      LIMIT 10) AS t2 ON t1.id = t2.id";
 
-				try {
-					try {
-						Class.forName("com.mysql.cj.jdbc.Driver");
-					} catch (ClassNotFoundException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-					Connection c = DriverManager.getConnection(url, user, password);
-					Statement cerca = c.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
-					ResultSet rs = cerca.executeQuery(consulta);
-					int posicio = 1;
+		        try {
+		            try {
+		                Class.forName("com.mysql.cj.jdbc.Driver");
+		            } catch (ClassNotFoundException e1) {
+		                // TODO Auto-generated catch block
+		                e1.printStackTrace();
+		            }
+		            Connection c = DriverManager.getConnection(url, user, password);
+		            Statement cerca = c.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+		            ResultSet rs = cerca.executeQuery(consulta);
+		            int posicio = 1;
 
-					while (rs.next()) {
-						String correuE = rs.getString("correuElectronic");
-						int temps = rs.getInt("tempsMin");
-						int espaisCorreuE = 22 - correuE.length();
-						if (espaisCorreuE < 0) {
-							espaisCorreuE = 0;
-						}
-						textRank += "<pre>" + (posicio + "") + ". " + correuE + " ".repeat(espaisCorreuE) + "|" + temps
-								+ "</pre><br>";
-						posicio++;
-					}
-					c.close();
-					rankingLabel.setText("<html>" + textRank + "</html>");
-					panelRanking.add(rankingLabel);
-					newFrame.add(panelRanking);
+		          
 
-				} catch (SQLException e1) {
-					e1.printStackTrace();
-				}
-			}
+		            while (rs.next()) {
+		                String correuE = rs.getString("correuElectronic");
+		                int temps= rs.getInt("tempsMin");
+		                int espaisCorreuE = 22-correuE.length();
+		                if(espaisCorreuE<0) {
+		                    espaisCorreuE=0;
+		                }
+		                textRank+="<pre>"+(posicio+"")+". "+correuE+" ".repeat(espaisCorreuE)+"|"+temps+"</pre><br>";
+		                posicio++;
+		            }
+		            c.close();
+		            rankingLabel.setText("<html>" + textRank + "</html>");
+		            panelRanking.add(rankingLabel);
+		            newFrame.add(panelRanking);
+		            
+		        } catch (SQLException e1) {
+		            e1.printStackTrace();
+		        }
+		    }
 		});
 		menu1.add(opcion1);
 		menu1.add(opcion2);
 
-		// Crear el segundo campo del menï¿½
+		// Crear el segundo campo del menÃ¯Â¿Â½
 		JMenu menu2 = new JMenu("Ayuda");
 		menuBar.add(menu2);
 
@@ -348,31 +342,35 @@ public class Buscaminas extends JFrame implements ActionListener, MouseListener 
 	public void mouseClicked(MouseEvent e) {
 		JButton botonPulsado = (JButton) e.getSource();
 		MouseEvent eventoRaton = e;
+		if(partidaNueva==false) {
+			if (eventoRaton.getButton() == MouseEvent.BUTTON1) {
+				if (botonPulsado.getIcon() != null || botonPulsado.getIcon() == new ImageIcon("img/bandera.png")) {
+					botonPulsado.setBackground(Color.GRAY);
+					botonPulsado.setIcon(null);
+					contBombas++;
+					labelBombas.setText("" + contBombas);
 
-		if (eventoRaton.getButton() == MouseEvent.BUTTON1) {
-			if (botonPulsado.getIcon() != null || botonPulsado.getIcon() == new ImageIcon("img/bandera.png")) {
-				botonPulsado.setBackground(Color.GRAY);
-				botonPulsado.setIcon(null);
-				contBombas++;
-				labelBombas.setText("" + contBombas);
-
+				} else {
+					if (botonPulsado.getBackground() == Color.GRAY) {
+						String num = botonPulsado.getName();
+						String[] nume = num.split("\\.");
+						int num1 = Integer.parseInt(nume[0]), num2 = Integer.parseInt(nume[1]);
+						desvelarAdj(num1, num2);
+					}
+				}
 			} else {
 				if (botonPulsado.getBackground() == Color.GRAY) {
-					String num = botonPulsado.getName();
-					String[] nume = num.split("\\.");
-					int num1 = Integer.parseInt(nume[0]), num2 = Integer.parseInt(nume[1]);
-					desvelarAdj(num1, num2);
+					ImageIcon imagen = new ImageIcon("img/bandera.png");
+					botonPulsado.setBackground(Color.YELLOW);
+					botonPulsado.setIcon(imagen);
+					contBombas--;
+					labelBombas.setText("" + contBombas);
 				}
 			}
-		} else {
-			if (botonPulsado.getBackground() == Color.GRAY) {
-				ImageIcon imagen = new ImageIcon("img/bandera.png");
-				botonPulsado.setBackground(Color.YELLOW);
-				botonPulsado.setIcon(imagen);
-				contBombas--;
-				labelBombas.setText("" + contBombas);
-			}
+		}else {
+			partidaNueva=false;
 		}
+		
 	}
 
 	@Override
@@ -426,24 +424,26 @@ public class Buscaminas extends JFrame implements ActionListener, MouseListener 
 //		 * String result = showInputDialog(resultadoFinal, "Fin de la partida"); if
 //		 * (result != null) { JOptionPane.showMessageDialog(null,
 //		 * "El valor ingresado fue: " + result); } else {
-//		 * JOptionPane.showMessageDialog(null, "No se ingresï¿½ ningï¿½n valor."); }
-		obtindreIdUsuari();
-		guardarDatos();
+//		 * JOptionPane.showMessageDialog(null, "No se ingresÃ¯Â¿Â½ ningÃ¯Â¿Â½n valor."); }
+		 obtindreIdUsuari();
+		 guardarDatos();
+		 
+		 int confirm = JOptionPane.showConfirmDialog(null, "Â¿Quieres jugar otra partida?", "Confirmar", JOptionPane.YES_NO_OPTION);
 
-		int confirm = JOptionPane.showConfirmDialog(null, "¿Quieres jugar otra partida?", "Confirmar",
-				JOptionPane.YES_NO_OPTION);
-
-		if (confirm == JOptionPane.YES_OPTION) {
-			// Código a ejecutar si el usuario pulsa "Vale"
-			repintarPartida();
-		} else if (confirm == JOptionPane.NO_OPTION) {
-			// Código a ejecutar si el usuario pulsa "No"
-			dispose();
-		}
+			if (confirm == JOptionPane.YES_OPTION) {
+			    // CÃ³digo a ejecutar si el usuario pulsa "Vale"
+				repintarPartida(num1, num2);
+			} else if (confirm == JOptionPane.NO_OPTION) {
+			    // CÃ³digo a ejecutar si el usuario pulsa "No"
+				dispose();
+			}
 	}
-
-	public void repintarPartida() {
-		getContentPane().removeAll();
+	
+	public void repintarPartida(int num1, int num2) {
+		partidaNueva=true;
+		casillas[num1][num2].setSelected(false);
+		casillas[num1][num2].setBackground(Color.GRAY);
+		casillas[num1][num2].setText("");
 		revalidate();
 		repaint();
 		creacioPanell();
@@ -477,60 +477,46 @@ public class Buscaminas extends JFrame implements ActionListener, MouseListener 
 	}
 
 	public void guardarDatos() {
-		// se guarda depende del tamaï¿½o (numCasillas) en una tabla o otra
-		// guardar id usuario, tiempo (tiempoTranscurrido)
+	    // se guarda depende del tamaÃ¯Â¿Â½o (numCasillas) en una tabla o otra
+	    // guardar id usuario, tiempo (tiempoTranscurrido)
 
-		String taulaAlterar = "";
-		String insert;
+	    String taulaAlterar = "";
+	    String insert;
 
-		switch (numCasillas) {
-		case 40:
-			taulaAlterar = "buscaminesDif";
-			insert = "INSERT INTO " + taulaAlterar + "(`id`,`temps`) VALUES ('" + id + "','" + tiempoTranscurrido
-					+ "')";
-			break;
-		case 20:
-			// tamaï¿½o mediano
-			taulaAlterar = "buscaminesMed";
-			insert = "INSERT INTO " + taulaAlterar + "(`id`,`temps`) VALUES ('" + id + "','" + tiempoTranscurrido
-					+ "')";
-			break;
-		case 10:
-			// tamaï¿½o pequeï¿½o
-			taulaAlterar = "buscaminesFacil";
-			insert = "INSERT INTO " + taulaAlterar + "(`id`,`temps`) VALUES ('" + id + "','" + tiempoTranscurrido
-					+ "')";
-			break;
-		default:
-			// Valor de numCasillas no vï¿½lido
-			return;
-		}
-		try {
-			try {
-				Class.forName("com.mysql.cj.jdbc.Driver");
-			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
-			}
-			Connection c = DriverManager.getConnection(url, user, password);
-			Statement cerca = c.createStatement();
-			cerca.executeUpdate(insert);
-			c.close();
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-		}
+	    switch (numCasillas) {
+	        case 40:
+	            taulaAlterar = "buscaminesDif";
+	            insert = "INSERT INTO " + taulaAlterar + "(`id`,`temps`) VALUES ('" + id + "','" + tiempoTranscurrido + "')";
+	            break;
+	        case 20:
+	            // tamaÃ¯Â¿Â½o mediano
+	            taulaAlterar = "buscaminesMed";
+	            insert = "INSERT INTO " + taulaAlterar + "(`id`,`temps`) VALUES ('" + id + "','" + tiempoTranscurrido + "')";
+	            break;
+	        case 10:
+	            // tamaÃ¯Â¿Â½o pequeÃ¯Â¿Â½o
+	            taulaAlterar = "buscaminesFacil";
+	            insert = "INSERT INTO " + taulaAlterar + "(`id`,`temps`) VALUES ('" + id + "','" + tiempoTranscurrido + "')";
+	            break;
+	        default:
+	            // Valor de numCasillas no vÃ¯Â¿Â½lido
+	            return;
+	    }
+	    try {
+	        try {
+	            Class.forName("com.mysql.cj.jdbc.Driver");
+	        } catch (ClassNotFoundException e) {
+	            e.printStackTrace();
+	        }
+	        Connection c = DriverManager.getConnection(url, user, password);
+	        Statement cerca = c.createStatement();
+	        cerca.executeUpdate(insert);
+	        c.close();
+	    } catch (SQLException e1) {
+	        e1.printStackTrace();
+	    }
 	}
-
-	public String[] top10() {
-		// per fer
-		String[] top10 = new String[10];
-		top10[0] = "loko1";
-		top10[1] = "loko2";
-		top10[2] = "loko3";
-		top10[3] = "loko4";
-		top10[4] = "loko5";
-		return top10;
-	}
-
+	
 	public void terminarP() {
 		String resultadoFinal = "Has durado: " + tiempoTranscurrido + " seg.";
 		JOptionPane.showMessageDialog(null, resultadoFinal);
@@ -546,7 +532,7 @@ public class Buscaminas extends JFrame implements ActionListener, MouseListener 
 		if (contCasillas == 0) {
 			timer.stop();
 			terminarP();
-		} else {
+		}if(!partidaNueva) {
 			int bombasAdyacentes = contarBombas(num1, num2);
 			casillas[num1][num2].setText(Integer.toString(bombasAdyacentes));
 			casillas[num1][num2].setEnabled(false);
@@ -575,6 +561,12 @@ public class Buscaminas extends JFrame implements ActionListener, MouseListener 
 								desvelarAdj(num1 + i, num2 + j);
 							}
 						}
+						if(partidaNueva) {
+							break;
+						}
+					}
+					if(partidaNueva) {
+						break;
 					}
 				}
 			}
