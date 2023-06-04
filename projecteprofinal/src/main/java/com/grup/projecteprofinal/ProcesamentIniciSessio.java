@@ -92,8 +92,10 @@ public class ProcesamentIniciSessio {
 		JOptionPane.showMessageDialog(null,
 				"L'inici de sessi� ha resultat satisfact�ri. Benvingut a la llar dels jocs " + nom + ".", "Inici sessi�",
 				JOptionPane.INFORMATION_MESSAGE);
-		InterficieSeleccioJocs panellJocs = new InterficieSeleccioJocs();
 		InterficieSeleccioJocs.setCorreuElectronic(correuElectronic);
+		InterficieSeleccioJocs panellJocs = new InterficieSeleccioJocs();
+		
+		
 		Usuari.panellsActius.put("panellJocs",panellJocs);
 		Usuari.panellsActius.get("panellPrincipal").dispose();
 		Usuari.panellsActius.remove("panellPrincipal");

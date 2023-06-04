@@ -69,7 +69,7 @@ public class PixelArt extends JFrame {
 	    this.WIDTH = 400;
 	    this.HEIGHT = 400;
 	    this.PIXEL_SIZE = 400;
-	    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	    setBounds(100, 100, 450, 300);
 	    contentPane = new JPanel();
 	    contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -170,10 +170,9 @@ public class PixelArt extends JFrame {
 	    panellGeneral.setPreferredSize(new Dimension(WIDTH, HEIGHT));
 	    panel2.setPreferredSize(new Dimension(WIDTH, HEIGHT));
 
-	    // Calculate GRID_SIZE after updating WIDTH and PIXEL_SIZE
 	    GRID_SIZE = WIDTH / PIXEL_SIZE;
 
-	    pixelButtons = new JButton[GRID_SIZE][GRID_SIZE]; // Update pixelButtons size
+	    pixelButtons = new JButton[GRID_SIZE][GRID_SIZE];
 
 	    for (int x = 0; x < GRID_SIZE; x++) {
 	        for (int y = 0; y < GRID_SIZE; y++) {
@@ -208,12 +207,12 @@ public class PixelArt extends JFrame {
 	    btnDescription.addActionListener(new ActionListener() {
 	        @Override
 	        public void actionPerformed(ActionEvent e) {
-	            JOptionPane.showMessageDialog(null, "Bienvenido a Pixel Art. Aquí puedes crear tu propio arte pixel por pixel.\n"
-	                    + "1. Elije un tamaño de cuadrícula para comenzar.\n"
-	                    + "2. Selecciona un color usando el botón 'Selecciona Color'.\n"
+	            JOptionPane.showMessageDialog(null, "Bienvenido a Pixel Art. Aquï¿½ puedes crear tu propio arte pixel por pixel.\n"
+	                    + "1. Elije un tamaï¿½o de cuadrï¿½cula para comenzar.\n"
+	                    + "2. Selecciona un color usando el botï¿½n 'Selecciona Color'.\n"
 	                    + "3. Haz clic izquierdo en un cuadro para pintarlo con el color seleccionado.\n"
 	                    + "4. Haz clic derecho en un cuadro para borrarlo y volverlo blanco.\n"
-	                    + "¡Diviértete creando!");
+	                    + "ï¿½Diviï¿½rtete creando!");
 	        }
 	    });
 
