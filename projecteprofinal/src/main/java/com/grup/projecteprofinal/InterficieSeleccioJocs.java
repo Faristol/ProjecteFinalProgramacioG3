@@ -3,6 +3,8 @@ package com.grup.projecteprofinal;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.FontFormatException;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
@@ -10,6 +12,8 @@ import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
@@ -44,6 +48,7 @@ public class InterficieSeleccioJocs extends JFrame implements ActionListener {
 	private JLabel lblNombreApellidos;
 	private JLabel lblPoblacion;
 	private JLabel lblCorreoElectronico;
+	private Font stocky;
 
 	/**
 	 * Launch the application.
@@ -70,10 +75,21 @@ public class InterficieSeleccioJocs extends JFrame implements ActionListener {
 
 		setTitle("Seleccio Jocs");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(0, 0, 800, 400);
+		setBounds(0, 0, 1000, 400);
 		setResizable(false);
 		getContentPane().setBackground(Color.RED);
+		try {
+			stocky = Font.createFont(Font.TRUETYPE_FONT, new File("stocky.ttf"));
+			stocky = stocky.deriveFont(Font.PLAIN, 18);
 
+		} catch (FontFormatException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		} catch (IOException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+		
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(255, 217, 61));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -85,6 +101,7 @@ public class InterficieSeleccioJocs extends JFrame implements ActionListener {
 		contentPane.add(panel, BorderLayout.SOUTH);
 
 		JButton btnNewButton_3 = new JButton("Dona'm de baixa");
+		btnNewButton_3.setFont(stocky);
 		btnNewButton_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Connection c;
@@ -120,6 +137,8 @@ public class InterficieSeleccioJocs extends JFrame implements ActionListener {
 						Usuari.panellsActius.get("panellJocs").dispose();
 						if(Usuari.panellsActius.get("pescamines")!=null){
 							JFrame framePescamines = Usuari.panellsActius.get("pescamines");
+							framePescamines.setFont(stocky);
+
 							if(framePescamines.isVisible()) {
 								framePescamines.dispose();
 							}
@@ -140,7 +159,7 @@ public class InterficieSeleccioJocs extends JFrame implements ActionListener {
 							
 						}
 						Usuari.panellsActius.clear();
-						JOptionPane.showMessageDialog(null, "Espere tornar-te a veure en la base de dades!", "Adéu",
+						JOptionPane.showMessageDialog(null, "Espere tornar-te a veure en la base de dades!", "Adï¿½u",
 								JOptionPane.INFORMATION_MESSAGE);
 						InterficiePrincipal panellPrincipal = new InterficiePrincipal();
 						
@@ -155,6 +174,7 @@ public class InterficieSeleccioJocs extends JFrame implements ActionListener {
 		panel.add(btnNewButton_3);
 
 		JButton btnNewButton_4 = new JButton("Tanca Sessio");
+		btnNewButton_4.setFont(stocky);
 		btnNewButton_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Usuari.panellsActius.get("panellJocs").dispose();
@@ -180,7 +200,7 @@ public class InterficieSeleccioJocs extends JFrame implements ActionListener {
 					
 				}
 				Usuari.panellsActius.clear();
-				JOptionPane.showMessageDialog(null, "Fins la pròxima!", "Adéu", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Fins la prï¿½xima!", "Adï¿½u", JOptionPane.INFORMATION_MESSAGE);
 				InterficiePrincipal panellPrincipal = new InterficiePrincipal();
 				Usuari.panellsActius.put("panellPrincipal", panellPrincipal);
 				panellPrincipal.setVisible(true);
@@ -253,8 +273,12 @@ public class InterficieSeleccioJocs extends JFrame implements ActionListener {
 				}
 
 				 lblNombreApellidos = new JLabel("Nom i cognoms: "+nombre +" "+apellidos);
-				 lblPoblacion = new JLabel("Població: "+poblacion);
+				 lblNombreApellidos.setFont(stocky);
+				 lblPoblacion = new JLabel("Poblaciï¿½: "+poblacion);
+				 lblPoblacion.setFont(stocky);
 				 lblCorreoElectronico = new JLabel("Correu: "+correoElectronico);
+				 lblCorreoElectronico.setFont(stocky);
+
 				panel_1.add(lblNombreApellidos, gbc_etiquetas);
 				panel_1.add(lblPoblacion, gbc_etiquetas);
 				panel_1.add(lblCorreoElectronico, gbc_etiquetas);
@@ -274,6 +298,7 @@ public class InterficieSeleccioJocs extends JFrame implements ActionListener {
 		contentPane.add(panel_2, BorderLayout.NORTH);
 
 		JLabel lblNewLabel_3 = new JLabel("La Llar Dels Jocs ");
+		lblNewLabel_3.setFont(stocky);
 		panel_2.add(lblNewLabel_3);
 
 		JPanel panel_3 = new JPanel();
@@ -288,6 +313,8 @@ public class InterficieSeleccioJocs extends JFrame implements ActionListener {
 		panel_3.setLayout(gbl_panel_3);
 
 		JLabel lblNewLabel = new JLabel("Pescamines:");
+		lblNewLabel.setFont(stocky);
+
 		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
 		// lblNewLabel.setHorizontalAlignment(SwingConstraints.CENTER);
 		gbc_lblNewLabel.gridwidth = 6;
@@ -297,6 +324,8 @@ public class InterficieSeleccioJocs extends JFrame implements ActionListener {
 		panel_3.add(lblNewLabel, gbc_lblNewLabel);
 
 		btnNewButton = new JButton("Accedir");
+		btnNewButton.setFont(stocky);
+
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -345,6 +374,8 @@ public class InterficieSeleccioJocs extends JFrame implements ActionListener {
 		panel_3.add(btnNewButton, gbc_btnNewButton);
 
 		JLabel lblNewLabel_1 = new JLabel("Pixel Art:");
+		lblNewLabel_1.setFont(stocky);
+
 		GridBagConstraints gbc_lblNewLabel_1 = new GridBagConstraints();
 		gbc_lblNewLabel_1.gridwidth = 6;
 		gbc_lblNewLabel_1.insets = new Insets(10, 200, 5, 5);
@@ -353,6 +384,8 @@ public class InterficieSeleccioJocs extends JFrame implements ActionListener {
 		panel_3.add(lblNewLabel_1, gbc_lblNewLabel_1);
 
 		btnNewButton_1 = new JButton("Accedir");
+		btnNewButton_1.setFont(stocky);
+
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(Usuari.panellsActius.size()<2) {
@@ -401,6 +434,8 @@ public class InterficieSeleccioJocs extends JFrame implements ActionListener {
 		panel_3.add(btnNewButton_1, gbc_btnNewButton_1);
 
 		JLabel lblNewLabel_2 = new JLabel("Joc de la vida:");
+		lblNewLabel_2.setFont(stocky);
+
 		lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
 		GridBagConstraints gbc_lblNewLabel_2 = new GridBagConstraints();
 		gbc_lblNewLabel_2.fill = GridBagConstraints.HORIZONTAL;
@@ -411,6 +446,8 @@ public class InterficieSeleccioJocs extends JFrame implements ActionListener {
 		panel_3.add(lblNewLabel_2, gbc_lblNewLabel_2);
 
 		btnNewButton_2 = new JButton("Accedir");
+		btnNewButton_2.setFont(stocky);
+
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(Usuari.panellsActius.size()<2) {
