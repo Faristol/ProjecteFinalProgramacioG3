@@ -170,10 +170,9 @@ public class PixelArt extends JFrame {
 	    panellGeneral.setPreferredSize(new Dimension(WIDTH, HEIGHT));
 	    panel2.setPreferredSize(new Dimension(WIDTH, HEIGHT));
 
-	    // Calculate GRID_SIZE after updating WIDTH and PIXEL_SIZE
 	    GRID_SIZE = WIDTH / PIXEL_SIZE;
 
-	    pixelButtons = new JButton[GRID_SIZE][GRID_SIZE]; // Update pixelButtons size
+	    pixelButtons = new JButton[GRID_SIZE][GRID_SIZE];
 
 	    for (int x = 0; x < GRID_SIZE; x++) {
 	        for (int y = 0; y < GRID_SIZE; y++) {

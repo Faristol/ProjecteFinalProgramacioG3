@@ -170,6 +170,7 @@ public class InterficieSeleccioJocs extends JFrame implements ActionListener {
 			}
 		});
 		panel.add(btnNewButton_3);
+		panel.setBackground(new Color(255, 217, 61));
 
 		JButton btnNewButton_4 = new JButton("Tanca Sessio");
 		btnNewButton_4.setFont(stocky);
@@ -285,6 +286,7 @@ public class InterficieSeleccioJocs extends JFrame implements ActionListener {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		panel_1.setBackground(new Color(255, 217, 61));
 		contentPane.add(panel_1, BorderLayout.WEST);
 
 		JPanel panel_2 = new JPanel();
@@ -293,6 +295,7 @@ public class InterficieSeleccioJocs extends JFrame implements ActionListener {
 		JLabel lblNewLabel_3 = new JLabel("La Llar Dels Jocs ");
 		lblNewLabel_3.setFont(stocky);
 		panel_2.add(lblNewLabel_3);
+		panel_2.setBackground(new Color(255, 217, 61));
 
 		JPanel panel_3 = new JPanel();
 		contentPane.add(panel_3, BorderLayout.CENTER);
@@ -456,9 +459,7 @@ public class InterficieSeleccioJocs extends JFrame implements ActionListener {
 						Usuari.panellsActius.remove("pescamines");
 					}
 					
-				}
-			
-					
+				}	
 
 				}
 
@@ -471,7 +472,7 @@ public class InterficieSeleccioJocs extends JFrame implements ActionListener {
 		gbc_btnNewButton_2.gridx = 10;
 		gbc_btnNewButton_2.gridy = 7;
 		panel_3.add(btnNewButton_2, gbc_btnNewButton_2);
-
+		panel_3.setBackground(new Color(255, 217, 61));
 		// pack();
 		setLocationRelativeTo(null);
 		setVisible(true);
