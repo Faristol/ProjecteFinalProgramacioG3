@@ -89,7 +89,7 @@ public class InterficieSeleccioJocs extends JFrame implements ActionListener {
 			// TODO Auto-generated catch block
 			e2.printStackTrace();
 		}
-		
+
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(255, 217, 61));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -117,8 +117,7 @@ public class InterficieSeleccioJocs extends JFrame implements ActionListener {
 					}
 					c = DriverManager.getConnection(url, user, password);
 					Statement cerca = c.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
-					String sentenciaIdUser = "SELECT id FROM tabla1 WHERE correuElectronic = '" + correu
-							+ "'";
+					String sentenciaIdUser = "SELECT id FROM tabla1 WHERE correuElectronic = '" + correu + "'";
 					ResultSet idUser = cerca.executeQuery(sentenciaIdUser);
 
 					if (idUser.next()) {
@@ -133,36 +132,35 @@ public class InterficieSeleccioJocs extends JFrame implements ActionListener {
 						String sentenciaBorrarTaula3 = "DELETE FROM tabla3 WHERE id = " + id;
 						int filasBorradas3 = cerca.executeUpdate(sentenciaBorrarTaula3);
 
-						
 						Usuari.panellsActius.get("panellJocs").dispose();
-						if(Usuari.panellsActius.get("pescamines")!=null){
+						if (Usuari.panellsActius.get("pescamines") != null) {
 							JFrame framePescamines = Usuari.panellsActius.get("pescamines");
 							framePescamines.setFont(stocky);
 
-							if(framePescamines.isVisible()) {
+							if (framePescamines.isVisible()) {
 								framePescamines.dispose();
 							}
-							
+
 						}
-						if(Usuari.panellsActius.get("vida")!=null){
+						if (Usuari.panellsActius.get("vida") != null) {
 							JFrame frameVida = Usuari.panellsActius.get("vida");
-							if(frameVida.isVisible()) {
+							if (frameVida.isVisible()) {
 								frameVida.dispose();
 							}
-							
+
 						}
-						if(Usuari.panellsActius.get("pixel")!=null){
+						if (Usuari.panellsActius.get("pixel") != null) {
 							JFrame framePixelArt = Usuari.panellsActius.get("pixel");
-							if(framePixelArt.isVisible()) {
+							if (framePixelArt.isVisible()) {
 								framePixelArt.dispose();
 							}
-							
+
 						}
 						Usuari.panellsActius.clear();
 						JOptionPane.showMessageDialog(null, "Espere tornar-te a veure en la base de dades!", "Ad�u",
 								JOptionPane.INFORMATION_MESSAGE);
 						InterficiePrincipal panellPrincipal = new InterficiePrincipal();
-						
+
 						Usuari.panellsActius.put("panellPrincipal", panellPrincipal);
 						panellPrincipal.setVisible(true);
 					}
@@ -178,26 +176,26 @@ public class InterficieSeleccioJocs extends JFrame implements ActionListener {
 		btnNewButton_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Usuari.panellsActius.get("panellJocs").dispose();
-				if(Usuari.panellsActius.get("pescamines")!=null){
+				if (Usuari.panellsActius.get("pescamines") != null) {
 					JFrame framePescamines = Usuari.panellsActius.get("pescamines");
-					if(framePescamines.isVisible()) {
+					if (framePescamines.isVisible()) {
 						framePescamines.dispose();
 					}
-					
+
 				}
-				if(Usuari.panellsActius.get("vida")!=null){
+				if (Usuari.panellsActius.get("vida") != null) {
 					JFrame frameVida = Usuari.panellsActius.get("vida");
-					if(frameVida.isVisible()) {
+					if (frameVida.isVisible()) {
 						frameVida.dispose();
 					}
-					
+
 				}
-				if(Usuari.panellsActius.get("pixel")!=null){
+				if (Usuari.panellsActius.get("pixel") != null) {
 					JFrame framePixelArt = Usuari.panellsActius.get("pixel");
-					if(framePixelArt.isVisible()) {
+					if (framePixelArt.isVisible()) {
 						framePixelArt.dispose();
 					}
-					
+
 				}
 				Usuari.panellsActius.clear();
 				JOptionPane.showMessageDialog(null, "Fins la pr�xima!", "Ad�u", JOptionPane.INFORMATION_MESSAGE);
@@ -209,7 +207,7 @@ public class InterficieSeleccioJocs extends JFrame implements ActionListener {
 		panel.add(btnNewButton_4);
 
 		JPanel panel_1 = new JPanel();
-		
+
 		GridBagLayout gbl_panel_1 = new GridBagLayout();
 		gbl_panel_1.columnWidths = new int[] { 0, 0 };
 		gbl_panel_1.rowHeights = new int[] { 0, 0, 0, 0, 0, 0, 0 };
@@ -223,7 +221,7 @@ public class InterficieSeleccioJocs extends JFrame implements ActionListener {
 		gbc_img.gridx = 0;
 		gbc_img.gridy = GridBagConstraints.RELATIVE;
 		gbc_img.anchor = GridBagConstraints.CENTER;
-		
+
 		GridBagConstraints gbc_etiquetas = new GridBagConstraints();
 		gbc_etiquetas.anchor = GridBagConstraints.WEST;
 		gbc_etiquetas.insets = new Insets(20, 15, 5, 0);
@@ -246,24 +244,21 @@ public class InterficieSeleccioJocs extends JFrame implements ActionListener {
 			String consulta = "SELECT nom, cognoms, poblacio, correuElectronic, imatgeBytes FROM tabla1 WHERE correuElectronic = '"
 					+ correu + "'";
 			ResultSet r = cerca.executeQuery(consulta);
-			
 
 			if (r.next()) {
-				
 
 				String nombre = r.getString("nom");
 				String apellidos = r.getString("cognoms");
 				String poblacion = r.getString("poblacio");
 				String correoElectronico = r.getString("correuElectronic");
 				byte[] imagenBytes = r.getBytes("imatgeBytes");
-				
-			
+
 				if (imagenBytes != null) {
 					Border borde = BorderFactory.createLineBorder(Color.BLACK, 1);
 					Image imagen = Toolkit.getDefaultToolkit().createImage(imagenBytes);
-					int nuevoAncho = 80; 
-				    int nuevoAlto = 80; 
-				    Image imagenRedimensionada = imagen.getScaledInstance(nuevoAncho, nuevoAlto, Image.SCALE_SMOOTH);
+					int nuevoAncho = 80;
+					int nuevoAlto = 80;
+					Image imagenRedimensionada = imagen.getScaledInstance(nuevoAncho, nuevoAlto, Image.SCALE_SMOOTH);
 					ImageIcon imagenUsuario = new ImageIcon(imagenRedimensionada);
 
 					img.setIcon(imagenUsuario);
@@ -272,28 +267,26 @@ public class InterficieSeleccioJocs extends JFrame implements ActionListener {
 
 				}
 
-				 lblNombreApellidos = new JLabel("Nom i cognoms: "+nombre +" "+apellidos);
-				 lblNombreApellidos.setFont(stocky);
-				 lblPoblacion = new JLabel("Poblaci�: "+poblacion);
-				 lblPoblacion.setFont(stocky);
-				 lblCorreoElectronico = new JLabel("Correu: "+correoElectronico);
-				 lblCorreoElectronico.setFont(stocky);
+				lblNombreApellidos = new JLabel("Nom i cognoms: " + nombre + " " + apellidos);
+				lblNombreApellidos.setFont(stocky);
+				lblPoblacion = new JLabel("Poblacio: " + poblacion);
+				lblPoblacion.setFont(stocky);
+				lblCorreoElectronico = new JLabel("Correu: " + correoElectronico);
+				lblCorreoElectronico.setFont(stocky);
 
 				panel_1.add(lblNombreApellidos, gbc_etiquetas);
 				panel_1.add(lblPoblacion, gbc_etiquetas);
 				panel_1.add(lblCorreoElectronico, gbc_etiquetas);
-			
+
 			}
 			connection.close();
-			
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		contentPane.add(panel_1,BorderLayout.WEST);
-	
-		
+		contentPane.add(panel_1, BorderLayout.WEST);
+
 		JPanel panel_2 = new JPanel();
 		contentPane.add(panel_2, BorderLayout.NORTH);
 
@@ -328,42 +321,36 @@ public class InterficieSeleccioJocs extends JFrame implements ActionListener {
 
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				if(Usuari.panellsActius.size()<2) {
-					Buscaminas framePescamines = new Buscaminas();
-					Usuari.panellsActius.put("pescamines", framePescamines);
-					framePescamines.setVisible(true);
-				}else {
-					if (Usuari.panellsActius.get("pixel") != null) {
-					    JFrame framePixelArt = Usuari.panellsActius.get("pixel");
-					    if (framePixelArt.isVisible()) {
-					        framePixelArt.dispose(); 
-					    }
-					    Usuari.panellsActius.remove("pixel"); 
-					}
-					if(Usuari.panellsActius.get("vida")!=null) {
-						JFrame frameVida = Usuari.panellsActius.get("vida");
-						if(frameVida.isVisible()) {
-							frameVida.dispose();
-						}
-						Usuari.panellsActius.remove("vida");
-					}
-					if(Usuari.panellsActius.get("pescamines")!=null) {
-						JFrame framePescamines = Usuari.panellsActius.get("pescamines");
-						if(framePescamines.isVisible()) {
-							framePescamines.dispose();
-						}
+				if (Usuari.panellsActius.get("pescamines") != null) {
+					JFrame framePixelArt = Usuari.panellsActius.get("pescamines");
+					if (!framePixelArt.isVisible()) {
 						Usuari.panellsActius.remove("pescamines");
 					}
+					
+				}
+
+				if (Usuari.panellsActius.size() < 5 && Usuari.panellsActius.get("pescamines") == null) {
 					Buscaminas framePescamines = new Buscaminas();
 					Usuari.panellsActius.put("pescamines", framePescamines);
 					framePescamines.setVisible(true);
+				}
+				if (Usuari.panellsActius.get("pixel") != null) {
+					JFrame framePixelArt = Usuari.panellsActius.get("pixel");
+					if (!framePixelArt.isVisible()) {
+						Usuari.panellsActius.remove("pixel");
+					}
 					
-						
+				}
+			if (Usuari.panellsActius.get("vida") != null) {
+				JFrame framePixelArt = Usuari.panellsActius.get("vida");
+				if (!framePixelArt.isVisible()) {
+					Usuari.panellsActius.remove("vida");
 				}
 				
+			}
 
 			}
+
 		});
 		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
 		gbc_btnNewButton.gridwidth = 2;
@@ -387,42 +374,35 @@ public class InterficieSeleccioJocs extends JFrame implements ActionListener {
 		btnNewButton_1.setFont(stocky);
 
 		btnNewButton_1.addActionListener(new ActionListener() {
+
 			public void actionPerformed(ActionEvent e) {
-				if(Usuari.panellsActius.size()<2) {
+				if (Usuari.panellsActius.get("pixel") != null) {
+					JFrame framePixelArt = Usuari.panellsActius.get("pixel");
+					if (!framePixelArt.isVisible()) {
+						Usuari.panellsActius.remove("pixel");
+					}
+					
+				}
+				if (Usuari.panellsActius.size() < 5 && Usuari.panellsActius.get("pixel") == null) {
 					PixelArt framePixelArt = new PixelArt();
 					Usuari.panellsActius.put("pixel", framePixelArt);
 					framePixelArt.setVisible(true);
-				}else {
-					if (Usuari.panellsActius.get("pixel") != null) {
-					    JFrame framePixelArt = Usuari.panellsActius.get("pixel");
-					    if (framePixelArt.isVisible()) {
-					        framePixelArt.dispose(); 
-					    }
-					    Usuari.panellsActius.remove("pixel"); 
-					}
-					if(Usuari.panellsActius.get("vida")!=null) {
-						JFrame frameVida = Usuari.panellsActius.get("vida");
-						if(frameVida.isVisible()) {
-							frameVida.dispose();
-						}
-						Usuari.panellsActius.remove("vida");
-					}
-					if(Usuari.panellsActius.get("pescamines")!=null) {
-						JFrame framePescamines = Usuari.panellsActius.get("pescamines");
-						if(framePescamines.isVisible()) {
-							framePescamines.dispose();
-						}
+				}
+				if (Usuari.panellsActius.get("pescamines") != null) {
+					JFrame framePixelArt = Usuari.panellsActius.get("pescamines");
+					if (!framePixelArt.isVisible()) {
 						Usuari.panellsActius.remove("pescamines");
 					}
-					PixelArt framePixelArt = new PixelArt();
-					Usuari.panellsActius.put("pixel", framePixelArt);
-					framePixelArt.setVisible(true);
 					
-					
-						
+				}
+			if (Usuari.panellsActius.get("vida") != null) {
+				JFrame framePixelArt = Usuari.panellsActius.get("vida");
+				if (!framePixelArt.isVisible()) {
+					Usuari.panellsActius.remove("vida");
 				}
 				
-				
+			}
+
 			}
 		});
 		GridBagConstraints gbc_btnNewButton_1 = new GridBagConstraints();
@@ -450,41 +430,39 @@ public class InterficieSeleccioJocs extends JFrame implements ActionListener {
 
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(Usuari.panellsActius.size()<2) {
-					JocDeLaVida frameVida = new JocDeLaVida();
-					Usuari.panellsActius.put("vida", frameVida);
-					frameVida.setVisible(true);
-				}else {
-					if (Usuari.panellsActius.get("pixel") != null) {
-					    JFrame framePixelArt = Usuari.panellsActius.get("pixel");
-					    if (framePixelArt.isVisible()) {
-					        framePixelArt.dispose(); 
-					    }
-					    Usuari.panellsActius.remove("pixel"); 
-					}
-					if(Usuari.panellsActius.get("vida")!=null) {
-						JFrame frameVida = Usuari.panellsActius.get("vida");
-						if(frameVida.isVisible()) {
-							frameVida.dispose();
-						}
+				if (Usuari.panellsActius.get("vida") != null) {
+					JFrame framePixelArt = Usuari.panellsActius.get("vida");
+					if (!framePixelArt.isVisible()) {
 						Usuari.panellsActius.remove("vida");
 					}
-					if(Usuari.panellsActius.get("pescamines")!=null) {
-						JFrame framePescamines = Usuari.panellsActius.get("pescamines");
-						if(framePescamines.isVisible()) {
-							framePescamines.dispose();
-						}
-						Usuari.panellsActius.remove("pescamines");
-					}
+					
+				}
+			
+				if (Usuari.panellsActius.size() < 5 && Usuari.panellsActius.get("vida") == null) {
 					JocDeLaVida frameVida = new JocDeLaVida();
 					Usuari.panellsActius.put("vida", frameVida);
 					frameVida.setVisible(true);
-					
-					
+				} 
+				if (Usuari.panellsActius.get("pixel") != null) {
+						JFrame framePixelArt = Usuari.panellsActius.get("pixel");
+						if (!framePixelArt.isVisible()) {
+							Usuari.panellsActius.remove("pixel");
+						}
 						
+					}
+				if (Usuari.panellsActius.get("pescamines") != null) {
+					JFrame framePixelArt = Usuari.panellsActius.get("pescamines");
+					if (!framePixelArt.isVisible()) {
+						Usuari.panellsActius.remove("pescamines");
+					}
+					
 				}
 			
-			}
+					
+
+				}
+
+			
 		});
 		GridBagConstraints gbc_btnNewButton_2 = new GridBagConstraints();
 		gbc_btnNewButton_2.gridwidth = 2;
