@@ -104,7 +104,7 @@ public class Buscaminas extends JFrame implements ActionListener, MouseListener 
 
 		btnNewButton = new JButton("Grande");
 		btnNewButton_1 = new JButton("Mediano");
-		btnNewButton_2 = new JButton("PequeÃÂ±o");
+		btnNewButton_2 = new JButton("PequeÃ±o");
 
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -149,14 +149,14 @@ public class Buscaminas extends JFrame implements ActionListener, MouseListener 
 
 	public void creacioPanell() {
 
-		// Crear el menÃ¯Â¿Â½
+		// Crear el menï¿½
 		JMenuBar menuBar = new JMenuBar();
 
-		// Crear el primer campo del menÃ¯Â¿Â½
+		// Crear el primer campo del menï¿½
 		JMenu menu1 = new JMenu("Juego");
 		menuBar.add(menu1);
 
-		// Agregar opciones al primer campo del menÃ¯Â¿Â½
+		// Agregar opciones al primer campo del menï¿½
 		JMenuItem opcion1 = new JMenuItem("Nueva partida");
 		opcion1.addActionListener(new ActionListener() {
 
@@ -182,7 +182,7 @@ public class Buscaminas extends JFrame implements ActionListener, MouseListener 
 		        newFrame.setLayout(new BorderLayout(0, 0));
 		        JPanel panelRanking = new JPanel();
 		        rankingLabel = new JLabel();
-		        String textRank = "<pre>Correu ElectrÃ¯Â¿Â½nic        | Temps         </pre><br>";
+		        String textRank = "<pre>Correu Electrï¿½nic        | Temps         </pre><br>";
 		        String taula = "";
 		        String consulta = "";
 		        String correu = "";
@@ -191,11 +191,11 @@ public class Buscaminas extends JFrame implements ActionListener, MouseListener 
 		                taula = "buscaminesDif";
 		                break;
 		            case 20:
-		                // tamaÃ¯Â¿Â½o mediano
+		                // tamaï¿½o mediano
 		                taula = "buscaminesMed";
 		                break;
 		            case 10:
-		                // tamaÃ¯Â¿Â½o pequeÃ¯Â¿Â½o
+		                // tamaï¿½o pequeï¿½o
 		                taula = "buscaminesFacil";		
 		                break;
 		        }
@@ -246,7 +246,7 @@ public class Buscaminas extends JFrame implements ActionListener, MouseListener 
 		menu1.add(opcion1);
 		menu1.add(opcion2);
 
-		// Crear el segundo campo del menÃ¯Â¿Â½
+		// Crear el segundo campo del menï¿½
 		JMenu menu2 = new JMenu("Ayuda");
 		menuBar.add(menu2);
 
@@ -426,7 +426,7 @@ public class Buscaminas extends JFrame implements ActionListener, MouseListener 
 //		 * String result = showInputDialog(resultadoFinal, "Fin de la partida"); if
 //		 * (result != null) { JOptionPane.showMessageDialog(null,
 //		 * "El valor ingresado fue: " + result); } else {
-//		 * JOptionPane.showMessageDialog(null, "No se ingresÃ¯Â¿Â½ ningÃ¯Â¿Â½n valor."); }
+//		 * JOptionPane.showMessageDialog(null, "No se ingresï¿½ ningï¿½n valor."); }
 		 obtindreIdUsuari();
 		 guardarDatos();
 		 volverJugar();
@@ -435,15 +435,21 @@ public class Buscaminas extends JFrame implements ActionListener, MouseListener 
 	public void volverJugar() {
 		obtindreIdUsuari();
 		 guardarDatos();
-		 int confirm = JOptionPane.showConfirmDialog(null, "Â¿Quieres jugar otra partida?", "Confirmar", JOptionPane.YES_NO_OPTION);
+		 boolean parar=true;
+		 do {
+			 int confirm = JOptionPane.showConfirmDialog(null, "¿Quieres jugar otra partida?", "Confirmar", JOptionPane.YES_NO_OPTION);
 
-			if (confirm == JOptionPane.YES_OPTION) {
-			    // CÃ³digo a ejecutar si el usuario pulsa "Vale"
-				repintarPartida();
-			} else if (confirm == JOptionPane.NO_OPTION) {
-			    // CÃ³digo a ejecutar si el usuario pulsa "No"
-				dispose();
-			}
+				if (confirm == JOptionPane.YES_OPTION) {
+				    // Código a ejecutar si el usuario pulsa "Vale"
+					parar=false;
+					repintarPartida();
+					
+				} else if (confirm == JOptionPane.NO_OPTION) {
+				    // Código a ejecutar si el usuario pulsa "No"
+					parar=false;
+					dispose();
+				}
+		 }while(parar) ;
 	}
 	
 	public void repintarPartida() {
@@ -481,7 +487,7 @@ public class Buscaminas extends JFrame implements ActionListener, MouseListener 
 	}
 
 	public void guardarDatos() {
-	    // se guarda depende del tamaÃ¯Â¿Â½o (numCasillas) en una tabla o otra
+	    // se guarda depende del tamaï¿½o (numCasillas) en una tabla o otra
 	    // guardar id usuario, tiempo (tiempoTranscurrido)
 
 	    String taulaAlterar = "";
@@ -493,17 +499,17 @@ public class Buscaminas extends JFrame implements ActionListener, MouseListener 
 	            insert = "INSERT INTO " + taulaAlterar + "(`id`,`temps`) VALUES ('" + id + "','" + tiempoTranscurrido + "')";
 	            break;
 	        case 20:
-	            // tamaÃ¯Â¿Â½o mediano
+	            // tamaï¿½o mediano
 	            taulaAlterar = "buscaminesMed";
 	            insert = "INSERT INTO " + taulaAlterar + "(`id`,`temps`) VALUES ('" + id + "','" + tiempoTranscurrido + "')";
 	            break;
 	        case 10:
-	            // tamaÃ¯Â¿Â½o pequeÃ¯Â¿Â½o
+	            // tamaï¿½o pequeï¿½o
 	            taulaAlterar = "buscaminesFacil";
 	            insert = "INSERT INTO " + taulaAlterar + "(`id`,`temps`) VALUES ('" + id + "','" + tiempoTranscurrido + "')";
 	            break;
 	        default:
-	            // Valor de numCasillas no vÃ¯Â¿Â½lido
+	            // Valor de numCasillas no vï¿½lido
 	            return;
 	    }
 	    try {
@@ -558,6 +564,7 @@ public class Buscaminas extends JFrame implements ActionListener, MouseListener 
 				casillas[num1][num2].setBackground(Color.RED);
 				break;
 			}
+			casillas[num1][num2].setIcon(null);
 			contCasillas--;
 			labelCasillas.setText("Casillas por desvelar: " + contCasillas);
 			if (bombasAdyacentes == 0) {
@@ -622,7 +629,8 @@ public class Buscaminas extends JFrame implements ActionListener, MouseListener 
 	}
 
 	public static void obtindreIdUsuari() {
-		correuUsuari = InterficieSeleccioJocs.getCorreuElectronic();
+		//correuUsuari = InterficieSeleccioJocs.getCorreuElectronic();
+		correuUsuari="lol";
 		obtindreLesConnexion();
 		try {
 			try {
