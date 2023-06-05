@@ -362,10 +362,16 @@ public class PixelArt extends JFrame {
 			statement.setInt(2, id);
 			filasact = statement.executeUpdate();
 			if (filasact != 0) {
-				System.out.println("Datos guardados en la base de datos correctamente.");
+				
+				JOptionPane.showMessageDialog(null,
+						"Datos guardados en la base de datos correctamente", "Guardat correcte",
+						JOptionPane.INFORMATION_MESSAGE);
 
 			} else {
-				System.out.println("Error.");
+				JOptionPane.showMessageDialog(null,
+						"Datos guardados en la base de datos incorrectament", "Guardat incorrecte",
+						JOptionPane.ERROR_MESSAGE);
+
 			}
 
 		} catch (Exception e) {
@@ -402,7 +408,9 @@ public class PixelArt extends JFrame {
 				panellGeneral.revalidate();
 				panellGeneral.repaint();
 
-				System.out.println("Dibujo cargado desde la base de datos correctamente.");
+				JOptionPane.showMessageDialog(null,
+						"Dibuix carregat correctament", "Carregat correcte",
+						JOptionPane.ERROR_MESSAGE);
 			}
 
 			rs.close();
@@ -410,36 +418,36 @@ public class PixelArt extends JFrame {
 
 			// Cerrar la conexión
 			connection.close();
-			System.out.println("Conexión cerrada correctamente.");
+			
 		} catch (Exception e) {
-			System.err.println("Error.");
+			
 			e.printStackTrace();
 		}
 	}
 
 	public static void obtindreLesConnexion() {
-		Enumeration e;
-		try {
-			e = NetworkInterface.getNetworkInterfaces();
-			while (e.hasMoreElements()) {
-				NetworkInterface n = (NetworkInterface) e.nextElement();
-				Enumeration ee = n.getInetAddresses();
-				while (ee.hasMoreElements()) {
-					InetAddress i = (InetAddress) ee.nextElement();
-					String adress = "" + (i.getHostAddress());
-
-					if (adress.contains("192.168.14")) {
-						url = "jdbc:mysql://" + adress + "/1daw03_pro";
-
-						return;
-					}
-
-				}
-			}
-		} catch (SocketException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+//		Enumeration e;
+//		try {
+//			e = NetworkInterface.getNetworkInterfaces();
+//			while (e.hasMoreElements()) {
+//				NetworkInterface n = (NetworkInterface) e.nextElement();
+//				Enumeration ee = n.getInetAddresses();
+//				while (ee.hasMoreElements()) {
+//					InetAddress i = (InetAddress) ee.nextElement();
+//					String adress = "" + (i.getHostAddress());
+//
+//					if (adress.contains("192.168.14")) {
+//						url = "jdbc:mysql://" + adress + "/1daw03_pro";
+//
+//						return;
+//					}
+//
+//				}
+//			}
+//		} catch (SocketException e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
 		url = "jdbc:mysql://ticsimarro.org:3306/1daw03_pro";
 
 	}
@@ -500,10 +508,16 @@ public class PixelArt extends JFrame {
                 panel2.paint(image.getGraphics());
 
                 ImageIO.write(image, "PNG", new File(filePath));
+                JOptionPane.showMessageDialog(null,
+						"Archivo guardado correctamente "+filePath, "Guardat correcte",
+						JOptionPane.ERROR_MESSAGE);
 
-                System.out.println("Archivo guardado correctamente: " + filePath);
+                
             } catch (Exception e) {
-                System.out.println("Error al guardar el archivo: " + e.getMessage());
+            	JOptionPane.showMessageDialog(null,
+						"Error al guardar l'arxiu", "Error al guardar",
+						JOptionPane.ERROR_MESSAGE);
+                
             }
 		}
 	}
