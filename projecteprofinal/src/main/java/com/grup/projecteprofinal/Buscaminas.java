@@ -595,28 +595,28 @@ public class Buscaminas extends JFrame implements ActionListener, MouseListener 
 	}
 
 	public static void obtindreLesConnexion() {
-		Enumeration e;
-		try {
-			e = NetworkInterface.getNetworkInterfaces();
-			while (e.hasMoreElements()) {
-				NetworkInterface n = (NetworkInterface) e.nextElement();
-				Enumeration ee = n.getInetAddresses();
-				while (ee.hasMoreElements()) {
-					InetAddress i = (InetAddress) ee.nextElement();
-					String adress = "" + (i.getHostAddress());
-
-					if (adress.contains("192.168.14")) {
-						url = "jdbc:mysql://" + adress + "/1daw03_pro";
-
-						return;
-					}
-
-				}
-			}
-		} catch (SocketException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+//		Enumeration e;
+//		try {
+//			e = NetworkInterface.getNetworkInterfaces();
+//			while (e.hasMoreElements()) {
+//				NetworkInterface n = (NetworkInterface) e.nextElement();
+//				Enumeration ee = n.getInetAddresses();
+//				while (ee.hasMoreElements()) {
+//					InetAddress i = (InetAddress) ee.nextElement();
+//					String adress = "" + (i.getHostAddress());
+//
+//					if (adress.contains("192.168.14")) {
+//						url = "jdbc:mysql://" + adress + "/1daw03_pro";
+//
+//						return;
+//					}
+//
+//				}
+//			}
+//		} catch (SocketException e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
 		url = "jdbc:mysql://ticsimarro.org:3306/1daw03_pro";
 
 	}
